@@ -19,6 +19,6 @@
 #*.rar
 
 # ignore eclipse files
-.project
+#.project
 .classpath
 .settings
