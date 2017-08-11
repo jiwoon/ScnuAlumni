@@ -1,16 +1,33 @@
 package com.newttl.scnualumni.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
 import com.newttl.scnualumni.bean.pojo.SNSUserInfo;
 import com.newttl.scnualumni.bean.pojo.WeiXinOauth2Token;
 import com.newttl.scnualumni.util.AdvancedUtil;
+import com.newttl.scnualumni.util.DataBaseUtil;
 import com.newttl.scnualumni.weixin.WeiXinCommon;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 /**
  * 用户注册接口
  * @author lgc
@@ -66,8 +83,45 @@ public class SignUpServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String userName=req.getParameter("userName");
-		System.out.println(userName);
+		
+		//设置编码格式，防止中文出现乱码
+		/*req.setCharacterEncoding("gb2312");
+		resp.setCharacterEncoding("gb2312");*/
+		
+		resp.setCharacterEncoding("UTF-8");
+		
+		try {
+		//从HttpServletRequest中取输入流
+		InputStream iStream=req.getInputStream();
+		//读取输入流
+		InputStreamReader reader=new InputStreamReader(iStream,"UTF-8");
+		BufferedReader bufferedReader=new BufferedReader(reader);
+		StringBuffer buffer=new StringBuffer();
+		String str=null;
+		while (null != (str=bufferedReader.readLine())) {
+			buffer.append(str);
+		}
+		//释放资源
+		bufferedReader.close();
+		reader.close();
+		iStream.close();
+		iStream=null;
+		// 使用JSON-lib解析返回结果 getBytes("iso8859-1"),"utf-8"
+		JSONObject jsonObject = JSONObject.fromObject(buffer.toString());
+		String userName=jsonObject.getString("userName");
+		System.out.println("userName-"+userName);
+		
+		//向前台页面输出结果
+		DataBaseUtil baseUtil=new DataBaseUtil();
+		JSONObject respJson=baseUtil.getAlumnisName(userName);
+		System.out.println(String.valueOf(respJson));
+		PrintWriter out=resp.getWriter();
+		out.write(String.valueOf(respJson));
+		out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import com.newttl.scnualumni.bean.pojo.Token;
 import com.thoughtworks.xstream.mapper.OuterClassMapper;
 
-import lgc.util.MyX509TrustManager;
+import com.newttl.scnualumni.util.MyX509TrustManager;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 

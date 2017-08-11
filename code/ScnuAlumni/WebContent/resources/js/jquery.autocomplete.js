@@ -9,7 +9,6 @@
  *
  * Revision: $Id: jquery.autocomplete.js 15 2009-08-22 10:30:27Z joern.zaefferer $
  */
-$.browser = navigator.userAgent;
 ;(function($) {
 	
 $.fn.extend({

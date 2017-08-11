@@ -13,6 +13,9 @@ import com.newttl.scnualumni.bean.database.Knowledge;
 import com.newttl.scnualumni.bean.database.SignedUser;
 import com.newttl.scnualumni.bean.database.UserLocation;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 
 /**
  * 数据库操作类
@@ -491,6 +494,49 @@ public class DataBaseUtil {
 			releaseResources(conn, ps, rs);
 		}
 		return signedUsers;
+	}
+	
+	/**
+	 * 模糊搜索返回带相同字的校友名字
+	 * @param name
+	 * @return List<String>
+	 */
+	public JSONObject getAlumnisName(String name){
+		String sqlStr="select openId,userName,headImgUrl from signed_users where userName like ?";
+//		List<String> names=new ArrayList<String>();
+		JSONObject jsonObject=new JSONObject();
+		if (!("".equals(name))) {
+			JSONArray array=new JSONArray();
+			PreparedStatement ps=null;
+			ResultSet rs=null;
+			try {
+				ps=conn.prepareStatement(sqlStr);
+				ps.setString(1, "%"+name+"%");
+				rs=ps.executeQuery();
+				while (rs.next()) {
+//					names.add(rs.getString("userName"));
+//					System.out.println(rs.getString("userName"));
+					JSONObject sub=new JSONObject();
+					sub.put("openId", rs.getString("openId"));
+					sub.put("userName", rs.getString("userName"));
+					sub.put("headImgUrl", rs.getString("headImgUrl"));
+					array.add(sub);
+				}
+				jsonObject.put("users", array);
+			} catch (SQLException e) {
+				jsonObject=null;
+				e.printStackTrace();
+				System.out.println("getAlumnisName::\n"+e.toString());
+			}finally {
+				//释放资源
+				releaseResources(conn, ps, rs);
+			}
+		}else {
+			JSONArray none=new JSONArray();
+			jsonObject.put("users", none);
+		}
+		
+		return jsonObject;
 	}
 	
 	/**

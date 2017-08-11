@@ -17,8 +17,8 @@ public class WeiXinCommon {
 	 * ngrok.plub  http://newtkwx.ngrok.club
 	 * 魔法隧道  http://zlgvgnb.hk1.mofasuidao.cn
 	 */
-	public static final String WEIXIN_URL="http://zlgvgnb.hk1.mofasuidao.cn/WeChat/WxServlet";
-	public static final String REDIRECT_URI="http://zlgvgnb.hk1.mofasuidao.cn/WeChat/OAuthServlet";
+	public static final String WEIXIN_URL="http://zlgvgnb.hk1.mofasuidao.cn/ScnuAlumni/WxServlet";
+	public static final String REDIRECT_URI="http://zlgvgnb.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
 	public static final String OAUTH_URL="http://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 
 	/**
@@ -55,6 +55,6 @@ public class WeiXinCommon {
 	
 	public static final String wxAk="S0D9rYXOzhqervq5kOkwlOFfCPQZSR5H";
 	
-	public static final String signUpUrl="http://zlgvgnb.hk1.mofasuidao.cn/WeChat/SignUpServlet";
+	public static final String signUpUrl="http://zlgvgnb.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet";
 	
 }
