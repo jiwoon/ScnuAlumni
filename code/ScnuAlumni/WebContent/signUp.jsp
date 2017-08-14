@@ -40,6 +40,18 @@
 .my-label{
 	color: gray;
  }
+.m-weui-select {
+/*   -webkit-appearance: none; */
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  width: 100%;
+  font-size: inherit;
+  height: 44px;
+  position: relative;
+  z-index: 1;
+  /* padding-left: 15px; */
+}
 
  </style>
  
@@ -302,11 +314,52 @@
 <div class="weui_cells weui_cells_form" style="margin-top: 0px">
 	
 	<div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label">学院<span style='color: red;position: relative;top: 2px'>*</span></label></div>
-        <div class="weui_cell_bd weui_cell_primary">
-            <input class="weui_input" type="text" name="userCollege" placeholder="请输入学院">
-        </div>
-    </div>
+		<div class="weui_cell_hd"><label class="weui-label">学院<span style='color: red;position: relative;top: 2px'>*</span></label></div>
+		<div class="weui_cell_bd weui_cell_primary">
+			<select class="m-weui-select" name="userCollege" translate="yes">
+			<option value="教育科学学院">教育科学学院</option>
+			<option value="政治与行政学院">政治与行政学院</option>
+			<option value="马克思主义学院">马克思主义学院</option>
+			<option value="历史文化学院">历史文化学院</option>
+			<option value="外国语言文化学院">外国语言文化学院</option>
+			<option value="特殊教育学院">特殊教育学院</option>
+			<option value="国际文化学院">国际文化学院</option>
+			<option value="美术学院">美术学院</option>
+			<option value="旅游管理学院">旅游管理学院</option>
+			<option value="教育信息技术学院">教育信息技术学院</option>
+			<option value="数学科学学院">数学科学学院</option>
+			<option value="生命科学学院">生命科学学院</option>
+			<option value="地理科学学院">地理科学学院</option>
+			<option value="计算机学院">计算机学院</option>
+			<option value="心理学院">心理学院</option>
+			<option value="继续教育学院">继续教育学院</option>
+			<option value="网络教育学院">网络教育学院</option>
+			<option value="凤凰国际学院">凤凰国际学院</option>
+			<option value="光电子材料与技术研究所">光电子材料与技术研究所</option>
+			<option value="生物光子学研究院">生物光子学研究院</option>
+			<option value="基础教育培训与研究院">基础教育培训与研究院</option>
+			<option value="脑科学与康复医学研究院">脑科学与康复医学研究院</option>
+			<option value="华南数学应用与交叉研究中心">华南数学应用与交叉研究中心</option>
+			<option value="文学院">文学院</option>
+			<option value="经济与管理学院">经济与管理学院</option>
+			<option value="法学院">法学院</option>
+			<option value="公共管理学院">公共管理学院</option>
+			<option value="体育科学学院">体育科学学院</option>
+			<option value="音乐学院">音乐学院</option>
+			<option value="物理与电信工程学院">物理与电信工程学院</option>
+			<option value="化学与环境学院">化学与环境学院</option>
+			<option value="信息光电子科技学院">信息光电子科技学院</option>
+			<option value="华南先进光电子研究院">华南先进光电子研究院</option>
+			<option value="环境研究院">环境研究院</option>
+			<option value="创业学院">创业学院</option>
+			<option value="城市文化学院">城市文化学院</option>
+			<option value="国际商学院">国际商学院</option>
+			<option value="软件学院">软件学院</option>
+			<option value="职业教育学院">职业教育学院</option>
+			<option value="南海学院">南海学院</option>
+			</select>
+		</div>
+	</div>
     
 	<div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">班级<span style='color: red;position: relative;top: 2px'>*</span></label></div>

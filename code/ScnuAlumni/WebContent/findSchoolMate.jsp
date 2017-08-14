@@ -86,7 +86,7 @@ $().ready(function() {
 		$.ajax({
 			type:"POST",
 			contentType: "application/x-www-form-urlencoded; charset=utf-8",
-			url:"http://zlgvgnb.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet",
+			url:"/ScnuAlumni/SignUpServlet",
 			data:JSON.stringify(jsonStr),
 			dataType:"json",
 			success:function(data){  
@@ -127,7 +127,7 @@ function onSearch() {
 		$.ajax({
 			type:"POST",
 			contentType: "application/x-www-form-urlencoded; charset=utf-8",
-			url:"http://zlgvgnb.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet",
+			url:"/ScnuAlumni/SignUpServlet",
 			data:JSON.stringify(jsonStr),
 			dataType:"json",
 			success:function(data){  

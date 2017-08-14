@@ -41,6 +41,7 @@ request.setCharacterEncoding("UTF-8");
 <body ontouchstart>
 
 <%
+
 String select=request.getParameter("select2");
 String myType=request.getParameter("myType");
 String userOpenId=request.getParameter("userOpenId");

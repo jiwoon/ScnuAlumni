@@ -69,7 +69,7 @@ public class MenuManager {
 		ViewButton b33 = new ViewButton();
 		b33.setName("查找校友");
 		b33.setType("view");
-		b33.setUrl("http://zlgvgnb.hk1.mofasuidao.cn/ScnuAlumni/findSchoolMate.jsp");
+		b33.setUrl("http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/findSchoolMate.jsp");
 		/*
 		ComplexButton mainB1=new ComplexButton();
 		mainB1.setName("华师新闻");

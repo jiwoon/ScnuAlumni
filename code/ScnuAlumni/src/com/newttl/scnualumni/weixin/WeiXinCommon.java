@@ -15,10 +15,10 @@ public class WeiXinCommon {
 	 * 新浪云  http://ntkwechat.applinzi.com ✔
 	 * ngrokcc  http://newtkwx.ngrok.cc ✔
 	 * ngrok.plub  http://newtkwx.ngrok.club
-	 * 魔法隧道  http://zlgvgnb.hk1.mofasuidao.cn
+	 * 魔法隧道  http://jqfrudd.hk1.mofasuidao.cn
 	 */
-	public static final String WEIXIN_URL="http://zlgvgnb.hk1.mofasuidao.cn/ScnuAlumni/WxServlet";
-	public static final String REDIRECT_URI="http://zlgvgnb.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
+	public static final String WEIXIN_URL="http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/WxServlet";
+	public static final String REDIRECT_URI="http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
 	public static final String OAUTH_URL="http://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 
 	/**
@@ -43,7 +43,7 @@ public class WeiXinCommon {
 	/**
 	 * 获取本地服务器中的二维码的根目录
 	 */
-	public static final String qrCodeRoot="http://zlgvgnb.hk1.mofasuidao.cn/WeiXinMedia/qrcodes/";
+	public static final String qrCodeRoot="http://jqfrudd.hk1.mofasuidao.cn/WeiXinMedia/qrcodes/";
 	
 	/**
 	 * 百度地图获取周边的接口的Ak CA21bdecc75efc1664af5a195c30bb4e 
@@ -55,6 +55,6 @@ public class WeiXinCommon {
 	
 	public static final String wxAk="S0D9rYXOzhqervq5kOkwlOFfCPQZSR5H";
 	
-	public static final String signUpUrl="http://zlgvgnb.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet";
+	public static final String signUpUrl="http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet";
 	
 }
