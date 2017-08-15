@@ -96,6 +96,7 @@ String userProfession=request.getParameter("editProfession");
  		var hobby=document.formSub.userHobby.value;
  		var profession=document.formSub.userProfession.value;
  		var regEmail=/\w+([-+.']\w+)*@\w+([-.]\w+)*.\w+([-.]\w+)*/;
+ 		var reg_email=/^[a-zA-Z0-9_-](\w|\.|-)*@([a-zA-Z0-9_-]+-?[a-zA-Z0-9_-]+\.){1,3}[a-zA-Z]{2,4}$/i;
  		
 		if (name.length <= 0) {
  			$.alert("姓名不正确!");
@@ -107,7 +108,7 @@ String userProfession=request.getParameter("editProfession");
 			$.alert("手机号码长度不正确!");
 		}else if (qQ.length <= 0) {
 			$.alert("QQ长度不正确!");
-		}else if (!regEmail.test(email)) {
+		}else if (!reg_email.test(email)) {
 			$.alert("邮箱格式不正确!");
 		}else if (code.length != 4) {
 			$.alert("验证码不正确!");
@@ -245,14 +246,14 @@ String userProfession=request.getParameter("editProfession");
 	<div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">姓名<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell_bd weui_cell_primary">
-            <input class="weui_input" type="text" name="userName" placeholder="请输入姓名" value="<%=userName %>">
+            <input class="weui_input" type="text" name="userName" placeholder="请输入姓名" value="<%=userName %>" onkeyup="value=value.replace(/[^\a-zA-Z\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\a-zA-Z\u4E00-\u9FA5]/g,''))">
         </div>
     </div>
     
     <div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">QQ<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell_bd weui_cell_primary">
-            <input class="weui_input" type="number" name="userQQ" placeholder="请输入QQ号" value="<%=userQQ %>">
+            <input class="weui_input" type="number" name="userQQ" placeholder="请输入QQ号" value="<%=userQQ %>" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
         </div>
     </div>
     
@@ -266,7 +267,7 @@ String userProfession=request.getParameter("editProfession");
     <div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">手机号<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell_bd weui_cell_primary"">
-            <input class="weui_input" type="number" name="userPhone" placeholder="请输入手机号" value="<%=userPhone %>">
+            <input class="weui_input" type="number" name="userPhone" placeholder="请输入手机号" maxlength="11" value="<%=userPhone %>" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
         </div>
     </div>
     

@@ -1,8 +1,15 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.newttl.scnualumni.util.DataBaseUtil"%>
+<%@page import="com.newttl.scnualumni.bean.database.Alumnus"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String path=request.getContextPath();
 	String basePath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	List<Alumnus> alumnus=new ArrayList<Alumnus>();
+	DataBaseUtil baseUtil=new DataBaseUtil();
+	alumnus=baseUtil.getAllAlumnus();
 %>
 
 <!DOCTYPE html>
@@ -165,8 +172,12 @@ function onSearch() {
 
 function alumniClick(i) {
 	var formName="alumniform"+String.valueOf(i);
-	alert(formName);
-	/* document.formName.submit(); */
+	document.formName.submit();
+}
+
+function alumnus(i) {
+	var formName="alumnus"+String.valueOf(i);
+	document.formName.submit();
 }
 
 </script>
@@ -229,7 +240,38 @@ function alumniClick(i) {
  	</div>
 </div>
 
-<div id="result"></div>	
+<div id="result">
+
+<%
+	if(alumnus.size() > 0){
+		for(int i=0;i < alumnus.size();i++){
+			
+%>
+			<form action="alumniInfo.jsp" method="post" name="alumnus<%=i%>">
+			<div class="weui_cells weui_cells_form" style="margin-top: 0px">
+			
+			<div class="weui_cell">
+				<div class="inline">
+					<p><%=alumnus.get(i).getUserName()%></p>
+				</div>
+    			<div class="inline weui_cell_bd weui_cell_primary">
+					<button class="weui_input" onclick="alumnus(i);" value="<%=alumnus.get(i).getUserName()%>"></button>
+					<input type="hidden" name="alumniName" value="<%=alumnus.get(i).getUserName()%>">
+ 					<input type="hidden" name="alumniOpenId" value="<%=alumnus.get(i).getOpenId()%>">
+				</div>
+        		<div class="inline weui-cell_ft">
+         		    <img src="<%=alumnus.get(i).getHeadImgUrl()%>" style="height: 40px;width: 40px">
+					<input type="hidden" name="alumniHeadImgUrl" value="<%=alumnus.get(i).getHeadImgUrl()%>">
+       			</div>
+    		</div>
+			</div>
+			</form>
+<%		
+		}
+	}
+%>
+
+</div>	
 
 
 <!-- <script src="resources/js/fastclick.js"></script> -->

@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.newttl.scnualumni.bean.database.Alumnus;
 import com.newttl.scnualumni.bean.database.Knowledge;
 import com.newttl.scnualumni.bean.database.SignedUser;
 import com.newttl.scnualumni.bean.database.UserLocation;
@@ -537,6 +538,35 @@ public class DataBaseUtil {
 		}
 		
 		return jsonObject;
+	}
+	
+	/**
+	 * 获取所有校友，显示在查找校友主页
+	 * @return List<Alumnus>
+	 */
+	public List<Alumnus> getAllAlumnus(){
+		String sqlStr="SELECT openId,userName,headImgUrl FROM signed_users ORDER BY CONVERT(userName USING gbk ) COLLATE gbk_chinese_ci ASC";
+		List<Alumnus> alumnus=new ArrayList<Alumnus>();
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			ps=conn.prepareStatement(sqlStr);
+			rs=ps.executeQuery();
+			while (rs.next()) {
+				Alumnus alumni=new Alumnus();
+				alumni.setOpenId(rs.getString("openId"));
+				alumni.setUserName(rs.getString("userName"));
+				alumni.setHeadImgUrl(rs.getString("headImgUrl"));
+				alumnus.add(alumni);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("getAllAlumnus::\n"+e.toString());
+		}finally {
+			//释放资源
+			releaseResources(conn, ps, rs);
+		}
+		return alumnus;
 	}
 	
 	/**
