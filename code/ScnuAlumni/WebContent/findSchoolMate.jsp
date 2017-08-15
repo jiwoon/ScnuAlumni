@@ -25,10 +25,9 @@
 <link rel="stylesheet" href="resources/css/jquery-weui.css">
 
 <script src="resources/js/jquery-browser.js"></script>
-<script src="resources/js/jquery-weui.js"></script>
 <script src="resources/js/jquery-2.1.4.js"></script>
 <script src="resources/js/baiduTemplate.js"></script>
-
+<script src="resources/js/jquery-weui.js"></script>
 <script src="resources/js/jquery.autocomplete.js"></script>
 
 <style type="text/css">
@@ -143,7 +142,8 @@ function onSearch() {
 				/* alert(jsonObj.length); */
 				var jsonLength=jsonObj.users.length;
 				if (jsonLength <= 0) {
-					alert("不存在该校友!");
+					/* alert("不存在该校友!"); */
+					$.toast("不存在该校友!");
 				}
 				
 				//使用模板 ,使用baidu.template命名空间
@@ -274,14 +274,15 @@ function alumnus(i) {
 </div>	
 
 
-<!-- <script src="resources/js/fastclick.js"></script> -->
-<!-- 
+<script src="resources/js/fastclick.js"></script>
+ 
 <script>
   $(function() {
     FastClick.attach(document.body);
   });
 </script>
 
+<!-- 
  <script>
  	 $(document).on("click", "#show-alumni", function() {
  		document.alumniform.submit();

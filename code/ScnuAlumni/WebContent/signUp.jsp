@@ -114,6 +114,27 @@
 		}
  	}
  	
+ 	
+ 	function reload(){
+		document.getElementById("randImage").src="./ImageCodeServlet?date="+new Date().getTime();
+		$("#userCode").val("");   // 将验证码清空
+	} 
+	 
+	 function verificationcode(){
+		 var text=$.trim($("#userCode").val());
+		 $.post("${pageContext.request.contextPath}/ImageCodeServlet",{op:text},function(data){
+			 data=parseInt($.trim(data));
+			 if(data>0){
+				 document.getElementById("span").innerHTML="<i class='weui_icon_success_circle'></i>";
+				 $.toptip('验证成功', 'success');
+			 }else{
+				 document.getElementById("span").innerHTML="<i class='weui_icon_cancel'></i>";
+				 $.alert("请重新输入验证码","验证失败");
+				 reload();  //验证失败后需要更换验证码
+			 }
+		 });
+	 }
+ 	
  </script>
  
 </head>
@@ -400,10 +421,11 @@
     <div class="weui_cell weui_vcode">
     	<div class="weui_cell_hd"><label class="weui-label">验证码<span style='color: red;position: relative;top: 2px'>*</span></label></div>
     	<div class="weui_cell_bd weui_cell_primary">
-        	<input class="weui_input" type="text" name="userCode" placeholder="请输入验证码">
+    		<input class="weui_input" type="text" id="userCode" name="userCode" placeholder="请输入验证码" onblur="javascript:verificationcode()" maxlength="4" onkeyup="value=value.replace(/[\W]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
     	</div>
+    	<span id="span"></span>
     	<div class="weui_cell_ft weui_vimg_wrp">
-        	<img src="./images/vcode.jpg" />
+    		<img id="randImage" src="./ImageCodeServlet" onclick="javascript:reload();" />
     	</div>
     </div>
     
