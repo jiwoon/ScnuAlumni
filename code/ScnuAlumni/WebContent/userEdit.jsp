@@ -105,6 +105,8 @@ String userProfession=request.getParameter("editProfession");
 			$.alert("学院不能为空!");
 		}else if (userClss.length <= 0) {
 			$.alert("班级不能为空!");
+		}else if (city.length <= 0) {
+			$.alert("城市不能为空!");
 		}else if (phone.length != 11) {
 			$.alert("手机号码长度不正确!");
 		}else if (qQ.length <= 0) {
@@ -113,8 +115,6 @@ String userProfession=request.getParameter("editProfession");
 			$.alert("邮箱格式不正确!");
 		}else if (code.length != 4) {
 			$.alert("验证码错误!");
-		}else if (city.length <= 0) {
-			$.alert("城市不能为空!");
 		}else if (industry.length <= 0) {
 			$.alert("行业不能为空!");
 		}else if (hobby.length <= 0) {
@@ -153,7 +153,7 @@ String userProfession=request.getParameter("editProfession");
 
 </head>
 
-<body >
+<body>
 
 <form action="userSignInfo.jsp" method="post" name="formSub">
 <div class="page__bd">
@@ -270,6 +270,13 @@ String userProfession=request.getParameter("editProfession");
     </div>
     
     <div class="weui_cell">
+        <div class="weui_cell__hd"><label for="home-city" class="weui-label">城市<span style='color: red;position: relative;top: 2px'>*</span></label></div>
+        <div class="weui_cell__ft">
+          <input class="weui_input" id="home-city" type="text" name="userCity">
+        </div>
+     </div>
+    
+    <div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">QQ<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell_bd weui_cell_primary">
             <input class="weui_input" type="number" name="userQQ" placeholder="请输入QQ号" value="<%=userQQ %>" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
@@ -301,13 +308,6 @@ String userProfession=request.getParameter("editProfession");
     	</div>
     	
     </div>
-    
-    <div class="weui_cell">
-        <div class="weui_cell__hd"><label for="home-city" class="weui-label">城市<span style='color: red;position: relative;top: 2px'>*</span></label></div>
-        <div class="weui_cell__ft">
-          <input class="weui_input" id="home-city" type="text" name="userCity">
-        </div>
-     </div>
       
 </div>
 

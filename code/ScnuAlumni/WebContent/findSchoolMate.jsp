@@ -20,15 +20,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
 <title>查找校友</title>
 
-<link rel="stylesheet" href="resources/css/jquery.autocomplete.css">
+
 <link rel="stylesheet" href="resources/css/weui.css">
 <link rel="stylesheet" href="resources/css/jquery-weui.css">
 
-<script src="resources/js/jquery-browser.js"></script>
 <script src="resources/js/jquery-2.1.4.js"></script>
 <script src="resources/js/baiduTemplate.js"></script>
 <script src="resources/js/jquery-weui.js"></script>
-<script src="resources/js/jquery.autocomplete.js"></script>
 
 <style type="text/css">
 
@@ -38,92 +36,7 @@
  
  </style>
 
-
-
 <script type="text/javascript">
-//本地数组
-var data=["java","javaee","jquery","c++","css","html","htm5","bb","ejb","c#"];
-//开始
-/* 
-$().ready(function() {
-	$("#autoComplete").autocomplete(data,  
-	        {  
-	            minChars: 0,  
-	            max: 5,  
-	            autoFill: true,  
-	            mustMatch: true,  
-	            matchContains: true,
-	            formatItem: function (data, i, total) {  
-	              return "<I>" + data[0] + "</I>";  
-	            }, formatMatch: function (data, i, total) {  
-	              return data[0];  
-	            }, formatResult: function (data) {  
-	              return data[0];  
-	            }     
-	              
-	        });  
-});
- */
- 
- $(document).ready(function() {
-		var name=$("#autoComplete").val();
-		/* 
-		var jsonStr={'userName':name};
-		$.ajax({
-			type:"POST",
-			contentType: "application/x-www-form-urlencoded; charset=utf-8",
-			url:"http://zlgvgnb.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet",
-			data:JSON.stringify(jsonStr),
-			dataType:"json",
-			success:function(data){  
-				var resp=JSON.stringify(data);
-				var jsonObj = JSON.parse(resp);
-				var rnames=jsonObj.names;
-				alert(rnames);
-				autocompleteFn(rnames);
-			}
-		});
-		   */
-	});
- 
- function getEnter(){
-	 	var name=$("#autoComplete").val();
-		var jsonStr={'userName':name};
-		$.ajax({
-			type:"POST",
-			contentType: "application/x-www-form-urlencoded; charset=utf-8",
-			url:"/ScnuAlumni/SignUpServlet",
-			data:JSON.stringify(jsonStr),
-			dataType:"json",
-			success:function(data){  
-				var resp=JSON.stringify(data);
-				var jsonObj = JSON.parse(resp);
-				alert(jsonObj.names);
-				autocompleteFn(jsonObj.names);
-			}
-		});
-}
- 
-//自动 补全方法  
- function autocompleteFn(names){  
-   $("#autocomplete").autocomplete(names,
-		   {  
-		       minChars: 0,  
-		       max: 5,  
-		       autoFill: true,  
-		       mustMatch: true,  
-		       matchContains: true,
-		       formatItem: function (data, i, total) {  
-		         return "<I>" + data[0] + "</I>";  
-		       }, formatMatch: function (data, i, total) {  
-		         return data[0];  
-		       }, formatResult: function (data) {  
-		         return data[0];  
-		       }     
-		         
-		   });
- }  
-
 //搜索数据
 function onSearch() {
 	var name=$("#autoComplete").val();
@@ -168,7 +81,6 @@ function onSearch() {
 	}
 	
 }
-
 
 function alumniClick(i) {
 	var formName="alumniform"+String.valueOf(i);
@@ -227,10 +139,10 @@ function alumnus(i) {
 </head>
 <body>
 
-<div class="weui_cells weui_cells_access"  style="margin-top: 0px">
+<div class="weui_cells weui_cells_access"  style="margin-top: 0px;">
  	<div class="weui_cell">
  		<div class="weui_cell_bd weui_cell_primary">
-	   		<input class="weui_input" type="text" id="autoComplete" placeholder="输入校友名字">
+	   		<input class="weui_input" type="text" id="autoComplete" placeholder="输入校友名字" onkeyup="value=value.replace(/\s/g,'')">
 	   	</div>
  		
  		<div class="weui-cell_ft">

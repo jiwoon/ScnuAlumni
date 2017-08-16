@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="resources/css/weui.css">
 <link rel="stylesheet" href="resources/css/weui.min.css">
 <link rel="stylesheet" href="resources/css/jquery-weui.css">
-<!-- <link rel="stylesheet" href="resources/css/demos.css"> -->
+
 
 <style type="text/css">
  .p{

@@ -273,7 +273,6 @@
 </div>
 
 <div class="weui_btn_area">
-     <!-- <a class="weui_btn weui_btn_primary" href="http://newtkwx.ngrok.cc/WeChat/userSignInfo.jsp?tell='5566'" id="showTooltips">确定</a> -->
      <input class="weui_btn weui_btn_primary" type="submit" name="edit" value="修改">
 </div>
 <br>
@@ -398,6 +397,13 @@
     </div>
     
     <div class="weui_cell">
+        <div class="weui_cell__hd"><label for="home-city" class="weui-label">城市<span style='color: red;position: relative;top: 2px'>*</span></label></div>
+        <div class="weui_cell__ft">
+          <input class="weui_input" id="home-city" type="text" name="userCity">
+        </div>
+     </div>
+    
+    <div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">QQ<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell_bd weui_cell_primary">
             <input class="weui_input" type="number" name="userQQ" placeholder="请输入QQ号" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
@@ -428,14 +434,6 @@
     		<img id="randImage" src="./ImageCodeServlet" onclick="javascript:reload();" />
     	</div>
     </div>
-    
-    
-    <div class="weui_cell">
-        <div class="weui_cell__hd"><label for="home-city" class="weui-label">城市<span style='color: red;position: relative;top: 2px'>*</span></label></div>
-        <div class="weui_cell__ft">
-          <input class="weui_input" id="home-city" type="text" name="userCity">
-        </div>
-     </div>
       
 </div>
 
@@ -473,18 +471,14 @@
 </div>
 </form>
 
-
-<!-- <script src="resources/js/jquery-2.1.4.js"></script>
-<script src="resources/js/fastclick.js"></script>	 -->
-
 <script>
   $(function() {
     FastClick.attach(document.body);
   });
 </script>
-<!-- <script src="resources/js/jquery-weui.js"></script>
-<script src="resources/js/city-picker.js"></script> -->
+
  <script>
+ 
  	$("#home-city").cityPicker({
  		showDistrict: true,
  		title:"请选择您的地址",
