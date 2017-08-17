@@ -44,7 +44,7 @@ public class OAuthServlet extends HttpServlet {
 		if (!(code.equals("authdeny"))) {
 			//获取网页授权凭证 access_token
 			AdvancedUtil advancedUtil=new AdvancedUtil();
-			WeiXinOauth2Token weiXinOauth2Token=advancedUtil.getAdvancedMethod().getOauth2AccessToken(WeiXinCommon.appID, WeiXinCommon.appsecret, code);
+			WeiXinOauth2Token weiXinOauth2Token=advancedUtil.getAdvancedMethod().getOauth2AccessToken(WeiXinCommon.appID2, WeiXinCommon.appsecret2, code);
 			String accessToken=weiXinOauth2Token.getAccessToken();
 			//获得用户的标志
 			String openID=weiXinOauth2Token.getOpenId();
@@ -55,7 +55,7 @@ public class OAuthServlet extends HttpServlet {
 			req.setAttribute("snsUserInfo", snsUserInfo);
 			//跳转到目标页面
 //			req.getRequestDispatcher("snsUserInfo.jsp").forward(req, resp);
-			req.getRequestDispatcher("signUp.jsp").forward(req, resp);
+			req.getRequestDispatcher("activity.jsp").forward(req, resp);
 		}
 	}
 	

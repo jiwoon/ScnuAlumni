@@ -1,19 +1,14 @@
 package com.newttl.scnualumni.service;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
 import com.newttl.scnualumni.baidumap.BaiduMapUtil;
 import com.newttl.scnualumni.baidumap.BaiduPoiPlace;
 import com.newttl.scnualumni.bean.database.UserLocation;
-import com.newttl.scnualumni.bean.database.UserLocationEvent;
 import com.newttl.scnualumni.bean.pojo.Token;
-import com.newttl.scnualumni.bean.pojo.WeiXinMedia;
-import com.newttl.scnualumni.bean.pojo.WeiXinTemporaryQRCode;
 import com.newttl.scnualumni.bean.pojo.WeiXinUserInfo;
 import com.newttl.scnualumni.bean.response.Article;
 import com.newttl.scnualumni.bean.response.Image;
@@ -23,10 +18,9 @@ import com.newttl.scnualumni.bean.response.TextMessage;
 import com.newttl.scnualumni.util.AdvancedUtil;
 import com.newttl.scnualumni.util.CommonUtil;
 import com.newttl.scnualumni.util.DataBaseUtil;
-import com.newttl.scnualumni.util.EmojiUtil;
 import com.newttl.scnualumni.util.MessageUtil;
-import com.newttl.scnualumni.weixin.MenuManager;
 import com.newttl.scnualumni.weixin.WeiXinCommon;
+import com.newttl.scnualumni.bean.event.QRCodeEvent;
 
 /**
  * 消息处理服务类
@@ -40,7 +34,7 @@ public class MessageService {
 	
 	static{
 		//获取接口凭证
-		Token token=CommonUtil.getToken(WeiXinCommon.appID, WeiXinCommon.appsecret);
+		Token token=CommonUtil.getToken(WeiXinCommon.appID2, WeiXinCommon.appsecret2);
 		access_token=token.getAccess_token();
 	}
 	
@@ -223,14 +217,40 @@ public class MessageService {
 				
 				switch (eventType) {
 				case MessageUtil.EVENT_TYPE_SUBSCRIBE://关注
-					//用户一关注就获取用户基本信息
-					AdvancedUtil advance=new AdvancedUtil();
-					WeiXinUserInfo userInfo=advance.getAdvancedMethod().getUserInfo(access_token, req_fromUserName);
-					System.out.println(userInfo.getHeadImgUrl());
-					//设置文本消息内容
-					textMessage.setContent(respContent);
-					respContent=getSubscribeMsg();
-					//将文本消息对象转换为XML格式
+					//根据带参二维码中ticket判断新用户是否通过扫描他人推荐二维码进行的关注
+					String ticket = reqMap.get("Ticket");
+					//非空，说明是扫描推荐二维码进行的关注
+					if(ticket != null){
+						QRCodeEvent qr = new QRCodeEvent();
+						String eventKey = reqMap.get("EventKey");
+						DataBaseUtil dataBaseUtil=new DataBaseUtil();
+						
+						// 截取推荐二维码中参数 选取二维码提供者的微信openid  保存在数据库中
+						String provider = eventKey.substring(8, eventKey.length());
+						
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
+						
+						AdvancedUtil advancedUtil3=new AdvancedUtil();
+						WeiXinUserInfo providerInfo =advancedUtil3.getAdvancedMethod().getUserInfo(access_token,provider);
+						String providerName = providerInfo.getNickName();
+						WeiXinUserInfo recieverInfo =advancedUtil3.getAdvancedMethod().getUserInfo(access_token,req_fromUserName);
+						String recieverName = recieverInfo.getNickName();
+						dataBaseUtil.saveQRCodeParmer(provider, req_fromUserName, ticket, df.format(new Date()), providerName, recieverName);
+						
+						// 生成关注事件
+						qr.setToUserName(resp_toUserName);
+						qr.setFromUserName(resp_fromUserName);
+						qr.setCreateTime(new Date().getTime());
+						qr.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_EVENT);
+						qr.setEvent(MessageUtil.EVENT_TYPE_SUBSCRIBE);
+						qr.setEventKey(eventKey);
+						qr.setTicket(ticket);
+						respXml = MessageUtil.messageToXml(qr);
+					}
+					
+					// 新用户关注问候语
+					textMessage.setContent("终于等到你[玫瑰]大家都想你了[害羞]\n" + "\n【华师新闻】看母校最新动态\n\n"
+							+ "【公众号二维码】生成你的专属公众号二维码，轻松邀请校友\n\n" + "【工具箱】查找校友通讯录、校友最近活动\n\n" + "快点和昔日的同学联系吧！[拥抱]\n为了方便更多同学联系你，请先点击菜单栏【工具箱】->【用户中心】进行注册~[愉快]");
 					respXml=MessageUtil.messageToXml(textMessage);
 					break;
 					
@@ -277,23 +297,9 @@ public class MessageService {
 					if ("qrcode".equals(eventKey)) {
 						//获取临时带参二维码
 						AdvancedUtil advancedUtil2=new AdvancedUtil();
-						WeiXinTemporaryQRCode qrCode=advancedUtil2.getAdvancedMethod()
-								.createTemporaryQRCode(access_token, 60, (int)(System.currentTimeMillis()/1000L));
-						
-						System.out.println("qrCode.getUrl()::"+qrCode.getUrl());
-						System.out.println("qrCode.getTicket()::"+qrCode.getTicket());
-						System.out.println("qrCode.getExpireSeconds()::"+qrCode.getExpireSeconds());
-						
-						String savePath=advancedUtil2.getAdvancedMethod().getQRCode(qrCode.getTicket(), WeiXinCommon.downloadQrCode);
-						
-						System.out.println("savePath::"+savePath);
-						
-						WeiXinMedia qrCodeMedia=advancedUtil2.getAdvancedMethod().uploadTemporaryMedia(access_token, "image", savePath);
-						
-						System.out.println("qrCodeMedia.getMediaId()::"+qrCodeMedia.getMediaId());
-						
 						Image qrCodeImg=new Image();
-						qrCodeImg.setMediaId(qrCodeMedia.getMediaId());
+						String s_id = advancedUtil2.getAdvancedMethod().getQRid(resp_toUserName);
+						qrCodeImg.setMediaId(s_id);
 						ImageMessage qrCodeMessage=new ImageMessage();
 						qrCodeMessage.setFromUserName(resp_fromUserName);
 						qrCodeMessage.setToUserName(resp_toUserName);

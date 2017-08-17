@@ -1,15 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
-	import="com.mysql.jdbc.Connection,java.sql.*,com.mysql.jdbc.PreparedStatement,org.jason.course.dao.*"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.newttl.scnualumni.util.DataBaseUtil"%>
+<%@page import="com.newttl.scnualumni.bean.database.Activity"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no">
-<link rel="stylesheet" href="css/weui.min.css">
-<link rel="stylesheet" href="css/jquery-weui.css">
-<link rel="stylesheet" href="css/demos.css">
+<link rel="stylesheet" href="resources/css/weui.min.css">
+<link rel="stylesheet" href="resources/css/jquery-weui.css">
+<link rel="stylesheet" href="resources/css/demos.css">
 <script>
 	function checkInput() {
 		var activityName = document.formSub.aname.value;
@@ -54,11 +56,12 @@
 	<%
 		String aid = request.getParameter("parmer");
 		session.setAttribute("aid", aid);
-		Connection conn = JDBConnect.connectMySQL();
-		String sql = "select * from activity where id =" + aid;
-		PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();
-		rs.next();
+		int id = Integer.parseInt(aid);
+		
+		out.print(aid);
+		Activity activity = new Activity();
+		DataBaseUtil baseUtil = new DataBaseUtil();
+		activity = baseUtil.getTheActivity(id);
 	%>
 	<div>
 		<br />
@@ -72,7 +75,7 @@
 				</div>
 				<div class="weui-cell__bd">
 					<input class="weui-input" type="text" name="aname"
-						value='<%=rs.getString("activity_name")%>' placeholder="请输入活动名称" />
+						value='<%=activity.getActivityName()%>' placeholder="请输入活动名称" />
 				</div>
 			</div>
 			<div class="weui-cell">
@@ -83,16 +86,16 @@
 				<div class="weui-cell__bd">
 					<input class="weui-input" id="datetime-picker1" type="text"
 						name="start_time" placeholder="请选择开始时间"
-						value='<%=rs.getString("start_time")%>'>
+						value='<%=activity.getStartTime()%>'>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至 <input class="weui-input"
 						id="datetime-picker2" type="text" name="end_time"
-						placeholder="请选择截止时间" value='<%=rs.getString("end_time")%>'>
+						placeholder="请选择截止时间" value='<%=activity.getEndTime()%>'>
 				</div>
 			</div>
 
 			<div id="picker-container"></div>
-			<script src="js/jquery-2.1.4.js"></script>
-			<script src="js/jquery-weui.js"></script>
+			<script src="resources/js/jquery-2.1.4.js"></script>
+			<script src="resources/js/jquery-weui.js"></script>
 			<script>
 				$("#datetime-picker1").datetimePicker();
 			</script>
@@ -106,7 +109,7 @@
 				</div>
 				<div class="weui-cell__bd">
 					<input class="weui-input" type="text" name="aadress"
-						value='<%=rs.getString("activity_adress")%>'
+						value='<%=activity.getActivityAddress()%>'
 						placeholder="请输入活动地点" />
 				</div>
 			</div>
@@ -117,7 +120,7 @@
 				<div class="weui-cell">
 					<div class="weui-cell__bd">
 						<textarea class="weui-textarea" name="atip" placeholder="请输入活动介绍"
-							rows="3"><%=rs.getString("activity_intro")%></textarea>
+							rows="3"><%=activity.getActivityIntro()%></textarea>
 						<div class="weui-textarea-counter">
 							<span>0</span>/100
 						</div>
@@ -132,8 +135,8 @@
 			<br /> <br /> <br /> <br />
 		</div>
 	</form>
-	<script src="js/jquery-2.1.4.js"></script>
-	<script src="js/jquery-weui.js"></script>
+	<script src="resources/js/jquery-2.1.4.js"></script>
+	<script src="resources/js/jquery-weui.js"></script>
 	<script>
 		$(document).on("click", "#show-confirm", function() {
 			$.confirm("您确定要提交信息吗?", "提交信息", function() {
@@ -146,10 +149,5 @@
 		});
 	</script>
 	</form>
-	<%
-		rs.close();
-		ps.close();
-		conn.close();
-	%>
 </body>
 </html>

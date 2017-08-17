@@ -14,6 +14,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.newttl.scnualumni.bean.database.UserLocationEvent;
+import com.newttl.scnualumni.bean.event.QRCodeEvent;
 import com.newttl.scnualumni.bean.response.Article;
 import com.newttl.scnualumni.bean.response.ImageMessage;
 import com.newttl.scnualumni.bean.response.MusicMessage;
@@ -202,6 +203,16 @@ public class MessageUtil {
 		xStream.alias("xml", newsMessage.getClass());
 		xStream.alias("item", new Article().getClass());
 		return xStream.toXML(newsMessage);
+	}
+	
+	/**
+	 * 关注事件转换为XML
+	 * @param qrMessage
+	 * @return
+	 */
+	public static String messageToXml(QRCodeEvent qrMessage) {
+		xStream.alias("xml", qrMessage.getClass());
+		return xStream.toXML(qrMessage);
 	}
 	
 	//======================保存用户的消息到数据库=====================

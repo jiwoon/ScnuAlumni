@@ -1,3 +1,4 @@
+
 package com.newttl.scnualumni.interfaces;
 
 import java.io.File;
@@ -170,6 +171,11 @@ public interface AdvancedInterface {
 	 */
 	WeiXinPermanentQRCode createPermanentQRCode(String accessToken,String sceneStr);
 	
+	/*
+	 * 获取专属二维码
+	 */
+	String getQRid(String user) throws Exception;
+	
 	/**
 	 * 根据 ticket 获取二维码
 	 * 
@@ -250,15 +256,14 @@ public interface AdvancedInterface {
 	 * 目前只成功上传了 image 类型
 	 * 
 	 */
-	WeiXinMedia uploadTemporaryMedia(String accessToken, String type, String mediaFileUrl);
-	
-	String upload(String filePath, String accessToken, String type)throws IOException, NoSuchAlgorithmException;
-	
-	JSONObject uploadMedia(File file, String token, String type);
-	
-	
 	WeiXinMedia uploadMedia(String accessToken, String type, String mediaFileUrl);
 	
+	/**
+	 * 获取活动海报的media_id
+	 * @param String content 海报内容
+	 * @return WeiXinMedia.getMediaId()
+	 */
+	String getActivityImgId(String content) throws Exception;
 	
 	/**
 	 * 从微信服务器上下载对应 mediaId 的媒体文件
@@ -272,10 +277,4 @@ public interface AdvancedInterface {
 	 */
 	String downLoadMedia(String accessToken, String mediaId, String savePath);
 	
-	
-	/**
-	 * 测试方法
-	 * @return
-	 */
-	String getHello();
 }

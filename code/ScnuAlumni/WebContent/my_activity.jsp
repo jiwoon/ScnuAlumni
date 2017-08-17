@@ -1,19 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
-	import="com.mysql.jdbc.Connection,java.sql.*,com.mysql.jdbc.PreparedStatement,org.jason.course.dao.*"%>
-<%@ page import="org.jason.course.dao.CustomMessage.*"%>
-<%@ page
-	import="java.text.DateFormat,java.text.SimpleDateFormat,java.util.Date "%>
-<%@ page import="org.jason.course.pojo.SNSUserInfo"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.newttl.scnualumni.util.DataBaseUtil"%>
+<%@page import="com.newttl.scnualumni.bean.database.Activity"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no">
-<link rel="stylesheet" href="css/demos.css">
-<link rel="stylesheet" href="css/weui.min.css">
-<link rel="stylesheet" href="css/jquery-weui.css">
+<link rel="stylesheet" href="resources/css/demos.css">
+<link rel="stylesheet" href="resources/css/weui.min.css">
+<link rel="stylesheet" href="resources/css/jquery-weui.css">
 <title>校友近期活动</title>
 </head>
 <body>
@@ -36,15 +33,12 @@
 	<%
 		String openid = (String) session.getAttribute("openid");
 
-		Connection conn = JDBConnect.connectMySQL();
-		String sql = "select * from activity where openid='" + openid + "' order by start_time";
-		PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();
+		List<Activity> activitys = new ArrayList<Activity>();
+		DataBaseUtil baseUtil = new DataBaseUtil();
+		activitys = baseUtil.getSomeActivity(openid);
 
-		//将游标移到最后一行
-		rs.last();
 		//获取最后一行的行号
-		int size = rs.getRow();
+		int size = activitys.size();
 		pageCount = (size % PAGESIZE == 0) ? (size / PAGESIZE) : (size / PAGESIZE + 1);
 		//当前显示的页数
 		int curPage = 1;
@@ -57,14 +51,14 @@
 			curPage = pageCount;
 		if (curPage <= 1)
 			curPage = 1;
-		//游标移动到对应的位置
-		rs.absolute((curPage - 1) * PAGESIZE + 1);
+
 		int count = 1;
-		do {
-			if (count > PAGESIZE)
-				break;
-			count++;
-			if (size > 0) {
+
+		if (activitys.size() > 0) {
+			for (int i = 0; i < activitys.size(); i++) {
+				if (count > PAGESIZE)
+					break;
+				count++;
 	%>
 
 	<div class="weui-form-preview">
@@ -72,44 +66,43 @@
 		<div class="weui-form-preview__hd">
 			<div class="weui-form-preview__item">
 				<label class="weui-form-preview__label">活动名称</label> <span
-					class="weui-form-preview__value"><%=rs.getString("activity_name")%></span>
+					class="weui-form-preview__value"><%=activitys.get(i).getActivityName()%></span>
 			</div>
 		</div>
 		<!-- body 部分 -->
 		<div class="weui-form-preview__bd">
 			<div class="weui-form-preview__item">
 				<label class="weui-form-preview__label">活动开始时间</label> <span
-					class="weui-form-preview__value"><%=rs.getString("start_time")%></span>
+					class="weui-form-preview__value"><%=activitys.get(i).getStartTime()%></span>
 			</div>
 			<div class="weui-form-preview__item">
 				<label class="weui-form-preview__label">活动结束时间</label> <span
-					class="weui-form-preview__value"><%=rs.getString("end_time")%></span>
+					class="weui-form-preview__value"><%=activitys.get(i).getEndTime()%></span>
 			</div>
 			<div class="weui-form-preview__item">
 				<label class="weui-form-preview__label">活动地点</label> <span
-					class="weui-form-preview__value"><%=rs.getString("activity_adress")%></span>
+					class="weui-form-preview__value"><%=activitys.get(i).getActivityAddress()%></span>
 			</div>
 			<div class="weui-form-preview__item">
 				<label class="weui-form-preview__label">活动介绍</label> <span
-					class="weui-form-preview__value"><%=rs.getString("activity_intro")%></span>
+					class="weui-form-preview__value"><%=activitys.get(i).getActivityIntro()%></span>
 			</div>
 			<div class="weui-form-preview__item">
 				<label class="weui-form-preview__label">发起人</label> <span
-					class="weui-form-preview__value"><%=rs.getString("activity_holder")%></span>
+					class="weui-form-preview__value"><%=activitys.get(i).getActivityHolder()%></span>
 			</div>
-
 		</div>
 	</div>
 
 	<div class="weui-form-preview__ft">
-		<a href="delete_activity.jsp?parmer=<%=rs.getInt("id")%>"
+		<a href="delete_activity.jsp?parmer=<%=activitys.get(i).getId()%>"
 			onclick="return confirm('确定将此记录删除?')"
 			class="weui-form-preview__btn weui-form-preview__btn_default">删除</a>
 
-		<a href="update_activity.jsp?parmer=<%=rs.getInt("id")%>"
+		<a href="update_activity.jsp?parmer=<%=activitys.get(i).getId()%>"
 			class="weui-form-preview__btn weui-form-preview__btn_default">修改</a>
 		<a
-			href="sendImgMessage.jsp?openid=<%=rs.getString("openid")%>&aid=<%=rs.getInt("id")%>"
+			href="sendImgMessage.jsp?openid=<%=activitys.get(i).getOpenID()%>&aid=<%=activitys.get(i).getId()%>"
 			class="weui-form-preview__btn weui-form-preview__btn_primary">生成活动海报</a>
 	</div>
 	<hr />
@@ -117,14 +110,11 @@
 	<!-- foot 	部分 -->
 	<%
 		}
-		} while (rs.next());
-		rs.close();
-		ps.close();
-		conn.close();
+		}
 	%>
 	<!-- return confirm('确定将此记录删除?') -->
-	<script src="js/jquery-2.1.4.js"></script>
-	<script src="js/jquery-weui.js"></script>
+	<script src="resources/js/jquery-2.1.4.js"></script>
+	<script src="resources/js/jquery-weui.js"></script>
 
 	<br />
 	<div style="text-align: center">

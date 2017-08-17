@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="org.jason.course.pojo.SNSUserInfo"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,8 +7,8 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,user-scalable=0">
 <title>新增活动</title>
-<link rel="stylesheet" href="css/weui.min.css">
-<link rel="stylesheet" href="css/jquery-weui.css">
+<link rel="stylesheet" href="resources/css/weui.min.css">
+<link rel="stylesheet" href="resources/css/jquery-weui.css">
 <script src="js/jquery-weui.js"></script>
 <script>
 function checkInput(){
@@ -82,8 +81,8 @@ function checkInput(){
 			</div>
 
 			<div id="picker-container"></div>
-			<script src="js/jquery-2.1.4.js"></script>
-			<script src="js/jquery-weui.js"></script>
+			<script src="resources/js/jquery-2.1.4.js"></script>
+			<script src="resources/js/jquery-weui.js"></script>
 			<script>
 				$("#datetime-picker1").datetimePicker();
 			</script>

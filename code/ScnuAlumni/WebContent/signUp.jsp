@@ -16,7 +16,7 @@
 
 <html>
 <head>
- <base href="<%=basePath%>">
+
  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
  
@@ -142,7 +142,7 @@
 <body ontouchstart>
 
 <%
-	//获取 OAuthServlet 传入的参数
+	//获取 SignUpServlet 传入的参数
 	SNSUserInfo snsUserInfo=(SNSUserInfo)request.getAttribute("snsUserInfo");
 	String openId="";
 	String headImgUrl="";

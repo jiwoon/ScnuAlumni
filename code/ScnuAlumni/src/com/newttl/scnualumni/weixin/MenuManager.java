@@ -49,8 +49,8 @@ public class MenuManager {
 		b31.setUrl("http://zlgvgnb.hk1.mofasuidao.cn/WeChat/signUp.jsp");*/
 		
 		String url0=WeiXinCommon.OAUTH_URL;
-		String url1=CommonUtil.urlEncodingUTF8(WeiXinCommon.signUpUrl);
-		url0=url0.replace("APPID",WeiXinCommon.appID);
+		String url1=CommonUtil.urlEncodingUTF8(WeiXinCommon.signUpUrl2);
+		url0=url0.replace("APPID",WeiXinCommon.appID2);
 		url0=url0.replace("REDIRECT_URI", url1);
 		
 		b31.setName("个人中心");
@@ -62,14 +62,22 @@ public class MenuManager {
 		
 		
 		ViewButton b32=new ViewButton();
+		String ur32=WeiXinCommon.OAUTH_URL;
+		String ur33=CommonUtil.urlEncodingUTF8(WeiXinCommon.activityUrl);
+		ur32=ur32.replace("APPID",WeiXinCommon.appID2);
+		ur32=ur32.replace("REDIRECT_URI", ur33);
 		b32.setName("活动中心");
 		b32.setType("view");
-		b32.setUrl("http://m.jd.com");
+		b32.setUrl(ur32);
+		
+		System.out.println("ur32::"+"\n"+ur32);
+		
+		
 		
 		ViewButton b33 = new ViewButton();
 		b33.setName("查找校友");
 		b33.setType("view");
-		b33.setUrl("http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/findSchoolMate.jsp");
+		b33.setUrl("http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/findSchoolMate.jsp");
 		/*
 		ComplexButton mainB1=new ComplexButton();
 		mainB1.setName("华师新闻");
@@ -92,9 +100,9 @@ public class MenuManager {
 	
 	public static void main(String[] args) {
 		//第三方用户唯一凭证appID
-		String appID="wxdfead60d5e0dbcd6";
+		String appID="wx8078d2f14310fef3";
 		//第三方用户唯一凭证密钥appsecret
-		String appsecret="92663408c73b91e5749a0c5de20bd953";
+		String appsecret="b5f2071bd9c871139f7001e1efc2c3a8";
 		
 		
 		//通过凭证 appID appsecret获取 access_token
@@ -111,12 +119,6 @@ public class MenuManager {
 				System.out.println("菜单创建失败");
 			}
 			
-			//组装文本客服消息  oA1HcvwJj9KKuPC6fmRWm8h6Qv4I  oA1Hcv9PfGShFQfsHXEdjQrPGPmQ oA1Hcv3WBD5x2oZd42nR3Ioq0dVs oA1Hcv3fxuC-9dz52m-oDBgFAUPY
-			AdvancedUtil advancedUtil=new AdvancedUtil();
-			String customMsg=advancedUtil.getAdvancedMethod().makeTextCustomMessage("oA1HcvwJj9KKuPC6fmRWm8h6Qv4I", "糠糠,你在干嘛呀？");
-			//发送客服消息
-			boolean custom=advancedUtil.getAdvancedMethod().sendCustomMessage(accessToken, customMsg);
-			System.out.println("发送客服消息：："+custom);
 		}
 		
 		

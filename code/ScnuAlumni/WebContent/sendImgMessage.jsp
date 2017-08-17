@@ -1,8 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
-	import="com.mysql.jdbc.Connection,java.sql.*,com.mysql.jdbc.PreparedStatement,org.jason.course.dao.*"%>
-<%@ page import="org.jason.course.dao.CustomMessage.*"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="com.newttl.scnualumni.util.CommonUtil"%>
+<%@page import="com.newttl.scnualumni.bean.pojo.Token"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.newttl.scnualumni.util.DataBaseUtil"%>
+<%@page import="com.newttl.scnualumni.bean.database.Activity"%>
+<%@page import="java.util.List"%>
+<%@page import="com.newttl.scnualumni.util.AdvancedUtil"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,32 +15,43 @@
 </head>
 <body>
 	<%
+	    String openid =(String) session.getAttribute("openid");
+	
 		String aid = request.getParameter("aid");
-		String openid = request.getParameter("openid");
+		int  id = Integer.parseInt(aid);
 
-		Connection conn = JDBConnect.connectMySQL();
-		String sql = "select * from activity where id =" + aid;
-		PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();
-		rs.next();
-		String aname = rs.getString("activity_name");
-		String start_time = rs.getString("start_time");
-		String end_time = rs.getString("end_time");
-		String aadress = rs.getString("activity_adress");
-		String atip = rs.getString("activity_intro");
-		String awho = rs.getString("activity_holder");
-		//发送客服消息
-		String content = aname + "/" + start_time + " - " + end_time + "/" + aadress + "/" + atip + "/" + awho;
-		CustomMessage.sentMessage(openid, content);
+		Activity activity = new Activity();
+		DataBaseUtil baseUtil = new DataBaseUtil();
+		activity = baseUtil.getTheActivity(id);
+		
+		String aname = activity.getActivityName();
+		String start_time = activity.getStartTime();
+		String end_time = activity.getEndTime();
+		String address = activity.getActivityAddress();
+		String atip = activity.getActivityIntro();
+		String awho = activity.getActivityHolder();
+		
+		//发送客服消息组装文本客服消息
+		String content = aname + "/" + start_time + " - " + end_time + "/" + address + "/" + atip + "/" + awho;
+		
+		//通过凭证 appID appsecret获取 access_token
+		Token token=CommonUtil.getToken("wx8078d2f14310fef3", "b5f2071bd9c871139f7001e1efc2c3a8");
+		
+		// 发送客服消息
+		AdvancedUtil customMessage = new AdvancedUtil();
+		String jsonTextMsg = customMessage.getAdvancedMethod().makeTextCustomMessage(openid, "你的活动邀请海报生成啦！快转发到校友群通知大家参加吧[呲牙]");
+		customMessage.getAdvancedMethod().sendCustomMessage(token.getAccess_token(), jsonTextMsg);
+
+		
+		String jsonImageMsg = customMessage.getAdvancedMethod()
+				.makeImageCustomMessage(openid,customMessage.getAdvancedMethod().getActivityImgId(content));
+		customMessage.getAdvancedMethod().sendCustomMessage(token.getAccess_token(), jsonImageMsg);
+		
 	%>
 	<script>
 		alert("你的活动邀请海报已经生成，请回到公众号查看！")
 	</script>
 	<jsp:include page="recent_activity.jsp" />
-	<%
-		rs.close();
-		ps.close();
-		conn.close();
-	%>
+
 </body>
 </html>
