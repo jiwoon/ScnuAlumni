@@ -161,7 +161,7 @@
 	document.title='个人信息';
 </script>
 
-<form action="userEdit.jsp" method="post" name="formInfo">
+<form action="userEdit.jsp?openId=<%=signedUser.getOpenId() %>" method="post" name="formInfo">
 <div class="page__bd">
  <div class="weui_cells weui_cells_access"  style="margin-top: 0px">
  	<div class="weui_cell">
@@ -478,12 +478,12 @@
 </script>
 
  <script>
- 
- 	$("#home-city").cityPicker({
+ 	$("#home-city").cityPicker("",{
  		showDistrict: true,
  		title:"请选择您的地址",
 		onChange: function (picker, values, displayValues) {
-	          console.log(values, displayValues);
+				$.alert(picker.cols[0].displayValue);
+	          /* console.log(values, displayValues); */
 	        }
  	});
  	

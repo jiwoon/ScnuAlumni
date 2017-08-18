@@ -1,4 +1,5 @@
 // jshint ignore: start
+
 +function($){
 
 $.rawCitiesData = [
@@ -16554,7 +16555,8 @@ $.rawCitiesData = [
     return [p.code, c.code];
   }
 
-  $.fn.cityPicker = function(params) {
+  $.fn.cityPicker = function(userAddr,params) {
+	/*var userAddr=document.getElementById('edit-city').value;*/
     params = $.extend({}, defaults, params);
     return this.each(function() {
       var self = this;
@@ -16581,10 +16583,30 @@ $.rawCitiesData = [
         return c.code;
       });
 
+      /*
       var currentProvince = provincesName[0];
       var currentCity = initCitiesName[0];
       var currentDistrict = initDistrictsName[0];
-
+      */
+      var currentProvince;
+      var currentCity;
+      var currentDistrict;
+      
+      if ("" != userAddr) {
+    	  currentProvince = userAddr.split(" ")[0];
+          currentCity = userAddr.split(" ")[1];
+          currentDistrict= userAddr.split(" ")[2];
+      }else {
+    	  currentProvince = provincesName[0];
+          currentCity = initCitiesName[0];
+          currentDistrict = initDistrictsName[0];
+      }
+      
+      /*
+      var currentProvince = '天津';
+      var currentCity = '天津市';
+      var currentDistrict = '和平区';*/
+      
       var cols = [
           {
             displayValues: provincesName,
@@ -16612,6 +16634,7 @@ $.rawCitiesData = [
           return displayValues.join(' ');
         },
         onChange: function (picker, values, displayValues) {
+        
           var newProvince = picker.cols[0].displayValue;
           var newCity;
           if(newProvince !== currentProvince) {
@@ -16664,10 +16687,17 @@ $.rawCitiesData = [
       var p = $.extend({}, params, config);
       //计算value
       var val = $(this).val();
-      if (!val) val = '北京 北京市 东城区';
+      //if (!val) val = '北京 北京市 东城区';
+      //if (!val) val = '天津 天津市 和平区';
+      /*
+      val = '山西 太原市 小店区';
+      
       currentProvince = val.split(" ")[0];
       currentCity = val.split(" ")[1];
       currentDistrict= val.split(" ")[2];
+      */
+      
+      val =currentProvince+" "+currentCity+" "+currentDistrict;
       if(val) {
         p.value = parseInitValue(val);
         if(p.value[0]) {
@@ -16709,5 +16739,6 @@ $.rawCitiesData = [
   defaults = $.fn.cityPicker.prototype.defaults = {
     showDistrict: true //是否显示地区选择
   };
-
+  
+  
 }($);

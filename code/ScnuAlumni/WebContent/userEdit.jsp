@@ -1,4 +1,6 @@
+<%@page import="com.newttl.scnualumni.util.DataBaseUtil"%>
 <%@page import="sun.dc.DuctusRenderingEngine"%>
+<%@page import="com.newttl.scnualumni.bean.database.SignedUser" %>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@page import="java.lang.*" %>
 
@@ -14,7 +16,8 @@
 <head>
 
 <%
-
+String openID=request.getParameter("openId");
+/* 
 String userOpenId=request.getParameter("userOpenId");
 String userHeadImgUrl=request.getParameter("editHeadImgUrl");
 String userName=request.getParameter("editName");
@@ -25,9 +28,14 @@ String userPhone=request.getParameter("editPhone");
 String userQQ=request.getParameter("editQQ");
 String userEmail=request.getParameter("editEmail");
 String userCity=request.getParameter("editCity");
+out.println(userCity);
 String userIndustry=request.getParameter("editIndustry");
 String userHobby=request.getParameter("editHobby");
 String userProfession=request.getParameter("editProfession");
+ */
+
+DataBaseUtil dataBaseUtil=new DataBaseUtil();
+SignedUser signedUser=dataBaseUtil.getSigned(openID);
 
 %>
 
@@ -151,7 +159,7 @@ String userProfession=request.getParameter("editProfession");
 
 </head>
 
-<body>
+<body ontouchstart>
 
 <form action="userSignInfo.jsp" method="post" name="formSub">
 <div class="page__bd">
@@ -162,9 +170,9 @@ String userProfession=request.getParameter("editProfession");
  			<input type="hidden" name="myType" value="1">
  		</div>
  		<div class="weui-cell_ft" style="height: 48px">
- 			<img src="<%=userHeadImgUrl %>" style="height: 45px;width: 45px">
- 			<input type="hidden" name="userHeadImgUrl" value=<%=userHeadImgUrl%>>
- 			<input type="hidden" name="userOpenId" value=<%=userOpenId%>>
+ 			<img src="<%=signedUser.getHeadImgUrl() %>" style="height: 45px;width: 45px">
+ 			<input type="hidden" name="userHeadImgUrl" value=<%=signedUser.getHeadImgUrl()%>>
+ 			<input type="hidden" name="userOpenId" value=<%=signedUser.getOpenId()%>>
  		</div>
  	</div>
  </div>	
@@ -177,7 +185,7 @@ String userProfession=request.getParameter("editProfession");
             <p>男</p>
         </div>
         <div class="weui_cell_ft">
-            <input type="radio" class="weui_check" name="radioSex" id="sexm" value="男" <%if("男".equals(userSex)){%> checked="checked" <% }%> >
+            <input type="radio" class="weui_check" name="radioSex" id="sexm" value="男" <%if("男".equals(signedUser.getSex())){%> checked="checked" <% }%> >
             <span class="weui_icon_checked"></span>
         </div>
     </label>
@@ -186,7 +194,7 @@ String userProfession=request.getParameter("editProfession");
             <p>女</p>
         </div>
         <div class="weui_cell_ft">
-            <input type="radio" class="weui_check" name="radioSex" id="sexf" value="女" <%if("女".equals(userSex)){%> checked="checked" <% }%>>
+            <input type="radio" class="weui_check" name="radioSex" id="sexf" value="女" <%if("女".equals(signedUser.getSex())){%> checked="checked" <% }%>>
             <span class="weui_icon_checked"></span>
         </div>
     </label>
@@ -245,7 +253,7 @@ String userProfession=request.getParameter("editProfession");
 		<script>
 			var obj = document.getElementById("selectCollege");
 			for(var i=0;i<obj.length;i++){
-	 			if(obj[i].value == "<%=userCollege%>")
+	 			if(obj[i].value == "<%=signedUser.getCollege()%>")
 	 				obj[i].selected = true;
 	 		}
 		</script>
@@ -256,42 +264,42 @@ String userProfession=request.getParameter("editProfession");
     <div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">班级<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell_bd weui_cell_primary">
-            <input class="weui_input" type="text" name="userClass" placeholder="请输入班级" value="<%=userClss %>">
+            <input class="weui_input" type="text" name="userClass" placeholder="请输入班级" value="<%=signedUser.getUserClass() %>">
         </div>
     </div>
 	
 	<div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">姓名<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell_bd weui_cell_primary">
-            <input class="weui_input" type="text" name="userName" placeholder="请输入姓名" value="<%=userName %>" onkeyup="value=value.replace(/[^\a-zA-Z\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\a-zA-Z\u4E00-\u9FA5]/g,''))">
+            <input class="weui_input" type="text" name="userName" placeholder="请输入姓名" value="<%=signedUser.getUserName() %>" onkeyup="value=value.replace(/[^\a-zA-Z\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\a-zA-Z\u4E00-\u9FA5]/g,''))">
         </div>
     </div>
     
     <div class="weui_cell">
         <div class="weui_cell__hd"><label for="home-city" class="weui-label">城市<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell__ft">
-          <input class="weui_input" id="home-city" type="text" name="userCity">
+          <input class="weui_input" id="edit-city" type="text" name="userCity" value="<%=signedUser.getCity() %>">
         </div>
      </div>
     
     <div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">QQ<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell_bd weui_cell_primary">
-            <input class="weui_input" type="number" name="userQQ" placeholder="请输入QQ号" value="<%=userQQ %>" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+            <input class="weui_input" type="number" name="userQQ" placeholder="请输入QQ号" value="<%=signedUser.getQQ() %>" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
         </div>
     </div>
     
     <div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">邮箱<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell_bd weui_cell_primary">
-            <input class="weui_input" type="text" name="userEmail" placeholder="请输入邮箱地址" value="<%=userEmail %>">
+            <input class="weui_input" type="text" name="userEmail" placeholder="请输入邮箱地址" value="<%=signedUser.geteMail() %>">
         </div>
     </div>
     
     <div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">手机号<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell_bd weui_cell_primary"">
-            <input class="weui_input" type="number" name="userPhone" placeholder="请输入手机号" maxlength="11" value="<%=userPhone %>" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+            <input class="weui_input" type="number" name="userPhone" placeholder="请输入手机号" maxlength="11" value="<%=signedUser.getPhone() %>" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
         </div>
     </div>
     
@@ -314,21 +322,21 @@ String userProfession=request.getParameter("editProfession");
 	<div class="weui_cell">
 	   	<div class="weui_cell_hd"><label class="weui-label">行业</label></div>
 	    <div class="weui_cell_bd weui_cell_primary">
-	        <input class="weui_input" type="text" name="userIndustry" placeholder="请输入行业" value="<%=userIndustry %>">
+	        <input class="weui_input" type="text" name="userIndustry" placeholder="请输入行业" value="<%=signedUser.getIndustry() %>">
 	    </div>
 	</div>
 	
 	<div class="weui_cell">
 	   	<div class="weui_cell_hd"><label class="weui-label">爱好</label></div>
 	    <div class="weui_cell_bd weui_cell_primary">
-	        <input class="weui_input" type="text" name="userHobby" placeholder="请输入爱好" value="<%=userHobby %>">
+	        <input class="weui_input" type="text" name="userHobby" placeholder="请输入爱好" value="<%=signedUser.getHobby() %>">
 	    </div>
 	</div>
 	
 	<div class="weui_cell">
 	   	<div class="weui_cell_hd"><label class="weui-label">职业</label></div>
 	    <div class="weui_cell_bd weui_cell_primary">
-	        <input class="weui_input" type="text" name="userProfession" placeholder="请输入职业" value="<%=userProfession %>">
+	        <input class="weui_input" type="text" name="userProfession" placeholder="请输入职业" value="<%=signedUser.getProfession() %>">
 	    </div>
 	</div>
 	
@@ -349,7 +357,7 @@ String userProfession=request.getParameter("editProfession");
 </script>
 
  <script>
- 	$("#home-city").cityPicker({
+ 	$("#edit-city").cityPicker("<%=signedUser.getCity()%>",{
  		showDistrict: true,
  		title:"请选择您的地址",
 		onChange: function (picker, values, displayValues) {

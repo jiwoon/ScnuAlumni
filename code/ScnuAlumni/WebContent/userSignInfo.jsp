@@ -45,7 +45,6 @@ request.setCharacterEncoding("UTF-8");
 String select=request.getParameter("select2");
 String myType=request.getParameter("myType");
 String userOpenId=request.getParameter("userOpenId");
-String headImgUrl00="http://wx.qlogo.cn/mmopen/68gBkGFy9oGE04Zmz9AUuMmLiaaViaib7muOm7icDic1DfNtuiadE3J41xwORubVaUy44549lmRAKDSojvqbRKkUKQkrt3MwB45nBR/0";
 String userHeadImgUrl=request.getParameter("userHeadImgUrl");
 String sex=request.getParameter("radioSex");
 String userCollege=request.getParameter("userCollege");
@@ -94,7 +93,7 @@ if(!"".equals(userOpenId)){
 
 %>
 
-<form action="userEdit.jsp" method="post">
+<form action="userEdit.jsp?openId=<%=userOpenId %>" method="post">
 <div class="page__bd">
  <div class="weui_cells weui_cells_access" style="margin-top: 0px">
  	<div class="weui_cell">
@@ -171,7 +170,7 @@ if(!"".equals(userOpenId)){
         <div class="weui_cell__hd"><label class="weui-label my-label">城市</label></div>
         <div class="weui_cell__ft">
           <p><%=userCity%></p>
-          <input type="hidden" name="editCity" value=<%=userCity %>>
+          <input type="hidden" name="editCity" value="<%=userCity %>" >
         </div>
      </div>
       
