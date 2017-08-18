@@ -7,17 +7,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
+<!-- 校友活动添加到活动表中 -->
 <body>
 	<%
 		String openid = (String) session.getAttribute("openid");
 		String awho = (String) session.getAttribute("nickname");
-
+		//防止中文乱码
 		String aname = new String((request.getParameter("aname")).getBytes("ISO-8859-1"), "UTF-8");
 		String start_time = request.getParameter("start_time");
 		String end_time = request.getParameter("end_time");
-		String address = new String((request.getParameter("aadress")).getBytes("ISO-8859-1"), "UTF-8");
+		String address = new String((request.getParameter("address")).getBytes("ISO-8859-1"), "UTF-8");
 		String atip = new String((request.getParameter("atip")).getBytes("ISO-8859-1"), "UTF-8");
-
 
 		Activity activity = new Activity();
 		activity.setActivityName(aname);
@@ -27,10 +27,9 @@
 		activity.setActivityHolder(awho);
 		activity.setActivityIntro(atip);
 		activity.setActivityAddress(address);
-		
-		DataBaseUtil dataBaseUtil=new DataBaseUtil();
+
+		DataBaseUtil dataBaseUtil = new DataBaseUtil();
 		dataBaseUtil.saveActivity(activity);
 	%>
 	<jsp:include page="recent_activity.jsp" />
-
 </html>

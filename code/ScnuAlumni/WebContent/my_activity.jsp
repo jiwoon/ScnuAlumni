@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="resources/css/weui.min.css">
 <link rel="stylesheet" href="resources/css/jquery-weui.css">
 <title>校友近期活动</title>
+<!-- 显示我发起过的活动 -->
 </head>
 <body>
 	<%!public static final int PAGESIZE = 3;
@@ -133,8 +134,13 @@
 		</div>
 		<br /> <br />
 	</div>
-	<br />
-	<br />
 
+	<div class="weui-footer ">
+		<p class="weui-footer__links">
+			<a href="#" class="weui-footer__link">华师校友通讯录</a>
+		</p>
+		<p class="weui-footer__text">Copyright © 2017 SCNU</p>
+	</div>
+	<br />
 </body>
 </html>

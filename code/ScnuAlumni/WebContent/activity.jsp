@@ -23,6 +23,6 @@
 			session.setAttribute("nickname", user.getNickName());
 		}
 	%>
-	<jsp:include page="recent_activity.jsp"/>
+	<jsp:include page="recent_activity.jsp" />
 </body>
 </html>

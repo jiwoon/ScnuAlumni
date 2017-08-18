@@ -43,6 +43,7 @@
 </script>
 <title>校友最新活动</title>
 </head>
+<!-- 获取要修改的活动信息 -->
 <body>
 	<div class="weui-btn-area">
 		<a href="recent_activity.jsp"
@@ -57,7 +58,7 @@
 		String aid = request.getParameter("parmer");
 		session.setAttribute("aid", aid);
 		int id = Integer.parseInt(aid);
-		
+
 		out.print(aid);
 		Activity activity = new Activity();
 		DataBaseUtil baseUtil = new DataBaseUtil();
@@ -109,8 +110,7 @@
 				</div>
 				<div class="weui-cell__bd">
 					<input class="weui-input" type="text" name="aadress"
-						value='<%=activity.getActivityAddress()%>'
-						placeholder="请输入活动地点" />
+						value='<%=activity.getActivityAddress()%>' placeholder="请输入活动地点" />
 				</div>
 			</div>
 
@@ -143,8 +143,7 @@
 				//确认操作
 				checkInput();
 			}, function() {
-				//取消操作
-				$.toast("取消提交", "cancel");
+
 			});
 		});
 	</script>

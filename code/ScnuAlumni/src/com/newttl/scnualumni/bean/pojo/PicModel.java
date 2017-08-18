@@ -27,7 +27,7 @@ public class PicModel {
     private int y = 0;  
   
     /** 
-     * ���뱾��ͼƬ�������� 
+     * 导入本地图片到缓冲区 
      */  
     public BufferedImage loadImageLocal(String imgName) {  
         try {  
@@ -39,7 +39,7 @@ public class PicModel {
     }  
     
     /** 
-     * ��������ͼƬ�������� 
+     * 导入网络图片到缓冲区 
      */  
     public BufferedImage loadImageUrl(String imgName) {  
         try {  
@@ -52,8 +52,8 @@ public class PicModel {
     }  
 
     /** 
-     * �����ͼƬ������ 
-     */  
+     * 生成新图片到本地 
+     */   
     public void writeImageLocal(String newImage, BufferedImage img) {  
         if (newImage != null && img != null) {  
             try {  
@@ -66,7 +66,7 @@ public class PicModel {
     }  
   
     /** 
-     * �趨���ֵ������ 
+     * 设定文字的字体等 
      */  
     public void setFont(String fontStyle, int fontSize) {  
         this.fontsize = fontSize;  
@@ -74,8 +74,8 @@ public class PicModel {
     }  
   
     /** 
-     * �޸�ͼƬ,�����޸ĺ��ͼƬ������ֻ���һ���ı��� 
-     */  
+     * 修改图片,返回修改后的图片缓冲区（只输出一行文本） 
+     */ 
     public BufferedImage modifyImage(BufferedImage img, Object content, int x, int y) {  
         try {  
             int w = img.getWidth();  
@@ -85,14 +85,9 @@ public class PicModel {
             g.setColor(Color.orange);//����������ɫ  
             if (this.font != null)  
                 g.setFont(this.font);  
-            // ��֤���λ�õ������ͺ����  
-           /* if (x >= h || y >= w) {  
-                this.x = h - this.fontsize + 2;  
-                this.y = w;  
-            } else {  */
                 this.x = x;  
                 this.y = y;  
-            //}  
+
             if (content != null) {  
                 g.drawString(content.toString(), this.x, this.y);  
             }  
@@ -104,9 +99,9 @@ public class PicModel {
     }  
   
     /** 
-     * �޸�ͼƬ,�����޸ĺ��ͼƬ������ֻ���һ���ı��� 
+     * 修改图片,返回修改后的图片缓冲区（只输出一行文本） 
      *  
-     * ʱ��:2007-10-8 
+     * 时间:2007-10-8 
      *  
      * @param img 
      * @return 
@@ -158,46 +153,76 @@ public class PicModel {
         return d;  
     } 
   
-    /*
-     * ƾ��ר����ά�룬���ά��������û���ơ��û�ͷ�񡢴�ζ�ά��
-     * nickname Ϊ΢���û��ǳ�
-     * path ��ɶ�ά���Ӧ�ı��ص�ַ
+    /**
+     * 生成带头像和昵称的推荐二维码
+     * @param nickname 微信用户昵称
+     * @param head_img 头像图片
      */
     
-    public static void MakeImg(String nickname, String img_pic){
-   // public static void main(String []args){
+    public static void MakeImg(String nickname, String head_img){
     	PicModel tt = new PicModel();  
-  
-        BufferedImage d = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\go2.jpg");  
-        //΢�����д��ͼƬ��  ע���Ʒ��������޷�����IO������ͼƬ�޸��޷�ִ�У���ʱ�ڱ��ؽ����޸�
-        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\go5.jpg",tt.modifyImage(d,nickname,320,350));
+    	
+    	//载入添加二维码模板图片go2.jpg
+        BufferedImage d = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QRModel.jpg");  
+        //往图片写入用户昵称，生成新图片qr_nickname.jpg
+        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QRModel_nickname.jpg",tt.modifyImage(d,nickname,320,350));
+        
+        //获取二维码图片QR.jpg
+        BufferedImage e = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QR.jpg");  
 
-        BufferedImage e = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\ticket.jpg");  
-        //����ɵĶ�ά�� �ϲ���ģ��ͼ
-        //��ά��ͼƬ��ַPath
-        BufferedImage b = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\go5.jpg"); 
+        BufferedImage b = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QRModel_nickname.jpg"); 
         
-        //������Ŀ��ͼƬΪfinal_path  modifyImagetogeter(e,b)��ס��e��ǰ b�ں�
-        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\final.jpg", tt.modifyImagetogeter(e, b));
+        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QRModel_nickname_QR.jpg", tt.modifyImagetogeter(e, b));
         
-        BufferedImage g = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\final.jpg");
-        //���ر���ͷ���ַΪk
-        BufferedImage k = tt.loadImageLocal(img_pic);
-        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\great.jpg", tt.modifyImagetogeter2(k, g));
+        
+        BufferedImage g = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QRModel_nickname_QR.jpg");
+        BufferedImage k = tt.loadImageLocal(head_img);
+        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\SpecialQR.jpg", tt.modifyImagetogeter2(k, g));
         
     } 
-    
+    /**
+     * 生成活动邀请海报
+     * @param content 海报内容
+     * @param img_pic 海报模板图片
+     */
     
     public static void MakeActivityImg(String content, String img_pic){
     	PicModel tt = new PicModel();  
         BufferedImage d = tt.loadImageLocal(img_pic);  
         String[] news = content.split("/");
         System.out.println(news[0]+"\n"+news[1]+"\n"+news[2]+"\n"+news[3]+"\n"+news[4]+"\n");
-        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\activity_invite.jpg",tt.modifyImage(d,news[0],347,556));
-        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\activity_invite.jpg",tt.modifyImage(d,news[1],160,771));
-        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\activity_invite.jpg",tt.modifyImage(d,news[2],347,640));
-        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\activity_invite.jpg",tt.modifyImage(d,news[3],160,912));
-        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\activity_invite.jpg",tt.modifyImage(d,news[4],555,1391));
+        
+        //finalActivityImg 这个是最终生成的活动邀请海报图片
+        String finalActivityImg = "G:\\Apache\\webapps\\ROOT\\image\\SpecialActivity.jpg";
+        
+        //写入活动名称
+        tt.writeImageLocal(finalActivityImg,tt.modifyImage(d,news[0],347,560));
+        //写入活动起始时间
+        tt.writeImageLocal(finalActivityImg,tt.modifyImage(d,news[1],160,771));
+        //写入活动地点
+        tt.writeImageLocal(finalActivityImg,tt.modifyImage(d,news[2],347,640));
+        //写入活动介绍(考虑到多行文本)
+        int intro_postion = 912;
+        int intro_startPostion = 160;
+        int intro_length = news[3].length();
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(news[3]);
+        for(int i = 0; i < (intro_length/18);i++)
+        {	
+        	if(i == 0) 
+        	{
+        		intro_startPostion = 210;
+        	}
+        	tt.writeImageLocal(finalActivityImg,tt.modifyImage(d,news[3].substring(0, 18),intro_startPostion,intro_postion));
+        	intro_postion += 70;
+        	intro_startPostion = 160;
+        	news[3] = buffer.delete(0, 18).toString();
+        }
+        tt.writeImageLocal(finalActivityImg,tt.modifyImage(d,news[3].substring(0, news[3].length()),intro_startPostion,intro_postion));
+        
+        //写入活动发起人
+        tt.writeImageLocal(finalActivityImg,tt.modifyImage(d,news[4],555,1391));
+        
         System.out.println("成功！");
         
     }  

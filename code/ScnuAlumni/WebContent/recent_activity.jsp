@@ -18,6 +18,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no">
 </head>
+<!-- 显示近期即将开始的校友活动 -->
 <body>
 	<%!public static final int PAGESIZE = 3;
 	int pageCount = 0;%>
@@ -39,12 +40,11 @@
 	<%
 		String openid = (String) session.getAttribute("openid");
 		String nickname = (String) session.getAttribute("nickname");
-		
-		List<Activity> activitys=new ArrayList<Activity>();
-		DataBaseUtil baseUtil=new DataBaseUtil();
-		activitys=baseUtil.getAllActivity();
-		
-		
+
+		List<Activity> activitys = new ArrayList<Activity>();
+		DataBaseUtil baseUtil = new DataBaseUtil();
+		activitys = baseUtil.getAllActivity();
+
 		//获取最后一行的行号
 		int size = activitys.size();
 		pageCount = (size % PAGESIZE == 0) ? (size / PAGESIZE) : (size / PAGESIZE + 1);
@@ -60,14 +60,13 @@
 		if (curPage <= 1)
 			curPage = 1;
 
-		int count = 1;	
-		
-		if(activitys.size() > 0){
-			for(int i=0;i < activitys.size();i++){
+		int count = 1;
+
+		if (activitys.size() > 0) {
+			for (int i = 0; i < activitys.size(); i++) {
 				if (count > PAGESIZE)
 					break;
 				count++;
-		
 	%>
 
 	<div class="weui-form-preview">
@@ -106,7 +105,7 @@
 
 	<%
 		}
-			}
+		}
 	%>
 	<br />
 	<div style="text-align: center">
@@ -124,8 +123,13 @@
 		</div>
 		<br /> <br />
 	</div>
-	<br />
-	<br />
 
+	<div class="weui-footer ">
+		<p class="weui-footer__links">
+			<a href="#" class="weui-footer__link">华师校友通讯录</a>
+		</p>
+		<p class="weui-footer__text">Copyright © 2017 SCNU</p>
+	</div>
+	<br />
 </body>
 </html>

@@ -1,7 +1,5 @@
 package com.newttl.scnualumni.weixin;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.newttl.scnualumni.bean.menu.Button;
 import com.newttl.scnualumni.bean.menu.ClickButton;
@@ -9,11 +7,8 @@ import com.newttl.scnualumni.bean.menu.ComplexButton;
 import com.newttl.scnualumni.bean.menu.Menu;
 import com.newttl.scnualumni.bean.menu.ViewButton;
 import com.newttl.scnualumni.bean.pojo.Token;
-import com.newttl.scnualumni.servlet.OAuthServlet;
-import com.newttl.scnualumni.util.AdvancedUtil;
 import com.newttl.scnualumni.util.CommonUtil;
 import com.newttl.scnualumni.util.MenuUtil;
-
 import com.newttl.scnualumni.weixin.WeiXinCommon;
 
 /**
@@ -77,7 +72,7 @@ public class MenuManager {
 		ViewButton b33 = new ViewButton();
 		b33.setName("查找校友");
 		b33.setType("view");
-		b33.setUrl("http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/findSchoolMate.jsp");
+		b33.setUrl(WeiXinCommon.SchoolMateUrl);
 		/*
 		ComplexButton mainB1=new ComplexButton();
 		mainB1.setName("华师新闻");
@@ -100,9 +95,9 @@ public class MenuManager {
 	
 	public static void main(String[] args) {
 		//第三方用户唯一凭证appID
-		String appID="wx8078d2f14310fef3";
+		String appID=WeiXinCommon.appID2;
 		//第三方用户唯一凭证密钥appsecret
-		String appsecret="b5f2071bd9c871139f7001e1efc2c3a8";
+		String appsecret=WeiXinCommon.appsecret2;
 		
 		
 		//通过凭证 appID appsecret获取 access_token

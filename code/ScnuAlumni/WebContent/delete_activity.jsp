@@ -10,9 +10,9 @@
 </head>
 <body>
 	<%
-		String aid =request.getParameter("parmer");
+		String aid = request.getParameter("parmer");
 		int id = Integer.parseInt(aid);
-		DataBaseUtil dataBaseUtil=new DataBaseUtil();
+		DataBaseUtil dataBaseUtil = new DataBaseUtil();
 		dataBaseUtil.deleteActivity(id);
 	%>
 	<jsp:include page="my_activity.jsp" />

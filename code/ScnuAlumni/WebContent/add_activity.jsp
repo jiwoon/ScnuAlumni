@@ -43,7 +43,7 @@ function checkInput(){
 </script>
 </head>
 <body>
-	<!-- Your Code -->
+	<!-- 新增校友活动界面 -->
 	
 	<div class="weui-btn-area">
 	<a href="recent_activity.jsp" class="weui-btn_mini weui-btn weui-btn_plain-primary">近期活动</a>
@@ -95,7 +95,7 @@ function checkInput(){
 					<label class="weui-label">活动地点<span style='color: red'>*</span></label>
 				</div>
 				<div class="weui-cell__bd">
-					<input class="weui-input" type="text" name="aadress"
+					<input class="weui-input" type="text" name="address"
 						placeholder="请输入活动地点" />
 				</div>
 			</div>
@@ -116,21 +116,26 @@ function checkInput(){
 				<a href="javascript:;" id='show-confirm'
 					class="weui-btn weui-btn_primary">提交</a>
 			</div>
-			<br /> <br /> <br /> <br />
+			<br /> <br /> 
 		</div>
 	</form>
-
 	<script>
 $(document).on("click", "#show-confirm", function() {
     $.confirm("您确定要提交信息吗?", "提交信息", function() {
       //确认操作
       checkInput();
     }, function() {
-      //取消操作
-   	 $.toast("取消提交", "cancel");
+
     });
   });
  </script>
+
+    <div class="weui-footer">
+        <p class="weui-footer__links">
+          <a href="#" class="weui-footer__link">华师校友通讯录</a>
+        </p>
+        <p class="weui-footer__text">Copyright © 2017 SCNU</p>
+      </div> <br /> 
 </body>
 
 </html>
