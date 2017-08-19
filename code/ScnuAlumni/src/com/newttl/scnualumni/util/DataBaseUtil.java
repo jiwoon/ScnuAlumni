@@ -534,6 +534,10 @@ public class DataBaseUtil {
 	 * @return 
 	 */
 	public int updateActivity(Activity activity){
+<<<<<<< HEAD
+=======
+//		update signed_users set headImgUrl=?, userName=?, phone=?, QQ=?, eMail=?, city=?, industry=?, hobby=?, profession=?, sex=? where openId=?
+>>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
 		String sqlStr="update activity set activity_name=?, activity_address=?, start_time=?, end_time=?, activity_intro=? where id=?";
 		int update=-1;
 		PreparedStatement ps=null;
@@ -588,7 +592,11 @@ public class DataBaseUtil {
 	 * @return List<Activity>
 	 */
 	public List<Activity> getSomeActivity(String openid){
+<<<<<<< HEAD
 		String sqlStr="select * from activity where openid=? order by id desc";
+=======
+		String sqlStr="select * from activity where openid=?";
+>>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
 		List<Activity> activitys=new ArrayList<Activity>();
 		PreparedStatement ps=null;
 		ResultSet rs=null;

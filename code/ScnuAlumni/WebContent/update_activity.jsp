@@ -59,6 +59,10 @@
 		session.setAttribute("aid", aid);
 		int id = Integer.parseInt(aid);
 
+<<<<<<< HEAD
+=======
+		out.print(aid);
+>>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
 		Activity activity = new Activity();
 		DataBaseUtil baseUtil = new DataBaseUtil();
 		activity = baseUtil.getTheActivity(id);
@@ -108,7 +112,11 @@
 					<label class="weui-label">活动地点<span style='color: red'>*</span></label>
 				</div>
 				<div class="weui-cell__bd">
+<<<<<<< HEAD
 					<input class="weui-input" type="text" name="address"
+=======
+					<input class="weui-input" type="text" name="aadress"
+>>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
 						value='<%=activity.getActivityAddress()%>' placeholder="请输入活动地点" />
 				</div>
 			</div>

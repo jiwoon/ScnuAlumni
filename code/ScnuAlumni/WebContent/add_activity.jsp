@@ -98,7 +98,11 @@
 				</div>
 				<div class="weui-cell__bd">
 					<input class="weui-input" type="text" name="address"
+<<<<<<< HEAD
 						 placeholder="请输入活动地点" />
+=======
+						placeholder="请输入活动地点" />
+>>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
 				</div>
 			</div>
 
@@ -120,9 +124,10 @@
 				<a href="javascript:;" id='show-confirm'
 					class="weui-btn weui-btn_primary">提交</a>
 			</div>
-			<br /> <br /> <br /> <br />
+			<br /> <br /> 
 		</div>
 	</form>
+<<<<<<< HEAD
 	<script src="resources/js/jquery-2.1.4.js"></script>
 	<script src="resources/js/jquery-weui.js"></script>
 	<script>
@@ -135,6 +140,18 @@
 			});
 		});
 	</script>
+=======
+	<script>
+$(document).on("click", "#show-confirm", function() {
+    $.confirm("您确定要提交信息吗?", "提交信息", function() {
+      //确认操作
+      checkInput();
+    }, function() {
+
+    });
+  });
+ </script>
+>>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
 
     <div class="weui-footer">
         <p class="weui-footer__links">

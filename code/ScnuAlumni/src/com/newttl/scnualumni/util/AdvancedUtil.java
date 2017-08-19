@@ -457,8 +457,12 @@ public class AdvancedUtil {
 				}
 				//将 ticket 做为文件名
 				//filePath=savePath+ticket+".jpg";
+<<<<<<< HEAD
 			
 				filePath = savePath+"QR.jpg";
+=======
+				filePath=savePath+"QR.jpg";
+>>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
 				fileName=WeiXinCommon.qrCodeRoot+ticket+".jpg";
 				//将微信服务器返回的输入流，写入文件中
 				InputStream in=connection.getInputStream();
@@ -487,7 +491,48 @@ public class AdvancedUtil {
 			
 		}
 		
+<<<<<<< HEAD
 		
+=======
+		/*
+		 * 获取专属二维码
+		 */
+		public String getQRid(String user) throws Exception {
+			String accessToken = CommonUtil.getToken(WeiXinCommon.appID2, WeiXinCommon.appsecret2).getAccess_token();
+			/**  
+			 * 获取用户信息，并将用户头像保存在本地
+			 */
+			WeiXinUserInfo username = getUserInfo(accessToken, user);
+			// 获取用户的昵称
+			String nickname = username.getNickName();
+			// 获取用户的头像
+			String head_img_url = username.getHeadImgUrl();
+			//头像图片保存地址
+			String head_img = "G:/Apache/webapps/ROOT/image/head.jpg";
+			saveImageLocal(head_img_url, head_img);
+
+			
+			// 根据ticket 获取永久二维码
+			WeiXinPermanentQRCode  weixinQRCode = createPermanentQRCode(accessToken, user);
+
+			// 临时二维码的ticket
+			String ticket = weixinQRCode.getTicket();
+			
+			// 根据ticket换取二维码 ，并保存到 Path 路径,二维码图片名称为ticket.jpg
+			String savePath = "G:/Apache8/webapps/ROOT/image";
+			getQRCode(ticket, savePath);
+
+			/**
+			 * 生成专属二维码模板,拼接微信用户的头像、昵称、专属二维码在一个模板中
+			 */
+			PicModel.MakeImg(nickname,head_img);
+			/**
+			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
+			 */
+			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialQR.jpg");
+			return weixinMedia.getMediaId();
+		}
+>>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
 		
 		/*
 		 * 保存微信头像地址到本地 imgUrl 从微信获取的原始头像链接 path 保存的本地地址
@@ -956,6 +1001,7 @@ public class AdvancedUtil {
 			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
 			 */
 			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialActivity.jpg");
+<<<<<<< HEAD
 			return weixinMedia.getMediaId();
 		}
 
@@ -1007,6 +1053,8 @@ public class AdvancedUtil {
 			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
 			 */
 			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialQR.jpg");
+=======
+>>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
 			return weixinMedia.getMediaId();
 		}
 		
