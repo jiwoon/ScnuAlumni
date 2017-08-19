@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ page import="com.newttl.scnualumni.bean.database.Activity"%>
 <%@ page import="com.newttl.scnualumni.util.DataBaseUtil"%>
 <html>
 <head>

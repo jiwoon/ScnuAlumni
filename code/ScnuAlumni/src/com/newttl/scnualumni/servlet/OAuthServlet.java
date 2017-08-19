@@ -44,7 +44,7 @@ public class OAuthServlet extends HttpServlet {
 		if (!(code.equals("authdeny"))) {
 			//获取网页授权凭证 access_token
 			AdvancedUtil advancedUtil=new AdvancedUtil();
-			WeiXinOauth2Token weiXinOauth2Token=advancedUtil.getAdvancedMethod().getOauth2AccessToken(WeiXinCommon.appID2, WeiXinCommon.appsecret2, code);
+			WeiXinOauth2Token weiXinOauth2Token=advancedUtil.getAdvancedMethod().getOauth2AccessToken(WeiXinCommon.appID, WeiXinCommon.appsecret, code);
 			String accessToken=weiXinOauth2Token.getAccessToken();
 			//获得用户的标志
 			String openID=weiXinOauth2Token.getOpenId();

@@ -22,6 +22,9 @@ public class WeiXinCommon {
 	public static final String REDIRECT_URI="http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
 	public static final String OAUTH_URL="http://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 
+	public static final String activityUrl1="http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
+	
+	public static final String SchoolMateUrl1="http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/findSchoolMate.jsp";
 	
 	/**
 	 * 公众号的  appID
@@ -58,6 +61,13 @@ public class WeiXinCommon {
 	public static final String wxAk="S0D9rYXOzhqervq5kOkwlOFfCPQZSR5H";
 	
 	public static final String signUpUrl="http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet";
+	
+	/**
+	 * 微信头像地址
+	 */
+	public static final String headImg1 = "D:/soft/Tomcat/tomcat8044/apache-tomcat-8.0.44/webapps/ROOT/image";
+	
+	public static final String QrFileUrl="http://jqfrudd.hk1.mofasuidao.cn/image/SpecialQR.jpg";
 	
 	
     //------------------------------------  JASON的配置如下    ------------------------------------//

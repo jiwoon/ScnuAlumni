@@ -5,8 +5,10 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("UTF-8");
+/* 
 	String path=request.getContextPath();
 	String basePath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	 */
 	List<Alumnus> alumnus=new ArrayList<Alumnus>();
 	DataBaseUtil baseUtil=new DataBaseUtil();
 	alumnus=baseUtil.getAllAlumnus();

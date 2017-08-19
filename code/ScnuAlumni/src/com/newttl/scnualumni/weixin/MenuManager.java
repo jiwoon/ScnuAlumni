@@ -39,13 +39,9 @@ public class MenuManager {
 		b21.setKey("qrcode");
 		
 		ViewButton b31=new ViewButton();
-		/*b31.setName("个人中心");
-		b31.setType("view");
-		b31.setUrl("http://zlgvgnb.hk1.mofasuidao.cn/WeChat/signUp.jsp");*/
-		
 		String url0=WeiXinCommon.OAUTH_URL;
-		String url1=CommonUtil.urlEncodingUTF8(WeiXinCommon.signUpUrl2);
-		url0=url0.replace("APPID",WeiXinCommon.appID2);
+		String url1=CommonUtil.urlEncodingUTF8(WeiXinCommon.signUpUrl);
+		url0=url0.replace("APPID",WeiXinCommon.appID);
 		url0=url0.replace("REDIRECT_URI", url1);
 		
 		b31.setName("个人中心");
@@ -58,8 +54,8 @@ public class MenuManager {
 		
 		ViewButton b32=new ViewButton();
 		String ur32=WeiXinCommon.OAUTH_URL;
-		String ur33=CommonUtil.urlEncodingUTF8(WeiXinCommon.activityUrl);
-		ur32=ur32.replace("APPID",WeiXinCommon.appID2);
+		String ur33=CommonUtil.urlEncodingUTF8(WeiXinCommon.activityUrl1);
+		ur32=ur32.replace("APPID",WeiXinCommon.appID);
 		ur32=ur32.replace("REDIRECT_URI", ur33);
 		b32.setName("活动中心");
 		b32.setType("view");
@@ -72,7 +68,7 @@ public class MenuManager {
 		ViewButton b33 = new ViewButton();
 		b33.setName("查找校友");
 		b33.setType("view");
-		b33.setUrl(WeiXinCommon.SchoolMateUrl);
+		b33.setUrl(WeiXinCommon.SchoolMateUrl1);
 		/*
 		ComplexButton mainB1=new ComplexButton();
 		mainB1.setName("华师新闻");
@@ -95,9 +91,9 @@ public class MenuManager {
 	
 	public static void main(String[] args) {
 		//第三方用户唯一凭证appID
-		String appID=WeiXinCommon.appID2;
+		String appID=WeiXinCommon.appID;
 		//第三方用户唯一凭证密钥appsecret
-		String appsecret=WeiXinCommon.appsecret2;
+		String appsecret=WeiXinCommon.appsecret;
 		
 		
 		//通过凭证 appID appsecret获取 access_token
