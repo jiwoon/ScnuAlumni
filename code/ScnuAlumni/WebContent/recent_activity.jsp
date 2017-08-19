@@ -18,7 +18,6 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no">
 </head>
-<<<<<<< HEAD
 
 <script>
 $(document).on("click", "#show-alert", function() {
@@ -26,8 +25,7 @@ $(document).on("click", "#show-alert", function() {
   });
 </script>
 
-=======
->>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
+
 <!-- 显示近期即将开始的校友活动 -->
 <body>
 	<%!
@@ -60,19 +58,11 @@ $(document).on("click", "#show-alert", function() {
 		<h2>&nbsp;近期活动</h2>
 	</div>
 	<%
-<<<<<<< HEAD
-	    List<Activity> activitys = new ArrayList<Activity>();
-	    DataBaseUtil baseUtil = new DataBaseUtil();
-	    activitys = baseUtil.getAllActivity();
-=======
-		String openid = (String) session.getAttribute("openid");
-		String nickname = (String) session.getAttribute("nickname");
 
 		List<Activity> activitys = new ArrayList<Activity>();
 		DataBaseUtil baseUtil = new DataBaseUtil();
 		activitys = baseUtil.getAllActivity();
 
->>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
 		//获取最后一行的行号
 		int size = activitys.size();
 		pageCount = (size % PAGESIZE == 0) ? (size / PAGESIZE) : (size / PAGESIZE + 1);
@@ -89,20 +79,11 @@ $(document).on("click", "#show-alert", function() {
 			curPage = 1;
 
 		int count = 1;
-<<<<<<< HEAD
 		int i = (curPage-1)*3;
 		while(i < size) {
 			if (count > PAGESIZE)
 				break;
 			count++;
-=======
-
-		if (activitys.size() > 0) {
-			for (int i = 0; i < activitys.size(); i++) {
-				if (count > PAGESIZE)
-					break;
-				count++;
->>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
 	%>
 
 	<div class="weui-form-preview">
@@ -140,12 +121,8 @@ $(document).on("click", "#show-alert", function() {
 	<hr />
 
 	<%
-<<<<<<< HEAD
 		i ++;}
-=======
-		}
-		}
->>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
+
 	%>
 	<br />
 	<div style="text-align: center">

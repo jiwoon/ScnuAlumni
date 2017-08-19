@@ -83,7 +83,6 @@ public class WeiXinCommon {
 	
 	
 	//菜单配置参数
-<<<<<<< HEAD
 	public static final String WEIXIN_URL2="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/WxServlet";
 	
 	public static final String REDIRECT_URI2="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
@@ -98,24 +97,5 @@ public class WeiXinCommon {
 	 * 微信头像地址
 	 */
 	public static final String headImg = "G:/Apache/webapps/ROOT/image/head.jpg";
-	
-=======
-	public static final String WEIXIN_URL2="https://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/WxServlet";
-	
-	public static final String REDIRECT_URI2="https://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
-	
-	public static final String signUpUrl2="https://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet";
->>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
-	
-	public static final String SchoolMateUrl="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/findSchoolMate.jsp";
-	
-	public static final String activityUrl="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
-	
-	/**
-	 * 微信头像地址
-	 */
-	public static final String headImg = "G:/Apache/webapps/ROOT/image/head.jpg";
-	
-	
 	
 }

@@ -98,11 +98,8 @@
 				</div>
 				<div class="weui-cell__bd">
 					<input class="weui-input" type="text" name="address"
-<<<<<<< HEAD
 						 placeholder="请输入活动地点" />
-=======
-						placeholder="请输入活动地点" />
->>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
+
 				</div>
 			</div>
 
