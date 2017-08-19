@@ -96,6 +96,8 @@ public class WeiXinCommon {
 	/**
 	 * 微信头像地址
 	 */
-	public static final String headImg = "G:/Apache/webapps/ROOT/image/head.jpg";
+	public static final String headImg = "G:/Apache/webapps/ROOT/image";
+	
+	public static final String QrFileUrl2="http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialQR.jpg";
 	
 }

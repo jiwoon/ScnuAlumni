@@ -124,7 +124,6 @@
 			<br /> <br /> 
 		</div>
 	</form>
-<<<<<<< HEAD
 	<script src="resources/js/jquery-2.1.4.js"></script>
 	<script src="resources/js/jquery-weui.js"></script>
 	<script>
@@ -137,18 +136,8 @@
 			});
 		});
 	</script>
-=======
-	<script>
-$(document).on("click", "#show-confirm", function() {
-    $.confirm("您确定要提交信息吗?", "提交信息", function() {
-      //确认操作
-      checkInput();
-    }, function() {
 
-    });
-  });
- </script>
->>>>>>> 35d04442a1d019cda94dfaab4020cf04a3eeabdf
+	
 
     <div class="weui-footer">
         <p class="weui-footer__links">

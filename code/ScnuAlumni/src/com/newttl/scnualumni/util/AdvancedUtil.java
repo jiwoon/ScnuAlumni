@@ -408,7 +408,7 @@ public class AdvancedUtil {
 			String requestUrl="https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=TOKENPOST";
 			requestUrl=requestUrl.replace("TOKENPOST", accessToken);
 			//需要提交的参数 
-			String jsonMsg="{\"action_name\": \"QR_LIMIT_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": %s}}}";
+			String jsonMsg="{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"%s\"}}}";
 			//获取二维码信息
 			JSONObject jsonObject=CommonUtil.httpsRequest(requestUrl, "POST", String.format(jsonMsg, sceneStr));
 			if (jsonObject != null) {
@@ -555,6 +555,8 @@ public class AdvancedUtil {
 			
 			//发起请求，获取用户信息
 			JSONObject jsonObject=CommonUtil.httpsRequest(requestUrl, "GET", null);
+			System.out.println(jsonObject.toString());
+			
 			if (jsonObject != null) {
 				try {
 					userInfo=new WeiXinUserInfo();
@@ -960,12 +962,6 @@ public class AdvancedUtil {
 			return weixinMedia.getMediaId();
 		}
 
-		@Override
-		public String getQRid(String user) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
 		/**
 		 * 获取二维码的media_id
 		 * @param String user 用户微信id
@@ -976,6 +972,9 @@ public class AdvancedUtil {
 		
 		@Override
 		public String getQRid(String user,String appID,String appSecret) throws Exception {
+			
+			System.out.println("user::"+user);
+			
 			String accessToken = CommonUtil.getToken(appID, appSecret).getAccess_token();
 			/**  
 			 * 获取用户信息，并将用户头像保存在本地
@@ -983,6 +982,7 @@ public class AdvancedUtil {
 			WeiXinUserInfo username = getUserInfo(accessToken, user);
 			// 获取用户的昵称
 			String nickname = username.getNickName();
+			System.out.print(nickname);
 			// 获取用户的头像
 			String head_img_url = username.getHeadImgUrl();
 			//头像图片保存地址
@@ -1007,9 +1007,12 @@ public class AdvancedUtil {
 			/**
 			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
 			 */
-			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", WeiXinCommon.QrFileUrl);
+			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", WeiXinCommon.QrFileUrl2);
 			return weixinMedia.getMediaId();
 		}
+
+
+
 		
 	}
 	

@@ -40,8 +40,8 @@ public class MenuManager {
 		
 		ViewButton b31=new ViewButton();
 		String url0=WeiXinCommon.OAUTH_URL;
-		String url1=CommonUtil.urlEncodingUTF8(WeiXinCommon.signUpUrl);
-		url0=url0.replace("APPID",WeiXinCommon.appID);
+		String url1=CommonUtil.urlEncodingUTF8(WeiXinCommon.signUpUrl2);
+		url0=url0.replace("APPID",WeiXinCommon.appID2);
 		url0=url0.replace("REDIRECT_URI", url1);
 		
 		b31.setName("个人中心");
@@ -54,8 +54,8 @@ public class MenuManager {
 		
 		ViewButton b32=new ViewButton();
 		String ur32=WeiXinCommon.OAUTH_URL;
-		String ur33=CommonUtil.urlEncodingUTF8(WeiXinCommon.activityUrl1);
-		ur32=ur32.replace("APPID",WeiXinCommon.appID);
+		String ur33=CommonUtil.urlEncodingUTF8(WeiXinCommon.activityUrl);
+		ur32=ur32.replace("APPID",WeiXinCommon.appID2);
 		ur32=ur32.replace("REDIRECT_URI", ur33);
 		b32.setName("活动中心");
 		b32.setType("view");
@@ -68,7 +68,7 @@ public class MenuManager {
 		ViewButton b33 = new ViewButton();
 		b33.setName("查找校友");
 		b33.setType("view");
-		b33.setUrl(WeiXinCommon.SchoolMateUrl1);
+		b33.setUrl(WeiXinCommon.SchoolMateUrl);
 		/*
 		ComplexButton mainB1=new ComplexButton();
 		mainB1.setName("华师新闻");
@@ -91,9 +91,9 @@ public class MenuManager {
 	
 	public static void main(String[] args) {
 		//第三方用户唯一凭证appID
-		String appID=WeiXinCommon.appID;
+		String appID=WeiXinCommon.appID2;
 		//第三方用户唯一凭证密钥appsecret
-		String appsecret=WeiXinCommon.appsecret;
+		String appsecret=WeiXinCommon.appsecret2;
 		
 		
 		//通过凭证 appID appsecret获取 access_token

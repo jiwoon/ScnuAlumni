@@ -171,10 +171,14 @@ public interface AdvancedInterface {
 	 */
 	WeiXinPermanentQRCode createPermanentQRCode(String accessToken,String sceneStr);
 	
-	/*
-	 * 获取专属二维码
+	/**
+	 * 获取二维码的media_id
+	 * @param String user 用户微信id
+	 * @param String appID 
+	 * @param String appSecret 
+	 * @return string
 	 */
-	String getQRid(String user) throws Exception;
+	String getQRid(String user, String appID,String appSecret) throws Exception;
 	
 	/**
 	 * 根据 ticket 获取二维码
@@ -266,14 +270,7 @@ public interface AdvancedInterface {
 	 */
 	String getActivityImgId(String content,String accessToken) throws Exception;
 	
-	/**
-	 * 获取二维码的media_id
-	 * @param String user 用户微信id
-	 * @param String appID 
-	 * @param String appSecret 
-	 * @return string
-	 */
-	String getQRid(String user, String appID,String appSecret) throws Exception;
+
 	/**
 	 * 从微信服务器上下载对应 mediaId 的媒体文件
 	 * 
