@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -456,7 +457,8 @@ public class AdvancedUtil {
 				}
 				//将 ticket 做为文件名
 				//filePath=savePath+ticket+".jpg";
-				filePath=savePath+"QR.jpg";
+			
+				filePath = savePath+"QR.jpg";
 				fileName=WeiXinCommon.qrCodeRoot+ticket+".jpg";
 				//将微信服务器返回的输入流，写入文件中
 				InputStream in=connection.getInputStream();
@@ -510,7 +512,7 @@ public class AdvancedUtil {
 			String ticket = weixinQRCode.getTicket();
 			
 			// 根据ticket换取二维码 ，并保存到 Path 路径,二维码图片名称为ticket.jpg
-			String savePath = "G:/Apache8/webapps/ROOT/image";
+			String savePath = "G:/Apache/webapps/ROOT/image";
 			getQRCode(ticket, savePath);
 
 			/**
