@@ -947,7 +947,7 @@ public class AdvancedUtil {
 			/*
 			 * 提取活动邀请海报模板图片 的路径
 			 */
-			String path =WeiXinCommon.headImg1+"/InviteModel.jpg";
+			String path =WeiXinCommon.headImg+"/InviteModel.jpg";
 
 			/*
 			 * 生成活动海报
