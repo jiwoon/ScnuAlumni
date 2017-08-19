@@ -1,0 +1,15 @@
+OAuthServlet
+SignUpServlet
+MenuManager
+sendImgMessage.jsp
+MessageService
+DataBaseUtil
+WeiXinCommon
+AdvancedUtil
+AdvancedInterface
+
+
+修改的地方
+appID
+appsecret
+各个链接

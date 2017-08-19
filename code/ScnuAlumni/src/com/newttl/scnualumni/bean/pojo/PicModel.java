@@ -5,6 +5,9 @@ package com.newttl.scnualumni.bean.pojo;
  * @time 2017��7��26��
  */
 import javax.imageio.ImageIO;
+
+import com.newttl.scnualumni.weixin.WeiXinCommon;
+
 import java.awt.Color;  
 import java.awt.Font;  
 import java.awt.Graphics2D;  
@@ -16,7 +19,7 @@ import java.net.URL;
   
 public class PicModel {  
   
-    private Font font = new Font("宋体", Font.PLAIN, 38);// ����������������  
+    private Font font = new Font("宋体", Font.PLAIN, 38); 
   
     private Graphics2D g = null;  
   
@@ -82,7 +85,7 @@ public class PicModel {
             int h = img.getHeight();  
             g = img.createGraphics();  
             g.setBackground(Color.WHITE);  
-            g.setColor(Color.orange);//����������ɫ  
+            g.setColor(Color.orange);
             if (this.font != null)  
                 g.setFont(this.font);  
                 this.x = x;  
@@ -112,7 +115,7 @@ public class PicModel {
             int h = img.getHeight();  
             g = img.createGraphics();  
             g.setBackground(Color.black);  
-            g.setColor(Color.blue);//����������ɫ  
+            g.setColor(Color.blue);
             if (this.font != null)  
                 g.setFont(this.font);  
             g.drawString("reyo.cn", w - 85, h - 5);  
@@ -163,21 +166,21 @@ public class PicModel {
     	PicModel tt = new PicModel();  
     	
     	//载入添加二维码模板图片go2.jpg
-        BufferedImage d = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QRModel.jpg");  
+        BufferedImage d = tt.loadImageLocal(WeiXinCommon.headImg1+"/QRModel.jpg");  
         //往图片写入用户昵称，生成新图片qr_nickname.jpg
-        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QRModel_nickname.jpg",tt.modifyImage(d,nickname,320,350));
+        tt.writeImageLocal(WeiXinCommon.headImg1+"/QRModel_nickname.jpg",tt.modifyImage(d,nickname,320,350));
         
         //获取二维码图片QR.jpg
-        BufferedImage e = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QR.jpg");  
+        BufferedImage e = tt.loadImageLocal(WeiXinCommon.headImg1+"/QR.jpg");  
 
-        BufferedImage b = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QRModel_nickname.jpg"); 
+        BufferedImage b = tt.loadImageLocal(WeiXinCommon.headImg1+"/QRModel_nickname.jpg"); 
         
-        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QRModel_nickname_QR.jpg", tt.modifyImagetogeter(e, b));
+        tt.writeImageLocal(WeiXinCommon.headImg1+"/QRModel_nickname_QR.jpg", tt.modifyImagetogeter(e, b));
         
         
-        BufferedImage g = tt.loadImageLocal("G:\\Apache\\webapps\\ROOT\\image\\QRModel_nickname_QR.jpg");
+        BufferedImage g = tt.loadImageLocal(WeiXinCommon.headImg1+"/QRModel_nickname_QR.jpg");
         BufferedImage k = tt.loadImageLocal(head_img);
-        tt.writeImageLocal("G:\\Apache\\webapps\\ROOT\\image\\SpecialQR.jpg", tt.modifyImagetogeter2(k, g));
+        tt.writeImageLocal(WeiXinCommon.headImg1+"/SpecialQR.jpg", tt.modifyImagetogeter2(k, g));
         
     } 
     /**
@@ -193,7 +196,7 @@ public class PicModel {
         System.out.println(news[0]+"\n"+news[1]+"\n"+news[2]+"\n"+news[3]+"\n"+news[4]+"\n");
         
         //finalActivityImg 这个是最终生成的活动邀请海报图片
-        String finalActivityImg = "G:\\Apache\\webapps\\ROOT\\image\\SpecialActivity.jpg";
+        String finalActivityImg =WeiXinCommon.headImg1+ "/SpecialActivity.jpg";
         
         //写入活动名称
         tt.writeImageLocal(finalActivityImg,tt.modifyImage(d,news[0],347,560));

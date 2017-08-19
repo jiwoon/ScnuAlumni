@@ -34,7 +34,7 @@ public class MessageService {
 	
 	static{
 		//获取接口凭证
-		Token token=CommonUtil.getToken(WeiXinCommon.appID2, WeiXinCommon.appsecret2);
+		Token token=CommonUtil.getToken(WeiXinCommon.appID, WeiXinCommon.appsecret);
 		access_token=token.getAccess_token();
 	}
 	

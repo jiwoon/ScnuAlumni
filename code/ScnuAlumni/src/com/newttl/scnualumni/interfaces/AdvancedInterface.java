@@ -261,9 +261,10 @@ public interface AdvancedInterface {
 	/**
 	 * 获取活动海报的media_id
 	 * @param String content 海报内容
+	 * @param String accessToken 公众号凭证
 	 * @return WeiXinMedia.getMediaId()
 	 */
-	String getActivityImgId(String content) throws Exception;
+	String getActivityImgId(String content,String accessToken) throws Exception;
 	
 	/**
 	 * 从微信服务器上下载对应 mediaId 的媒体文件

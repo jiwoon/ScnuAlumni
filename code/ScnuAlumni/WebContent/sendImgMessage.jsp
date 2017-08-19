@@ -36,7 +36,7 @@
 		String content = aname + "/" + start_time + " - " + end_time + "/" + address + "/" + atip + "/" + awho;
 		
 		//通过凭证 appID appsecret获取 access_token
-		Token token=CommonUtil.getToken(WeiXinCommon.appID2, WeiXinCommon.appsecret2);
+		Token token=CommonUtil.getToken(WeiXinCommon.appID, WeiXinCommon.appsecret);
 		
 		// 发送客服文本消息
 		AdvancedUtil customMessage = new AdvancedUtil();
@@ -45,7 +45,7 @@
 
 		// 发送客服图片消息
 		String jsonImageMsg = customMessage.getAdvancedMethod()
-				.makeImageCustomMessage(openid,customMessage.getAdvancedMethod().getActivityImgId(content));
+				.makeImageCustomMessage(openid,customMessage.getAdvancedMethod().getActivityImgId(content,token.getAccess_token()));
 		customMessage.getAdvancedMethod().sendCustomMessage(token.getAccess_token(), jsonImageMsg);
 		
 	%>

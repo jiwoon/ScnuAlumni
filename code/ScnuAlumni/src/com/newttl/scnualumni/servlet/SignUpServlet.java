@@ -47,8 +47,8 @@ public class SignUpServlet extends HttpServlet {
 		System.out.println("SignUpServlet doGet");
 		
 		//设置编码格式，防止中文出现乱码
-		req.setCharacterEncoding("gb2312");
-		resp.setCharacterEncoding("gb2312");
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
 		
 		//用户同意授权后，能够获得 code
 		String code=req.getParameter("code");
@@ -59,7 +59,7 @@ public class SignUpServlet extends HttpServlet {
 		if (!(code.equals("authdeny"))) {
 			//获取网页授权凭证 access_token
 			AdvancedUtil advancedUtil=new AdvancedUtil();
-			WeiXinOauth2Token weiXinOauth2Token=advancedUtil.getAdvancedMethod().getOauth2AccessToken(WeiXinCommon.appID2, WeiXinCommon.appsecret2, code);
+			WeiXinOauth2Token weiXinOauth2Token=advancedUtil.getAdvancedMethod().getOauth2AccessToken(WeiXinCommon.appID, WeiXinCommon.appsecret, code);
 			if (null != weiXinOauth2Token) {
 				String accessToken=weiXinOauth2Token.getAccessToken();
 				//获得用户的标志

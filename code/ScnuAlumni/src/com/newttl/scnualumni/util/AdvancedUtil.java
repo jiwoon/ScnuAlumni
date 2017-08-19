@@ -489,7 +489,7 @@ public class AdvancedUtil {
 		 * 获取专属二维码
 		 */
 		public String getQRid(String user) throws Exception {
-			String accessToken = CommonUtil.getToken(WeiXinCommon.appID2, WeiXinCommon.appsecret2).getAccess_token();
+			String accessToken = CommonUtil.getToken(WeiXinCommon.appID, WeiXinCommon.appsecret).getAccess_token();
 			/**  
 			 * 获取用户信息，并将用户头像保存在本地
 			 */
@@ -499,7 +499,7 @@ public class AdvancedUtil {
 			// 获取用户的头像
 			String head_img_url = username.getHeadImgUrl();
 			//头像图片保存地址
-			String head_img = "G:/Apache/webapps/ROOT/image/head.jpg";
+			String head_img = WeiXinCommon.headImg1+"/head.jpg";
 			saveImageLocal(head_img_url, head_img);
 
 			
@@ -510,7 +510,7 @@ public class AdvancedUtil {
 			String ticket = weixinQRCode.getTicket();
 			
 			// 根据ticket换取二维码 ，并保存到 Path 路径,二维码图片名称为ticket.jpg
-			String savePath = "G:/Apache8/webapps/ROOT/image";
+			String savePath = WeiXinCommon.headImg1;
 			getQRCode(ticket, savePath);
 
 			/**
@@ -520,14 +520,16 @@ public class AdvancedUtil {
 			/**
 			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
 			 */
-			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialQR.jpg");
+			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", WeiXinCommon.QrFileUrl);
 			return weixinMedia.getMediaId();
 		}
 		
-		/*
+		/**
 		 * 保存微信头像地址到本地 imgUrl 从微信获取的原始头像链接 path 保存的本地地址
+		 * @param head_img_url
+		 * @param head_img
+		 * @throws Exception
 		 */
-		
 		public void saveImageLocal(String head_img_url, String head_img) throws Exception {
 			// 截取头像图片链接最后一个字符，把/0 换成/96，即图片像素为96 X 96
 			String news = head_img_url.substring(0, head_img_url.length() - 2);
@@ -972,16 +974,14 @@ public class AdvancedUtil {
 		/**
 		 * 获取活动海报的media_id
 		 * @param String content 海报内容
+		 * @param String accessToken 公众号凭证
 		 * @return WeiXinMedia.getMediaId()
 		 */
-		public String getActivityImgId(String content) throws Exception {
-			String accessToken = CommonUtil.getToken("wx8078d2f14310fef3", "b5f2071bd9c871139f7001e1efc2c3a8")
-					.getAccess_token();
-
+		public String getActivityImgId(String content,String accessToken) throws Exception {
 			/*
 			 * 提取活动邀请海报模板图片 的路径
 			 */
-			String path = "G:/Apache/webapps/ROOT/image/InviteModel.jpg";
+			String path =WeiXinCommon.headImg1+"/InviteModel.jpg";
 
 			/*
 			 * 生成活动海报
@@ -990,7 +990,7 @@ public class AdvancedUtil {
 			/**
 			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
 			 */
-			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialActivity.jpg");
+			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", WeiXinCommon.QrFileUrl);
 			return weixinMedia.getMediaId();
 		}
 		
