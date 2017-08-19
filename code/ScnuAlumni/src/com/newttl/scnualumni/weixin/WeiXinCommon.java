@@ -26,11 +26,10 @@ public class WeiXinCommon {
 	/**
 	 * 公众号的  appID
 	 */
-	public static final String appID="wxdfead60d5e0dbcd6";//我的 appId = "wx8078d2f14310fef3";
+	public static final String appID="wxdfead60d5e0dbcd6";
 	/**
 	 * 公众号的 appsecret
 	 */
-	//我的appsecret = "b5f2071bd9c871139f7001e1efc2c3a8";
 	public static final String appsecret="92663408c73b91e5749a0c5de20bd953";
 	
 	/**
@@ -61,20 +60,8 @@ public class WeiXinCommon {
 	public static final String signUpUrl="http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet";
 	
 	
-	/**
-	 * jason
-	 */
+    //------------------------------------  JASON的配置如下    ------------------------------------//
 	
-	public static final String activityUrl="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
-	/**
-	 * 获取微信头像后保存的地址
-	 */
-	public static final String headImg = "G:/Apache/webapps/ROOT/image/head.jpg";
-
-	public static final String WEIXIN_URL2="https://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/WxServlet";
-	public static final String REDIRECT_URI2="https://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
-	
-
 	/**
 	 * 公众号的  appID
 	 */
@@ -82,10 +69,25 @@ public class WeiXinCommon {
 	/**
 	 * 公众号的 appsecret
 	 */
-	//我的appsecret = "b5f2071bd9c871139f7001e1efc2c3a8";
 	public static final String appsecret2="b5f2071bd9c871139f7001e1efc2c3a8";
 	
-	public static final String signUpUrl2="https://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet";
+	
+	//菜单配置参数
+	public static final String WEIXIN_URL2="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/WxServlet";
+	
+	public static final String REDIRECT_URI2="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
+	
+	public static final String signUpUrl2="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet";
+	
+	public static final String SchoolMateUrl="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/findSchoolMate.jsp";
+	
+	public static final String activityUrl="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
+	
+	/**
+	 * 微信头像地址
+	 */
+	public static final String headImg = "G:/Apache/webapps/ROOT/image/head.jpg";
+	
 	
 	
 }

@@ -11,32 +11,53 @@
 <link rel="stylesheet" href="resources/css/demos.css">
 <link rel="stylesheet" href="resources/css/weui.min.css">
 <link rel="stylesheet" href="resources/css/jquery-weui.css">
+<script src="resources/js/jquery-2.1.4.js"></script>
+<script src="resources/js/jquery-weui.js"></script>
+
 <title>校友近期活动</title>
+<!-- 显示我发起过的活动 -->
 </head>
+<script>
+$(document).on("click", "#show-alert", function() {
+    $.alert("亲，请先到公众号菜单栏【个人中心】进行注册后，再发起活动！");
+  });
+</script>
 <body>
 	<%!public static final int PAGESIZE = 3;
-	int pageCount = 0;%>
-	<div class="weui-btn-area">
-		<a href="recent_activity.jsp"
-			class="weui-btn weui-btn_mini weui-btn_plain-primary">近期活动</a> <a
-			href="add_activity.jsp"
-			class="weui-btn_mini weui-btn weui-btn_plain-primary">发起活动</a> <a
-			href="my_activity.jsp"
-			class="weui-btn_mini weui-btn weui-btn_primary"><h3>我的活动</h3></a>
-	</div>
+	int pageCount = 0;
+	boolean Signed;
+	%>
 
-	<hr />
-	<div class="weui-form-preview__item">
-		<br />
-		<h2>&nbsp;我发起过的活动</h2>
-	</div>
 	<%
 		String openid = (String) session.getAttribute("openid");
 
 		List<Activity> activitys = new ArrayList<Activity>();
 		DataBaseUtil baseUtil = new DataBaseUtil();
 		activitys = baseUtil.getSomeActivity(openid);
+		DataBaseUtil baseUtil2 = new DataBaseUtil();
+		Signed = baseUtil2.isSigned(openid);
+		
+%>
+<div class="weui-btn-area">
+		<a href="recent_activity.jsp"
+			class="weui-btn weui-btn_mini weui-btn_plain-primary">近期活动</a> 
+			<% if(!Signed) {%>
+			<a href="javascript:;" id='show-alert' class="weui-btn_mini weui-btn weui-btn_plain-primary"  >发起活动</a> 
+		    <% } else { %>
+			<a href="add_activity.jsp" class="weui-btn_mini weui-btn weui-btn_plain-primary">发起活动</a> 
+			<%} %>
+			<a href="my_activity.jsp" class="weui-btn_mini weui-btn weui-btn_primary"><h3>我的活动</h3></a>
+	</div>
 
+	<hr />
+		<div class="weui-form-preview__item">
+		<br />
+		<h2>&nbsp;我发起过的活动</h2>
+	</div>
+	
+<% 
+		//判断是否注册过
+		Signed = baseUtil.isSigned(openid);
 		//获取最后一行的行号
 		int size = activitys.size();
 		pageCount = (size % PAGESIZE == 0) ? (size / PAGESIZE) : (size / PAGESIZE + 1);
@@ -113,8 +134,6 @@
 		}
 	%>
 	<!-- return confirm('确定将此记录删除?') -->
-	<script src="resources/js/jquery-2.1.4.js"></script>
-	<script src="resources/js/jquery-weui.js"></script>
 
 	<br />
 	<div style="text-align: center">
@@ -133,8 +152,13 @@
 		</div>
 		<br /> <br />
 	</div>
-	<br />
-	<br />
 
+	<div class="weui-footer ">
+		<p class="weui-footer__links">
+			<a href="#" class="weui-footer__link">华师校友通讯录</a>
+		</p>
+		<p class="weui-footer__text">Copyright © 2017 SCNU</p>
+	</div>
+	<br />
 </body>
 </html>

@@ -18,16 +18,38 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no">
 </head>
+<script>
+$(document).on("click", "#show-alert", function() {
+    $.alert("亲，请先到公众号菜单栏【个人中心】进行注册后，再发起活动！");
+  });
+</script>
+<!-- 显示近期即将开始的校友活动 -->
 <body>
 	<%!public static final int PAGESIZE = 3;
 	int pageCount = 0;%>
 
-	<div class="weui-btn-area">
+	<%
+		String openid = (String) session.getAttribute("openid");
+		String nickname = (String) session.getAttribute("nickname");
+
+		List<Activity> activitys = new ArrayList<Activity>();
+		DataBaseUtil baseUtil = new DataBaseUtil();
+		activitys = baseUtil.getAllActivity();
+		
+		//判断用户是否已经注册
+		DataBaseUtil baseUtil2 = new DataBaseUtil();
+		boolean Signed = baseUtil2.isSigned(openid);
+		
+	%>
+			<div class="weui-btn-area">
 		<a href="recent_activity.jsp"
-			class="weui-btn weui-btn_mini weui-btn_primary"><h3>近期活动</h3></a> <a
-			href="add_activity.jsp"
-			class="weui-btn_mini weui-btn weui-btn_plain-primary">发起活动</a> <a
-			href="my_activity.jsp"
+			class="weui-btn weui-btn_mini weui-btn_primary"><h3>近期活动</h3></a> 
+			<% if(!Signed) {%>
+			<a href="javascript:;" id='show-alert' class="weui-btn_mini weui-btn weui-btn_plain-primary"  >发起活动</a> 
+		    <% } else { %>
+			<a href="add_activity.jsp" class="weui-btn_mini weui-btn weui-btn_plain-primary">发起活动</a> 
+			<%} %>
+		    <a href="my_activity.jsp"
 			class="weui-btn_mini weui-btn weui-btn_plain-primary">我的活动</a>
 	</div>
 	<hr />
@@ -35,16 +57,8 @@
 		<br />
 		<h2>&nbsp;近期活动</h2>
 	</div>
-
 	<%
-		String openid = (String) session.getAttribute("openid");
-		String nickname = (String) session.getAttribute("nickname");
-		
-		List<Activity> activitys=new ArrayList<Activity>();
-		DataBaseUtil baseUtil=new DataBaseUtil();
-		activitys=baseUtil.getAllActivity();
-		
-		
+
 		//获取最后一行的行号
 		int size = activitys.size();
 		pageCount = (size % PAGESIZE == 0) ? (size / PAGESIZE) : (size / PAGESIZE + 1);
@@ -60,14 +74,13 @@
 		if (curPage <= 1)
 			curPage = 1;
 
-		int count = 1;	
-		
-		if(activitys.size() > 0){
-			for(int i=0;i < activitys.size();i++){
+		int count = 1;
+
+		if (activitys.size() > 0) {
+			for (int i = 0; i < activitys.size(); i++) {
 				if (count > PAGESIZE)
 					break;
 				count++;
-		
 	%>
 
 	<div class="weui-form-preview">
@@ -106,7 +119,7 @@
 
 	<%
 		}
-			}
+		}
 	%>
 	<br />
 	<div style="text-align: center">
@@ -124,8 +137,13 @@
 		</div>
 		<br /> <br />
 	</div>
-	<br />
-	<br />
 
+	<div class="weui-footer ">
+		<p class="weui-footer__links">
+			<a href="#" class="weui-footer__link">华师校友通讯录</a>
+		</p>
+		<p class="weui-footer__text">Copyright © 2017 SCNU</p>
+	</div>
+	<br />
 </body>
 </html>

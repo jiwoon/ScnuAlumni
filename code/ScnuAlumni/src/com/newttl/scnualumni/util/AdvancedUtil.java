@@ -455,7 +455,8 @@ public class AdvancedUtil {
 					savePath+="/";
 				}
 				//将 ticket 做为文件名
-				filePath=savePath+ticket+".jpg";
+				//filePath=savePath+ticket+".jpg";
+				filePath=savePath+"QR.jpg";
 				fileName=WeiXinCommon.qrCodeRoot+ticket+".jpg";
 				//将微信服务器返回的输入流，写入文件中
 				InputStream in=connection.getInputStream();
@@ -488,8 +489,7 @@ public class AdvancedUtil {
 		 * 获取专属二维码
 		 */
 		public String getQRid(String user) throws Exception {
-			String accessToken = CommonUtil.getToken("wx8078d2f14310fef3", "b5f2071bd9c871139f7001e1efc2c3a8")
-					.getAccess_token();
+			String accessToken = CommonUtil.getToken(WeiXinCommon.appID2, WeiXinCommon.appsecret2).getAccess_token();
 			/**  
 			 * 获取用户信息，并将用户头像保存在本地
 			 */
@@ -498,8 +498,9 @@ public class AdvancedUtil {
 			String nickname = username.getNickName();
 			// 获取用户的头像
 			String head_img_url = username.getHeadImgUrl();
-			String imgPath = "G:/Apache/webapps/ROOT/image/head.jpg";
-			saveImageLocal(head_img_url, imgPath);
+			//头像图片保存地址
+			String head_img = "G:/Apache/webapps/ROOT/image/head.jpg";
+			saveImageLocal(head_img_url, head_img);
 
 			
 			// 根据ticket 获取永久二维码
@@ -507,18 +508,19 @@ public class AdvancedUtil {
 
 			// 临时二维码的ticket
 			String ticket = weixinQRCode.getTicket();
+			
+			// 根据ticket换取二维码 ，并保存到 Path 路径,二维码图片名称为ticket.jpg
 			String savePath = "G:/Apache8/webapps/ROOT/image";
-			// 根据ticket换取二维码 ，并保存到 Path 路径
 			getQRCode(ticket, savePath);
 
-			/*
+			/**
 			 * 生成专属二维码模板,拼接微信用户的头像、昵称、专属二维码在一个模板中
 			 */
-			PicModel.MakeImg(nickname,imgPath);
+			PicModel.MakeImg(nickname,head_img);
 			/**
 			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
 			 */
-			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/great.jpg");
+			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialQR.jpg");
 			return weixinMedia.getMediaId();
 		}
 		
@@ -526,9 +528,9 @@ public class AdvancedUtil {
 		 * 保存微信头像地址到本地 imgUrl 从微信获取的原始头像链接 path 保存的本地地址
 		 */
 		
-		public void saveImageLocal(String imgUrl, String path) throws Exception {
-			// new一个URL对象 选取头像图片大小为96 X 96
-			String news = imgUrl.substring(0, imgUrl.length() - 2);
+		public void saveImageLocal(String head_img_url, String head_img) throws Exception {
+			// 截取头像图片链接最后一个字符，把/0 换成/96，即图片像素为96 X 96
+			String news = head_img_url.substring(0, head_img_url.length() - 2);
 			String new_url = news + "/96";
 			URL url = new URL(new_url);
 			// 打开链接
@@ -542,7 +544,7 @@ public class AdvancedUtil {
 			// 得到图片的二进制数据，以二进制封装得到数据，具有通用性
 			byte[] data = readInputStream(inStream);
 			// new一个文件对象用来保存图片，默认保存当前工程根目录
-			File imageFile = new File("G:/Apache/webapps/ROOT/image/head.jpg");
+			File imageFile = new File(head_img);
 			// 创建输出流
 			FileOutputStream outStream = new FileOutputStream(imageFile);
 			// 写入数据
@@ -976,8 +978,10 @@ public class AdvancedUtil {
 			String accessToken = CommonUtil.getToken("wx8078d2f14310fef3", "b5f2071bd9c871139f7001e1efc2c3a8")
 					.getAccess_token();
 
-			// 根据ticket换取二维码 ，并保存到 Path 路径
-			String path = "G:/Apache/webapps/ROOT/image/invite2.jpg";
+			/*
+			 * 提取活动邀请海报模板图片 的路径
+			 */
+			String path = "G:/Apache/webapps/ROOT/image/InviteModel.jpg";
 
 			/*
 			 * 生成活动海报
@@ -986,7 +990,7 @@ public class AdvancedUtil {
 			/**
 			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
 			 */
-			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/activity_invite.jpg");
+			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialActivity.jpg");
 			return weixinMedia.getMediaId();
 		}
 		

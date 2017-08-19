@@ -478,7 +478,7 @@ public class DataBaseUtil {
 			rs=ps.executeQuery();
 			while (rs.next()) {
 				activity.setActivityName(rs.getString("activity_name"));
-				activity.setActivityAddress(rs.getString("activity_adress"));
+				activity.setActivityAddress(rs.getString("activity_address"));
 				activity.setStartTime(rs.getString("start_time"));
 				activity.setEndTime(rs.getString("end_time"));
 				activity.setActivityIntro(rs.getString("activity_intro"));
@@ -502,7 +502,7 @@ public class DataBaseUtil {
 	public int saveActivity(Activity activity){
 //		openId headImgUrl userName phone QQ eMail city industry hobby profession sex
 		String sqlStr = "insert into activity (openid,activity_name,"
-				+ "activity_adress,start_time,end_time,activity_intro,activity_holder) values(?,?,?,?,?,?,?)";
+				+ "activity_address,start_time,end_time,activity_intro,activity_holder) values(?,?,?,?,?,?,?)";
 		int insert=-1;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -531,11 +531,10 @@ public class DataBaseUtil {
 	/**
 	 * 更新校友活动信息
 	 * @param signedUser
-	 * @return int
+	 * @return 
 	 */
 	public int updateActivity(Activity activity){
-//		update signed_users set headImgUrl=?, userName=?, phone=?, QQ=?, eMail=?, city=?, industry=?, hobby=?, profession=?, sex=? where openId=?
-		String sqlStr="update activity set activity_name=?, activity_adress=?, start_time=?, end_time=?, activity_intro=? where id=?";
+		String sqlStr="update activity set activity_name=?, activity_address=?, start_time=?, end_time=?, activity_intro=? where id=?";
 		int update=-1;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -547,8 +546,8 @@ public class DataBaseUtil {
 			ps.setString(4, activity.getEndTime());
 			ps.setString(5, activity.getActivityIntro());
 			ps.setInt(6, activity.getId());
-			update=ps.executeUpdate();
 			
+			update=ps.executeUpdate();	
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("updateActivity::\n"+e.toString());
@@ -565,7 +564,6 @@ public class DataBaseUtil {
 	 * @return int
 	 */
 	public int deleteActivity(int id){
-//		update signed_users set headImgUrl=?, userName=?, phone=?, QQ=?, eMail=?, city=?, industry=?, hobby=?, profession=?, sex=? where openId=?
 		String sqlStr="delete from activity where id =?";
 		int delete=-1;
 		PreparedStatement ps=null;
@@ -590,8 +588,7 @@ public class DataBaseUtil {
 	 * @return List<Activity>
 	 */
 	public List<Activity> getSomeActivity(String openid){
-		
-		String sqlStr="select * from activity where openid=? order by start_time";
+		String sqlStr="select * from activity where openid=?";
 		List<Activity> activitys=new ArrayList<Activity>();
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -601,7 +598,7 @@ public class DataBaseUtil {
 			rs=ps.executeQuery();
 			while (rs.next()) {
 				Activity activity=new Activity();
-				activity.setActivityAddress(rs.getString("activity_adress"));
+				activity.setActivityAddress(rs.getString("activity_address"));
 				activity.setActivityHolder(rs.getString("activity_holder"));
 				activity.setActivityIntro(rs.getString("activity_intro"));
 				activity.setActivityName(rs.getString("activity_name"));
@@ -618,6 +615,77 @@ public class DataBaseUtil {
 			releaseResources(conn, ps, rs);
 		}
 		return activitys;
+	}
+	
+	/**
+	 * 获取所有校友活动信息
+	 * @return List<Activity>
+	 */
+	public List<Activity> getAllActivity(){
+		Date date = new Date();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String time = format.format(date);	
+		String sqlStr="select * from activity where end_time > '" + time + "' order by start_time";
+		List<Activity> activitys=new ArrayList<Activity>();
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			ps=conn.prepareStatement(sqlStr);
+			rs=ps.executeQuery();
+			while (rs.next()) {
+				Activity activity=new Activity();
+				activity.setActivityAddress(rs.getString("activity_address"));
+				activity.setActivityHolder(rs.getString("activity_holder"));
+				activity.setActivityIntro(rs.getString("activity_intro"));
+				activity.setActivityName(rs.getString("activity_name"));
+				activity.setStartTime(rs.getString("start_time"));
+				activity.setEndTime(rs.getString("end_time"));
+				activitys.add(activity);	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("getAllActivity::\n"+e.toString());
+		}finally {
+			//释放资源
+			releaseResources(conn, ps, rs);
+		}
+		return activitys;
+	}
+	
+	/**
+	 * 保存推荐二维码扫描后用户之间的关系
+	 * @param provider 二维码生成者   
+	 * @param receiver 二维码扫描者
+	 * @param time 扫描时间   
+	 * @param ticket 二维码参数
+	 * @param providerName 生成者的昵称  
+	 * @param receiverName 扫描者的昵称
+	 * @return  
+	 */
+	public int saveQRCodeParmer(String provider,String receiver,String ticket,String time,String providerName,String receiverName){
+		String sqlStr = "insert into UserRelation (qr_provider,qr_receiver,"
+		+ "qr_ticket,qr_time,qr_provider_name,qr_receiver_name) values(?,?,?,?,?,?)";
+		int insert=-1;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			ps=conn.prepareStatement(sqlStr);
+			ps.setString(1, provider);
+			ps.setString(2, receiver);
+			ps.setString(3, ticket);
+			ps.setString(4, time);
+			ps.setString(5, providerName);
+			ps.setString(6, receiverName);
+		
+			insert=ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("saveQRCodeParmer::\n"+e.toString());
+		}finally {
+			//释放资源
+			releaseResources(conn, ps, rs);
+		}
+		return insert;
 	}
 	
 	/**
@@ -731,76 +799,6 @@ public class DataBaseUtil {
 			releaseResources(conn, ps, rs);
 		}
 		return alumnus;
-	}
-	
-	
-	/**
-	 * 获取所有校友活动信息
-	 * @return List<Activity>
-	 */
-	public List<Activity> getAllActivity(){
-		Date date = new Date();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		String time = format.format(date);	
-		String sqlStr="select * from activity where end_time > '" + time + "' order by start_time";
-		List<Activity> activitys=new ArrayList<Activity>();
-		PreparedStatement ps=null;
-		ResultSet rs=null;
-		try {
-			ps=conn.prepareStatement(sqlStr);
-			rs=ps.executeQuery();
-			while (rs.next()) {
-				Activity activity=new Activity();
-				activity.setActivityAddress(rs.getString("activity_adress"));
-				activity.setActivityHolder(rs.getString("activity_holder"));
-				activity.setActivityIntro(rs.getString("activity_intro"));
-				activity.setActivityName(rs.getString("activity_name"));
-				activity.setStartTime(rs.getString("start_time"));
-				activity.setEndTime(rs.getString("end_time"));
-				activitys.add(activity);	
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("getAllActivity::\n"+e.toString());
-		}finally {
-			//释放资源
-			releaseResources(conn, ps, rs);
-		}
-		return activitys;
-	}
-	
-	/**
-	 * 保存推荐二维码扫描后用户之间的关系
-	 * @param provider 二维码生成者   @param receiver 二维码扫描者
-	 * @param time 扫描时间   @param ticket 二维码参数
-	 * @param providerName 生成者的昵称  @param receiverName 扫描者的昵称
-	 * @return  
-	 */
-	public int saveQRCodeParmer(String provider,String receiver,String ticket,String time,String providerName,String receiverName){
-//		openId headImgUrl userName phone QQ eMail city industry hobby profession sex
-		String sqlStr = "insert into UserRelation (qr_provider,qr_receiver,"
-		+ "qr_ticket,qr_time,qr_provider_name,qr_receiver_name) values(?,?,?,?,?,?)";
-		int insert=-1;
-		PreparedStatement ps=null;
-		ResultSet rs=null;
-		try {
-			ps=conn.prepareStatement(sqlStr);
-			ps.setString(1, provider);
-			ps.setString(2, receiver);
-			ps.setString(3, ticket);
-			ps.setString(4, time);
-			ps.setString(5, providerName);
-			ps.setString(6, receiverName);
-		
-			insert=ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("saveQRCodeParmer::\n"+e.toString());
-		}finally {
-			//释放资源
-			releaseResources(conn, ps, rs);
-		}
-		return insert;
 	}
 	
 	
