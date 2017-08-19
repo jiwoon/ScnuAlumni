@@ -16,7 +16,7 @@
 		String aname = new String((request.getParameter("aname")).getBytes("ISO-8859-1"), "UTF-8");
 		String start_time = request.getParameter("start_time");
 		String end_time = request.getParameter("end_time");
-		String address = new String((request.getParameter("aadress")).getBytes("ISO-8859-1"), "UTF-8");
+		String address = new String((request.getParameter("address")).getBytes("ISO-8859-1"), "UTF-8");
 		String atip = new String((request.getParameter("atip")).getBytes("ISO-8859-1"), "UTF-8");
 
 		Activity activity = new Activity();

@@ -298,7 +298,7 @@ public class MessageService {
 						//获取临时带参二维码
 						AdvancedUtil advancedUtil2=new AdvancedUtil();
 						Image qrCodeImg=new Image();
-						String s_id = advancedUtil2.getAdvancedMethod().getQRid(resp_toUserName);
+						String s_id = advancedUtil2.getAdvancedMethod().getQRid(resp_toUserName,WeiXinCommon.appID2,WeiXinCommon.appsecret2);
 						qrCodeImg.setMediaId(s_id);
 						ImageMessage qrCodeMessage=new ImageMessage();
 						qrCodeMessage.setFromUserName(resp_fromUserName);

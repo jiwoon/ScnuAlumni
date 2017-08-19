@@ -588,7 +588,7 @@ public class DataBaseUtil {
 	 * @return List<Activity>
 	 */
 	public List<Activity> getSomeActivity(String openid){
-		String sqlStr="select * from activity where openid=?";
+		String sqlStr="select * from activity where openid=? order by id desc";
 		List<Activity> activitys=new ArrayList<Activity>();
 		PreparedStatement ps=null;
 		ResultSet rs=null;

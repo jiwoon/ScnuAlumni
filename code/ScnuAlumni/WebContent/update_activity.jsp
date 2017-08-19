@@ -15,7 +15,7 @@
 <script>
 	function checkInput() {
 		var activityName = document.formSub.aname.value;
-		var activityAddress = document.formSub.aadress.value;
+		var activityAddress = document.formSub.address.value;
 		var startTime = document.formSub.start_time.value;
 		var start = new Date(startTime.replace("-", "/").replace("-", "/"));
 		var endTime = document.formSub.end_time.value;
@@ -59,7 +59,6 @@
 		session.setAttribute("aid", aid);
 		int id = Integer.parseInt(aid);
 
-		out.print(aid);
 		Activity activity = new Activity();
 		DataBaseUtil baseUtil = new DataBaseUtil();
 		activity = baseUtil.getTheActivity(id);
@@ -109,7 +108,7 @@
 					<label class="weui-label">活动地点<span style='color: red'>*</span></label>
 				</div>
 				<div class="weui-cell__bd">
-					<input class="weui-input" type="text" name="aadress"
+					<input class="weui-input" type="text" name="address"
 						value='<%=activity.getActivityAddress()%>' placeholder="请输入活动地点" />
 				</div>
 			</div>
@@ -147,6 +146,5 @@
 			});
 		});
 	</script>
-	</form>
 </body>
 </html>

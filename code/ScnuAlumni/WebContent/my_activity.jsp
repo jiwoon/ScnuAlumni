@@ -25,17 +25,14 @@ $(document).on("click", "#show-alert", function() {
 <body>
 	<%!public static final int PAGESIZE = 3;
 	int pageCount = 0;
-	boolean Signed;
 	%>
 
 	<%
 		String openid = (String) session.getAttribute("openid");
-
-		List<Activity> activitys = new ArrayList<Activity>();
-		DataBaseUtil baseUtil = new DataBaseUtil();
-		activitys = baseUtil.getSomeActivity(openid);
+	
+		//判断用户是否已经注册
 		DataBaseUtil baseUtil2 = new DataBaseUtil();
-		Signed = baseUtil2.isSigned(openid);
+		boolean Signed = baseUtil2.isSigned(openid);
 		
 %>
 <div class="weui-btn-area">
@@ -56,8 +53,9 @@ $(document).on("click", "#show-alert", function() {
 	</div>
 	
 <% 
-		//判断是否注册过
-		Signed = baseUtil.isSigned(openid);
+		List<Activity> activitys = new ArrayList<Activity>();
+		DataBaseUtil baseUtil = new DataBaseUtil();
+		activitys = baseUtil.getSomeActivity(openid);
 		//获取最后一行的行号
 		int size = activitys.size();
 		pageCount = (size % PAGESIZE == 0) ? (size / PAGESIZE) : (size / PAGESIZE + 1);
@@ -72,14 +70,12 @@ $(document).on("click", "#show-alert", function() {
 			curPage = pageCount;
 		if (curPage <= 1)
 			curPage = 1;
-
 		int count = 1;
-
-		if (activitys.size() > 0) {
-			for (int i = 0; i < activitys.size(); i++) {
-				if (count > PAGESIZE)
-					break;
-				count++;
+		int i = (curPage-1)*3;
+		while(i < size) {
+			if (count > PAGESIZE)
+				break;
+			count++;
 	%>
 
 	<div class="weui-form-preview">
@@ -130,8 +126,8 @@ $(document).on("click", "#show-alert", function() {
 
 	<!-- foot 	部分 -->
 	<%
-		}
-		}
+		i++;}
+
 	%>
 	<!-- return confirm('确定将此记录删除?') -->
 

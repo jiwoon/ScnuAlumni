@@ -487,44 +487,7 @@ public class AdvancedUtil {
 			
 		}
 		
-		/*
-		 * 获取专属二维码
-		 */
-		public String getQRid(String user) throws Exception {
-			String accessToken = CommonUtil.getToken(WeiXinCommon.appID2, WeiXinCommon.appsecret2).getAccess_token();
-			/**  
-			 * 获取用户信息，并将用户头像保存在本地
-			 */
-			WeiXinUserInfo username = getUserInfo(accessToken, user);
-			// 获取用户的昵称
-			String nickname = username.getNickName();
-			// 获取用户的头像
-			String head_img_url = username.getHeadImgUrl();
-			//头像图片保存地址
-			String head_img = "G:/Apache/webapps/ROOT/image/head.jpg";
-			saveImageLocal(head_img_url, head_img);
-
-			
-			// 根据ticket 获取永久二维码
-			WeiXinPermanentQRCode  weixinQRCode = createPermanentQRCode(accessToken, user);
-
-			// 临时二维码的ticket
-			String ticket = weixinQRCode.getTicket();
-			
-			// 根据ticket换取二维码 ，并保存到 Path 路径,二维码图片名称为ticket.jpg
-			String savePath = "G:/Apache/webapps/ROOT/image";
-			getQRCode(ticket, savePath);
-
-			/**
-			 * 生成专属二维码模板,拼接微信用户的头像、昵称、专属二维码在一个模板中
-			 */
-			PicModel.MakeImg(nickname,head_img);
-			/**
-			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
-			 */
-			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialQR.jpg");
-			return weixinMedia.getMediaId();
-		}
+		
 		
 		/*
 		 * 保存微信头像地址到本地 imgUrl 从微信获取的原始头像链接 path 保存的本地地址
@@ -993,6 +956,57 @@ public class AdvancedUtil {
 			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
 			 */
 			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialActivity.jpg");
+			return weixinMedia.getMediaId();
+		}
+
+		@Override
+		public String getQRid(String user) throws Exception {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	
+		/**
+		 * 获取二维码的media_id
+		 * @param String user 用户微信id
+		 * @param String appID 
+		 * @param String appSecret 
+		 * @return string
+		 */
+		@Override
+		public String getQRid(String user,String appID,String appSecret) throws Exception {
+			String accessToken = CommonUtil.getToken(appID, appSecret).getAccess_token();
+			/**  
+			 * 获取用户信息，并将用户头像保存在本地
+			 */
+			WeiXinUserInfo username = getUserInfo(accessToken, user);
+			// 获取用户的昵称
+			String nickname = username.getNickName();
+			// 获取用户的头像
+			String head_img_url = username.getHeadImgUrl();
+			//头像图片保存地址
+			String head_img = "G:/Apache/webapps/ROOT/image/head.jpg";
+			saveImageLocal(head_img_url, head_img);
+
+			
+			// 根据ticket 获取永久二维码
+			WeiXinPermanentQRCode  weixinQRCode = createPermanentQRCode(accessToken, user);
+
+			// 临时二维码的ticket
+			String ticket = weixinQRCode.getTicket();
+			
+			// 根据ticket换取二维码 ，并保存到 Path 路径,二维码图片名称为ticket.jpg
+			String savePath = "G:/Apache/webapps/ROOT/image";
+			getQRCode(ticket, savePath);
+
+			/**
+			 * 生成专属二维码模板,拼接微信用户的头像、昵称、专属二维码在一个模板中
+			 */
+			PicModel.MakeImg(nickname,head_img);
+			/**
+			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
+			 */
+			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialQR.jpg");
 			return weixinMedia.getMediaId();
 		}
 		

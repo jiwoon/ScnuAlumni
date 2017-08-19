@@ -18,23 +18,22 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no">
 </head>
+
 <script>
 $(document).on("click", "#show-alert", function() {
     $.alert("亲，请先到公众号菜单栏【个人中心】进行注册后，再发起活动！");
   });
 </script>
+
 <!-- 显示近期即将开始的校友活动 -->
 <body>
-	<%!public static final int PAGESIZE = 3;
+	<%!
+	public static final int PAGESIZE = 3;
+	public int num = 0;
 	int pageCount = 0;%>
 
 	<%
 		String openid = (String) session.getAttribute("openid");
-		String nickname = (String) session.getAttribute("nickname");
-
-		List<Activity> activitys = new ArrayList<Activity>();
-		DataBaseUtil baseUtil = new DataBaseUtil();
-		activitys = baseUtil.getAllActivity();
 		
 		//判断用户是否已经注册
 		DataBaseUtil baseUtil2 = new DataBaseUtil();
@@ -58,7 +57,9 @@ $(document).on("click", "#show-alert", function() {
 		<h2>&nbsp;近期活动</h2>
 	</div>
 	<%
-
+	    List<Activity> activitys = new ArrayList<Activity>();
+	    DataBaseUtil baseUtil = new DataBaseUtil();
+	    activitys = baseUtil.getAllActivity();
 		//获取最后一行的行号
 		int size = activitys.size();
 		pageCount = (size % PAGESIZE == 0) ? (size / PAGESIZE) : (size / PAGESIZE + 1);
@@ -75,12 +76,11 @@ $(document).on("click", "#show-alert", function() {
 			curPage = 1;
 
 		int count = 1;
-
-		if (activitys.size() > 0) {
-			for (int i = 0; i < activitys.size(); i++) {
-				if (count > PAGESIZE)
-					break;
-				count++;
+		int i = (curPage-1)*3;
+		while(i < size) {
+			if (count > PAGESIZE)
+				break;
+			count++;
 	%>
 
 	<div class="weui-form-preview">
@@ -118,8 +118,7 @@ $(document).on("click", "#show-alert", function() {
 	<hr />
 
 	<%
-		}
-		}
+		i ++;}
 	%>
 	<br />
 	<div style="text-align: center">
