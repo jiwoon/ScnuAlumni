@@ -47,9 +47,9 @@
 		<a href="recent_activity.jsp"
 			class="weui-btn weui-btn_mini weui-btn_plain-primary">近期活动</a> <a
 			href="add_activity.jsp"
-			class="weui-btn_mini weui-btn weui-btn_plain-primary">发起活动</a> <a
+			class="weui-btn_mini weui-btn weui-btn_primary"><h3>发起活动</h3></a> <a
 			href="my_activity.jsp"
-			class="weui-btn_mini weui-btn weui-btn_primary"><h3>我的活动</h3></a>
+			class="weui-btn_mini weui-btn weui-btn_plain-primary">我的活动</a>
 	</div>
 	<hr />
 	<div>
