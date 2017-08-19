@@ -6,9 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.newttl.scnualumni.bean.database.Activity;
 import com.newttl.scnualumni.bean.database.Alumnus;
 import com.newttl.scnualumni.bean.database.Knowledge;
 import com.newttl.scnualumni.bean.database.SignedUser;
@@ -37,11 +41,11 @@ public class DataBaseUtil {
 		//驱动
 		String driver="com.mysql.jdbc.Driver";
 		// URL指向要访问的数据库名wechat_data
-        String url = "jdbc:mysql://127.0.0.1:3306/wechat_data";
+        String url = "jdbc:mysql://127.0.0.1:3306/jason";
         //用户名
         String userName="root";
         //密码
-        String password="guochang";
+        String password="123456";
 		//加载驱动
         try {
 			Class.forName(driver);
@@ -417,6 +421,8 @@ public class DataBaseUtil {
 		}
 		return insert;
 	}
+
+	
 	
 	/**
 	 * 更新用户修改的个人信息
@@ -454,6 +460,232 @@ public class DataBaseUtil {
 			releaseResources(conn, ps, rs);
 		}
 		return update;
+	}
+	
+	/**
+	 * 获取某一个活动
+	 * @return List<Activity>
+	 */
+	public Activity getTheActivity(int id){
+		
+		String sqlStr="select * from activity where id=?";
+		Activity activity=new Activity();
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			ps=conn.prepareStatement(sqlStr);
+			ps.setInt(1, id);
+			rs=ps.executeQuery();
+			while (rs.next()) {
+				activity.setActivityName(rs.getString("activity_name"));
+				activity.setActivityAddress(rs.getString("activity_address"));
+				activity.setStartTime(rs.getString("start_time"));
+				activity.setEndTime(rs.getString("end_time"));
+				activity.setActivityIntro(rs.getString("activity_intro"));
+				activity.setActivityHolder(rs.getString("activity_holder"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("getTheActivity::\n"+e.toString());
+		}finally {
+			//释放资源
+			releaseResources(conn, ps, rs);
+		}
+		return activity;
+	}
+	
+	/**
+	 * 保存校友活动的信息
+	 * @param signedUser
+	 * @return  int
+	 */
+	public int saveActivity(Activity activity){
+//		openId headImgUrl userName phone QQ eMail city industry hobby profession sex
+		String sqlStr = "insert into activity (openid,activity_name,"
+				+ "activity_address,start_time,end_time,activity_intro,activity_holder) values(?,?,?,?,?,?,?)";
+		int insert=-1;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			ps=conn.prepareStatement(sqlStr);
+			ps.setString(1, activity.getOpenID());
+			ps.setString(2, activity.getActivityName());
+			ps.setString(3, activity.getActivityAddress());
+			ps.setString(4, activity.getStartTime());
+			ps.setString(5, activity.getEndTime());
+			ps.setString(6, activity.getActivityIntro());
+			ps.setString(7, activity.getActivityHolder());
+			
+			insert=ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("saveActivity::\n"+e.toString());
+		}finally {
+			//释放资源
+			releaseResources(conn, ps, rs);
+		}
+		return insert;
+	}
+	
+	
+	/**
+	 * 更新校友活动信息
+	 * @param signedUser
+	 * @return 
+	 */
+	public int updateActivity(Activity activity){
+		String sqlStr="update activity set activity_name=?, activity_address=?, start_time=?, end_time=?, activity_intro=? where id=?";
+		int update=-1;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			ps=conn.prepareStatement(sqlStr);
+			ps.setString(1, activity.getActivityName());
+			ps.setString(2, activity.getActivityAddress());
+			ps.setString(3, activity.getStartTime());
+			ps.setString(4, activity.getEndTime());
+			ps.setString(5, activity.getActivityIntro());
+			ps.setInt(6, activity.getId());
+			
+			update=ps.executeUpdate();	
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("updateActivity::\n"+e.toString());
+		}finally {
+			//释放资源
+			releaseResources(conn, ps, rs);
+		}
+		return update;
+	}
+	
+	/**
+	 * 删除校友活动信息
+	 * @param signedUser
+	 * @return int
+	 */
+	public int deleteActivity(int id){
+		String sqlStr="delete from activity where id =?";
+		int delete=-1;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			ps=conn.prepareStatement(sqlStr);
+			ps.setInt(1, id);
+			delete=ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("deleteActivity::\n"+e.toString());
+		}finally {
+			//释放资源
+			releaseResources(conn, ps, rs);
+		}
+		return delete;
+	}
+	
+	/**
+	 * 获取某微信用户发起过的校友活动
+	 * @return List<Activity>
+	 */
+	public List<Activity> getSomeActivity(String openid){
+		String sqlStr="select * from activity where openid=?";
+		List<Activity> activitys=new ArrayList<Activity>();
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			ps=conn.prepareStatement(sqlStr);
+			ps.setString(1, openid);
+			rs=ps.executeQuery();
+			while (rs.next()) {
+				Activity activity=new Activity();
+				activity.setActivityAddress(rs.getString("activity_address"));
+				activity.setActivityHolder(rs.getString("activity_holder"));
+				activity.setActivityIntro(rs.getString("activity_intro"));
+				activity.setActivityName(rs.getString("activity_name"));
+				activity.setStartTime(rs.getString("start_time"));
+				activity.setEndTime(rs.getString("end_time"));
+				activity.setId(rs.getInt("id"));
+				activitys.add(activity);	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("getSomeActivity::\n"+e.toString());
+		}finally {
+			//释放资源
+			releaseResources(conn, ps, rs);
+		}
+		return activitys;
+	}
+	
+	/**
+	 * 获取所有校友活动信息
+	 * @return List<Activity>
+	 */
+	public List<Activity> getAllActivity(){
+		Date date = new Date();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String time = format.format(date);	
+		String sqlStr="select * from activity where end_time > '" + time + "' order by start_time";
+		List<Activity> activitys=new ArrayList<Activity>();
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			ps=conn.prepareStatement(sqlStr);
+			rs=ps.executeQuery();
+			while (rs.next()) {
+				Activity activity=new Activity();
+				activity.setActivityAddress(rs.getString("activity_address"));
+				activity.setActivityHolder(rs.getString("activity_holder"));
+				activity.setActivityIntro(rs.getString("activity_intro"));
+				activity.setActivityName(rs.getString("activity_name"));
+				activity.setStartTime(rs.getString("start_time"));
+				activity.setEndTime(rs.getString("end_time"));
+				activitys.add(activity);	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("getAllActivity::\n"+e.toString());
+		}finally {
+			//释放资源
+			releaseResources(conn, ps, rs);
+		}
+		return activitys;
+	}
+	
+	/**
+	 * 保存推荐二维码扫描后用户之间的关系
+	 * @param provider 二维码生成者   
+	 * @param receiver 二维码扫描者
+	 * @param time 扫描时间   
+	 * @param ticket 二维码参数
+	 * @param providerName 生成者的昵称  
+	 * @param receiverName 扫描者的昵称
+	 * @return  
+	 */
+	public int saveQRCodeParmer(String provider,String receiver,String ticket,String time,String providerName,String receiverName){
+		String sqlStr = "insert into UserRelation (qr_provider,qr_receiver,"
+		+ "qr_ticket,qr_time,qr_provider_name,qr_receiver_name) values(?,?,?,?,?,?)";
+		int insert=-1;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			ps=conn.prepareStatement(sqlStr);
+			ps.setString(1, provider);
+			ps.setString(2, receiver);
+			ps.setString(3, ticket);
+			ps.setString(4, time);
+			ps.setString(5, providerName);
+			ps.setString(6, receiverName);
+		
+			insert=ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("saveQRCodeParmer::\n"+e.toString());
+		}finally {
+			//释放资源
+			releaseResources(conn, ps, rs);
+		}
+		return insert;
 	}
 	
 	/**
@@ -569,6 +801,7 @@ public class DataBaseUtil {
 		return alumnus;
 	}
 	
+	
 	/**
 	 * 向远程数据库新建数据表
 	 * 
@@ -599,6 +832,7 @@ public class DataBaseUtil {
 		}
 		return createIndex;
 	}
+	
 	
 	/**
 	 * 增删改数据表

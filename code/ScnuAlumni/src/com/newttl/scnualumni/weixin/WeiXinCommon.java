@@ -17,10 +17,12 @@ public class WeiXinCommon {
 	 * ngrok.plub  http://newtkwx.ngrok.club
 	 * 魔法隧道  http://jqfrudd.hk1.mofasuidao.cn
 	 */
+	
 	public static final String WEIXIN_URL="http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/WxServlet";
 	public static final String REDIRECT_URI="http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
 	public static final String OAUTH_URL="http://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 
+	
 	/**
 	 * 公众号的  appID
 	 */
@@ -56,5 +58,36 @@ public class WeiXinCommon {
 	public static final String wxAk="S0D9rYXOzhqervq5kOkwlOFfCPQZSR5H";
 	
 	public static final String signUpUrl="http://jqfrudd.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet";
+	
+	
+    //------------------------------------  JASON的配置如下    ------------------------------------//
+	
+	/**
+	 * 公众号的  appID
+	 */
+	public static final String appID2="wx8078d2f14310fef3";//我的 appId = "wx8078d2f14310fef3";
+	/**
+	 * 公众号的 appsecret
+	 */
+	public static final String appsecret2="b5f2071bd9c871139f7001e1efc2c3a8";
+	
+	
+	//菜单配置参数
+	public static final String WEIXIN_URL2="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/WxServlet";
+	
+	public static final String REDIRECT_URI2="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
+	
+	public static final String signUpUrl2="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/SignUpServlet";
+	
+	public static final String SchoolMateUrl="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/findSchoolMate.jsp";
+	
+	public static final String activityUrl="http://1m8dqy5.hk1.mofasuidao.cn/ScnuAlumni/OAuthServlet";
+	
+	/**
+	 * 微信头像地址
+	 */
+	public static final String headImg = "G:/Apache/webapps/ROOT/image/head.jpg";
+	
+	
 	
 }
