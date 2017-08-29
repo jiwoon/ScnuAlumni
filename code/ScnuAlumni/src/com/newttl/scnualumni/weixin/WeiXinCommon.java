@@ -69,6 +69,8 @@ public class WeiXinCommon {
 	
 	public static final String QrFileUrl="http://jqfrudd.hk1.mofasuidao.cn/image/SpecialQR.jpg";
 	
+	public static final String activityImgUrl1="http://jqfrudd.hk1.mofasuidao.cn/image/SpecialActivity.jpg";
+	
 	
     //------------------------------------  JASON的配置如下    ------------------------------------//
 	

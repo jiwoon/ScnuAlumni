@@ -41,11 +41,11 @@ public class DataBaseUtil {
 		//驱动
 		String driver="com.mysql.jdbc.Driver";
 		// URL指向要访问的数据库名wechat_data
-        String url = "jdbc:mysql://127.0.0.1:3306/jason";
+        String url = "jdbc:mysql://127.0.0.1:3306/wechat_data";
         //用户名
         String userName="root";
         //密码
-        String password="123456";
+        String password="guochang";
 		//加载驱动
         try {
 			Class.forName(driver);

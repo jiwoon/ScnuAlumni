@@ -947,7 +947,7 @@ public class AdvancedUtil {
 			/*
 			 * 提取活动邀请海报模板图片 的路径
 			 */
-			String path =WeiXinCommon.headImg+"/InviteModel.jpg";
+			String path =WeiXinCommon.headImg1+"/InviteModel.jpg";
 
 			/*
 			 * 生成活动海报
@@ -957,7 +957,7 @@ public class AdvancedUtil {
 			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
 			 */
 
-			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", "http://1m8dqy5.hk1.mofasuidao.cn/image/SpecialActivity.jpg");
+			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", WeiXinCommon.activityImgUrl1);
 
 			return weixinMedia.getMediaId();
 		}
@@ -986,7 +986,7 @@ public class AdvancedUtil {
 			// 获取用户的头像
 			String head_img_url = username.getHeadImgUrl();
 			//头像图片保存地址
-			String head_img = "G:/Apache/webapps/ROOT/image/head.jpg";
+			String head_img = WeiXinCommon.headImg1+"/head.jpg";
 			saveImageLocal(head_img_url, head_img);
 
 			
@@ -997,7 +997,7 @@ public class AdvancedUtil {
 			String ticket = weixinQRCode.getTicket();
 			
 			// 根据ticket换取二维码 ，并保存到 Path 路径,二维码图片名称为ticket.jpg
-			String savePath = "G:/Apache/webapps/ROOT/image";
+			String savePath = WeiXinCommon.headImg1;
 			getQRCode(ticket, savePath);
 
 			/**
@@ -1007,7 +1007,7 @@ public class AdvancedUtil {
 			/**
 			 * 上传多媒体文件 需要上传URL链接 而不是本地图片地址
 			 */
-			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", WeiXinCommon.QrFileUrl2);
+			WeiXinMedia weixinMedia = uploadMedia(accessToken, "image", WeiXinCommon.QrFileUrl);
 			return weixinMedia.getMediaId();
 		}
 

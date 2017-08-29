@@ -34,7 +34,7 @@ public class MessageService {
 	
 	static{
 		//获取接口凭证
-		Token token=CommonUtil.getToken(WeiXinCommon.appID2, WeiXinCommon.appsecret2);
+		Token token=CommonUtil.getToken(WeiXinCommon.appID, WeiXinCommon.appsecret);
 		access_token=token.getAccess_token();
 	}
 	
@@ -299,7 +299,7 @@ public class MessageService {
 						//获取临时带参二维码
 						AdvancedUtil advancedUtil2=new AdvancedUtil();
 						Image qrCodeImg=new Image();
-						String s_id = advancedUtil2.getAdvancedMethod().getQRid(resp_toUserName,WeiXinCommon.appID2,WeiXinCommon.appsecret2);
+						String s_id = advancedUtil2.getAdvancedMethod().getQRid(resp_toUserName,WeiXinCommon.appID,WeiXinCommon.appsecret);
 						qrCodeImg.setMediaId(s_id);
 						ImageMessage qrCodeMessage=new ImageMessage();
 						qrCodeMessage.setFromUserName(resp_fromUserName);

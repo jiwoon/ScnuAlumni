@@ -166,21 +166,21 @@ public class PicModel {
     	PicModel tt = new PicModel();  
     	
     	//载入添加二维码模板图片go2.jpg
-        BufferedImage d = tt.loadImageLocal(WeiXinCommon.headImg+"/QRModel.jpg");  
+        BufferedImage d = tt.loadImageLocal(WeiXinCommon.headImg1+"/QRModel.jpg");  
         //往图片写入用户昵称，生成新图片qr_nickname.jpg
-        tt.writeImageLocal(WeiXinCommon.headImg+"/QRModel_nickname.jpg",tt.modifyImage(d,nickname,320,350));
+        tt.writeImageLocal(WeiXinCommon.headImg1+"/QRModel_nickname.jpg",tt.modifyImage(d,nickname,320,350));
         
         //获取二维码图片QR.jpg
-        BufferedImage e = tt.loadImageLocal(WeiXinCommon.headImg+"/QR.jpg");  
+        BufferedImage e = tt.loadImageLocal(WeiXinCommon.headImg1+"/QR.jpg");  
 
-        BufferedImage b = tt.loadImageLocal(WeiXinCommon.headImg+"/QRModel_nickname.jpg"); 
+        BufferedImage b = tt.loadImageLocal(WeiXinCommon.headImg1+"/QRModel_nickname.jpg"); 
         
-        tt.writeImageLocal(WeiXinCommon.headImg+"/QRModel_nickname_QR.jpg", tt.modifyImagetogeter(e, b));
+        tt.writeImageLocal(WeiXinCommon.headImg1+"/QRModel_nickname_QR.jpg", tt.modifyImagetogeter(e, b));
         
         
-        BufferedImage g = tt.loadImageLocal(WeiXinCommon.headImg+"/QRModel_nickname_QR.jpg");
+        BufferedImage g = tt.loadImageLocal(WeiXinCommon.headImg1+"/QRModel_nickname_QR.jpg");
         BufferedImage k = tt.loadImageLocal(head_img);
-        tt.writeImageLocal(WeiXinCommon.headImg+"/SpecialQR.jpg", tt.modifyImagetogeter2(k, g));
+        tt.writeImageLocal(WeiXinCommon.headImg1+"/SpecialQR.jpg", tt.modifyImagetogeter2(k, g));
         
     } 
     /**
@@ -196,7 +196,7 @@ public class PicModel {
         System.out.println(news[0]+"\n"+news[1]+"\n"+news[2]+"\n"+news[3]+"\n"+news[4]+"\n");
         
         //finalActivityImg 这个是最终生成的活动邀请海报图片
-        String finalActivityImg =WeiXinCommon.headImg+ "/SpecialActivity.jpg";
+        String finalActivityImg =WeiXinCommon.headImg1+ "/SpecialActivity.jpg";
         
         //写入活动名称
         tt.writeImageLocal(finalActivityImg,tt.modifyImage(d,news[0],347,560));
