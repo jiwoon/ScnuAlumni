@@ -54,7 +54,7 @@ public class MenuManager {
 		
 		ViewButton b32=new ViewButton();
 		String ur32=WeiXinCommon.OAUTH_URL;
-		String ur33=CommonUtil.urlEncodingUTF8(WeiXinCommon.activityUrl1);
+		String ur33=CommonUtil.urlEncodingUTF8(WeiXinCommon.activityUrl);
 		ur32=ur32.replace("APPID",WeiXinCommon.appID);
 		ur32=ur32.replace("REDIRECT_URI", ur33);
 		b32.setName("活动中心");
@@ -63,21 +63,11 @@ public class MenuManager {
 		
 		System.out.println("ur32::"+"\n"+ur32);
 		
-		
-		
 		ViewButton b33 = new ViewButton();
 		b33.setName("查找校友");
 		b33.setType("view");
-		b33.setUrl(WeiXinCommon.SchoolMateUrl1);
-		/*
-		ComplexButton mainB1=new ComplexButton();
-		mainB1.setName("华师新闻");
-		mainB1.setSub_button(new Button[]{b11});
+		b33.setUrl(WeiXinCommon.SchoolMateUrl);
 		
-		ComplexButton mainB2=new ComplexButton();
-		mainB2.setName("公众号二维码");
-		mainB2.setSub_button(new Button[]{b21});
-		*/
 		ComplexButton mainB3=new ComplexButton();
 		mainB3.setName("工具箱");
 		mainB3.setSub_button(new Button[]{b33,b32,b31});

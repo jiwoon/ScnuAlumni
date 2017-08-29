@@ -150,7 +150,7 @@
 		headImgUrl=snsUserInfo.getHeadImgUrl();
 		openId=snsUserInfo.getOpenId();
 		DataBaseUtil baseUtil=new DataBaseUtil();
-		SignedUser signedUser=baseUtil.getSigned(snsUserInfo.getOpenId());
+		SignedUser signedUser=baseUtil.getSigned(openId);
 		/* out.print("signedUser::"+signedUser.getUserName()); */
 		//用户已经注册了，显示用户的信息 
 		if(null != signedUser){
