@@ -68,57 +68,68 @@
 	     for(var i=0;i<s.length;i++)           //遍历每一个文本字符
 	         ret=ret && (s.charCodeAt(i)>=10000);//判断文本字符的unicode值
 	     return ret;
-	 } 
+	 }
  
  	function checkInput(){
  		var sex=document.formSub.radioSex.value;
  		var name=document.formSub.userName.value;
  		var college=document.formSub.userCollege.value;
  		var userClss=document.formSub.userClass.value;
- 		var phone=document.formSub.userPhone.value;
- 		var qQ=document.formSub.userQQ.value;
- 		var email=document.formSub.userEmail.value;
+ 		var grade=document.getElementById("grade_select").value;
  		var code=document.formSub.userCode.value;
  		var city=document.formSub.userCity.value;
- 		var industry=document.formSub.userIndustry.value;
- 		var hobby=document.formSub.userHobby.value;
- 		var profession=document.formSub.userProfession.value;
  		var reg_email=/^[a-zA-Z0-9_-](\w|\.|-)*@([a-zA-Z0-9_-]+-?[a-zA-Z0-9_-]+\.){1,3}[a-zA-Z]{2,4}$/i;
+ 		var selectContact=document.getElementById("select_contact").value;
+ 		var inputContact=document.getElementById("input_contact").value;
  		
 		if (college.length <= 0) {
 			$.alert("学院不能为空!");
+		}else if (grade.length <= 0) {
+			$.alert("年级不能为空!");
 		}else if (userClss.length <= 0) {
 			$.alert("班级不能为空!");
 		}else if (name.length <= 0) {
- 			$.alert("姓名不正确!");
-		}else if (phone.length != 11) {
-			$.alert("手机号码长度不正确!");
-		}else if (qQ.length <= 0) {
-			$.alert("QQ长度不正确!");
-		}else if (!reg_email.test(email)) {
-			$.alert("邮箱格式不正确!");
-		}else if (code.length != 4) {
-			$.alert("验证码不正确!");
+ 			$.alert("姓名不能为空!");
 		}else if (city.length <= 0) {
 			$.alert("城市不能为空!");
-		}else if (industry.length <= 0) {
-			$.alert("行业不能为空!");
-		}else if (hobby.length <= 0) {
-			$.alert("爱好不能为空!");
-		}else if (profession.length <= 0) {
-			$.alert("职业不能为空!");
+		}else if (code.length != 4) {
+			$.alert("验证码不正确!");
 		}else {
-			//提交用户注册的信息
-			$.toast("提交成功");
-			document.formSub.submit(); 
+			
+			if ("1" == selectContact) {
+				if (inputContact.length <= 0) {
+					$.alert("QQ长度不正确!");
+				}else {
+					//提交用户注册的信息
+					$.toast("提交成功");
+					document.formSub.submit();
+				}
+			}
+			if ("2" == selectContact) {
+				if (!reg_email.test(inputContact)) {
+					$.alert("邮箱格式不正确!");
+				}else {
+					//提交用户注册的信息
+					$.toast("提交成功");
+					document.formSub.submit();
+				}
+			}
+			if ("3" == selectContact) {
+				if (inputContact.length != 11) {
+					$.alert("手机号码不正确!");
+				}else {
+					//提交用户注册的信息
+					$.toast("提交成功");
+					document.formSub.submit();
+				}
+			}
 		}
  	}
- 	
  	
  	function reload(){
 		document.getElementById("randImage").src="./ImageCodeServlet?date="+new Date().getTime();
 		$("#userCode").val("");   // 将验证码清空
-	} 
+	}
 	 
 	 function verificationcode(){
 		 var text=$.trim($("#userCode").val());
@@ -134,6 +145,51 @@
 			 }
 		 });
 	 }
+	 
+	 function selectContact() {
+		 var obj = document.getElementById("select_contact");
+		 var inputObj=document.getElementById("input_contact");
+			for(var i=0;i<obj.length;i++){
+					if(obj[i].selected == true){
+						switch (obj[i].value) {
+						case "1":
+							inputObj.removeAttribute("maxlength");
+							inputObj.value="";
+							inputObj.setAttribute("placeholder","请输入QQ号码");
+							inputObj.onkeyup=function(){
+								inputObj.value=inputObj.value.replace(/[^\d]/g,'');
+							}
+							inputObj.onbeforepaste=function(){
+								clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''));
+							}
+							break;
+							
+						case "2"://removeAttribute("disabled");
+							inputObj.removeAttribute("maxlength");
+							inputObj.value="";
+							inputObj.setAttribute("placeholder","请输入邮箱");
+							inputObj.onkeyup=function(){
+							}
+							inputObj.onbeforepaste=function(){
+							}
+							break;
+							
+						case "3":
+							inputObj.value="";
+							inputObj.setAttribute("maxlength","11");
+							inputObj.setAttribute("placeholder","请输入手机号码");
+							inputObj.onkeyup=function(){
+								inputObj.value=inputObj.value.replace(/[^\d]/g,'');
+							}
+							inputObj.onbeforepaste=function(){
+								clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''));
+							}
+							break;
+
+						}
+					}
+				}
+	}
  	
  </script>
  
@@ -146,6 +202,7 @@
 	SNSUserInfo snsUserInfo=(SNSUserInfo)request.getAttribute("snsUserInfo");
 	String openId="";
 	String headImgUrl="";
+	String contactType="";
 	if(null != snsUserInfo){
 		headImgUrl=snsUserInfo.getHeadImgUrl();
 		openId=snsUserInfo.getOpenId();
@@ -154,6 +211,14 @@
 		/* out.print("signedUser::"+signedUser.getUserName()); */
 		//用户已经注册了，显示用户的信息 
 		if(null != signedUser){
+			String type=signedUser.getContactType();
+			if("1".equals(type)){
+				contactType="QQ";
+			}else if("2".equals(type)){
+				contactType="邮箱";
+			}else if("3".equals(type)){
+				contactType="手机";
+			}
 
 %>
 
@@ -170,8 +235,6 @@
  		</div>
  		<div class="weui-cell_ft" style="height: 48px">
  			<img src="<%=signedUser.getHeadImgUrl() %>" style="height: 45px;width: 45px">
- 			<input type="hidden" name="editHeadImgUrl" value=<%=signedUser.getHeadImgUrl() %>>
- 			<input type="hidden" name="userOpenId" value=<%=signedUser.getOpenId() %>>
  		</div>
  	</div>
  </div>	
@@ -182,7 +245,13 @@
     	<div class="weui_cell_hd"><label class="weui-label my-label">学院</label></div>
         <div class="weui_cell_bd weui_cell_primary">
             <p ><%=signedUser.getCollege() %></p>
-            <input type="hidden" name="editCollege" value=<%=signedUser.getCollege() %>>
+        </div>
+    </div>
+    
+    <div class="weui_cell">
+    	<div class="weui_cell_hd"><label class="weui-label my-label">年级</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+            <p><%=signedUser.getGrade()%></p>
         </div>
     </div>
     
@@ -190,7 +259,6 @@
     	<div class="weui_cell_hd"><label class="weui-label my-label">班级</label></div>
         <div class="weui_cell_bd weui_cell_primary">
             <p ><%=signedUser.getUserClass() %></p>
-            <input type="hidden" name="editClass" value=<%=signedUser.getUserClass() %>>
         </div>
     </div>
 	
@@ -198,7 +266,6 @@
     	<div class="weui_cell_hd"><label class="weui-label my-label">姓名</label></div>
         <div class="weui_cell_bd weui_cell_primary">
             <p ><%=signedUser.getUserName() %></p>
-            <input type="hidden" name="editName" value=<%=signedUser.getUserName() %>>
         </div>
     </div>
     
@@ -206,31 +273,13 @@
     	<div class="weui_cell_hd"><label class="weui-label my-label">性别</label></div>
         <div class="weui_cell_bd weui_cell_primary">
             <p ><%=signedUser.getSex() %></p>
-            <input type="hidden" name="editSex" value=<%=signedUser.getSex() %>>
         </div>
     </div>
 
 	<div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label my-label">手机号</label></div>
+    	<div class="weui_cell_hd"><label class="weui-label my-label"><%=contactType %></label></div>
         <div class="weui_cell_bd weui_cell_primary"">
-            <p ><%=signedUser.getPhone() %></p>
-            <input type="hidden" name="editPhone" value=<%=signedUser.getPhone() %>>
-        </div>
-    </div>
-    
-    <div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label my-label">QQ</label></div>
-        <div class="weui_cell_bd weui_cell_primary">
-            <p ><%=signedUser.getQQ() %></p>
-            <input type="hidden" name="editQQ" value=<%=signedUser.getQQ() %>>
-        </div>
-    </div>
-    
-    <div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label my-label">邮箱</label></div>
-        <div class="weui_cell_bd weui_cell_primary">
-            <p ><%=signedUser.geteMail() %></p>
-            <input type="hidden" name="editEmail" value=<%=signedUser.geteMail() %>>
+            <p ><%=signedUser.getContact() %></p>
         </div>
     </div>
     
@@ -238,7 +287,6 @@
     	<div class="weui_cell_hd"><label class="weui-label my-label">城市</label></div>
         <div class="weui_cell_bd weui_cell_primary">
             <p ><%=signedUser.getCity()%></p>
-            <input type="hidden" name="editCity" value=<%=signedUser.getCity()%>>
         </div>
     </div>
 
@@ -250,7 +298,6 @@
 	   	<div class="weui_cell_hd"><label class="weui-label my-label">行业</label></div>
 	    <div class="weui_cell_bd weui_cell_primary">
 	        <p ><%=signedUser.getIndustry() %></p>
-	        <input type="hidden" name="editIndustry" value=<%=signedUser.getIndustry() %>>
 	    </div>
 	</div>
 	
@@ -258,7 +305,6 @@
 	   	<div class="weui_cell_hd"><label class="weui-label my-label">爱好</label></div>
 	    <div class="weui_cell_bd weui_cell_primary">
 	        <p ><%=signedUser.getHobby() %></p>
-	        <input type="hidden" name="editHobby" value=<%=signedUser.getHobby() %>>
 	    </div>
 	</div>
 	
@@ -266,7 +312,6 @@
 	   	<div class="weui_cell_hd"><label class="weui-label my-label">职业</label></div>
 	    <div class="weui_cell_bd weui_cell_primary">
 	        <p ><%=signedUser.getProfession() %></p>
-	        <input type="hidden" name="editProfession" value=<%=signedUser.getProfession() %>>
 	    </div>
 	</div>
 	
@@ -380,6 +425,29 @@
 			</select>
 		</div>
 	</div>
+	
+	<div class="weui_cell">
+    	<div class="weui_cell_hd"><label class="weui-label">年级<span style='color: red;position: relative;top: 2px'>*</span></label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+        		<select class="m-weui-select" name="userGrade" id="grade_select" translate="yes"> 
+					<%
+						StringBuffer bufYear = new StringBuffer();
+						//下拉列表的年数  
+						for(int i=0;i<28;i++){
+						//最小年
+						Date date=new Date();
+						int sYear = date.getYear();
+						//系统时间从1900年开始  
+						int sYearc = sYear+1900;
+						int iYear = sYearc-i;
+						bufYear.append("<option value = '"+iYear+" 级"+"'");
+						bufYear.append(" >"+iYear+" 级"+"</option>\n");
+						}
+						out.println(bufYear.toString());
+					%>
+				</select>
+        </div>
+    </div>
     
 	<div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label">班级<span style='color: red;position: relative;top: 2px'>*</span></label></div>
@@ -392,7 +460,6 @@
     	<div class="weui_cell_hd"><label class="weui-label">姓名<span style='color: red;position: relative;top: 2px'>*</span></label></div>
         <div class="weui_cell_bd weui_cell_primary">
         	<input class="weui_input" type="text" onkeyup="value=value.replace(/[^\a-zA-Z\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\a-zA-Z\u4E00-\u9FA5]/g,''))" name="userName" placeholder="请输入姓名">
-            <!-- <input class="weui_input" type="text" name="userName" placeholder="请输入姓名"> -->
         </div>
     </div>
     
@@ -402,27 +469,6 @@
           <input class="weui_input" id="home-city" type="text" name="userCity">
         </div>
      </div>
-    
-    <div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label">QQ<span style='color: red;position: relative;top: 2px'>*</span></label></div>
-        <div class="weui_cell_bd weui_cell_primary">
-            <input class="weui_input" type="number" name="userQQ" placeholder="请输入QQ号" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
-        </div>
-    </div>
-    
-    <div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label">邮箱<span style='color: red;position: relative;top: 2px'>*</span></label></div>
-        <div class="weui_cell_bd weui_cell_primary">
-            <input class="weui_input" type="text" name="userEmail" placeholder="请输入邮箱地址">
-        </div>
-    </div>
-    
-	<div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label">手机号<span style='color: red;position: relative;top: 2px'>*</span></label></div>
-        <div class="weui_cell_bd weui_cell_primary"">
-            <input class="weui_input" type="number" name="userPhone" placeholder="请输入手机号" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
-        </div>
-    </div>
     
     <div class="weui_cell weui_vcode">
     	<div class="weui_cell_hd"><label class="weui-label">验证码<span style='color: red;position: relative;top: 2px'>*</span></label></div>
@@ -435,6 +481,69 @@
     	</div>
     </div>
       
+</div>
+
+<div class="weui-cells__title"><span style='color: red;position: relative;top: 2px'>请选择填写QQ/邮箱/手机号码其中一个</span></div>
+<div class="weui-cells">
+
+  <div class="weui-cell weui-cell_select weui-cell_select-before">
+    <div class="weui-cell__hd">
+      <select class="weui-select" name="contactSelect" id="select_contact" onchange="selectContact()">
+        <option value="1">QQ</option>
+        <option value="2">邮箱</option>
+        <option value="3">手机</option>
+      </select>
+    </div>
+    <div class="weui-cell__bd">
+      <input class="weui-input" id="input_contact" name="contact">
+    </div>
+    
+    <script>
+	    var obj = document.getElementById("select_contact");
+	    var inputObj=document.getElementById("input_contact");
+		for(var i=0;i<obj.length;i++){
+				if(obj[i].selected == true){
+					switch (obj[i].value) {
+					case "1":
+						inputObj.removeAttribute("maxlength");
+						inputObj.value="";
+						inputObj.setAttribute("placeholder","请输入QQ号码");
+						inputObj.onkeyup=function(){
+							inputObj.value=inputObj.value.replace(/[^\d]/g,'');
+						}
+						inputObj.onbeforepaste=function(){
+							clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''));
+						}
+						break;
+						
+					case "2"://removeAttribute("disabled");
+						inputObj.removeAttribute("maxlength");
+						inputObj.value="";
+						inputObj.setAttribute("placeholder","请输入邮箱");
+						inputObj.onkeyup=function(){
+						}
+						inputObj.onbeforepaste=function(){
+						}
+						break;
+						
+					case "3":
+						inputObj.value="";
+						inputObj.setAttribute("maxlength","11");
+						inputObj.setAttribute("placeholder","请输入手机号码");
+						inputObj.onkeyup=function(){
+							inputObj.value=inputObj.value.replace(/[^\d]/g,'');
+						}
+						inputObj.onbeforepaste=function(){
+							clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''));
+						}
+						break;
+
+					}
+				}
+			}
+    </script>
+    
+  </div>
 </div>
 
 <div class="weui_cells weui_cells_form" style="margin-top: 0px">
@@ -482,8 +591,8 @@
  		showDistrict: true,
  		title:"请选择您的地址",
 		onChange: function (picker, values, displayValues) {
-				$.alert(picker.cols[0].displayValue);
-	          /* console.log(values, displayValues); */
+				/* $.alert(picker.cols[0].displayValue); */
+	          	/* console.log(values, displayValues); */
 	        }
  	});
  	

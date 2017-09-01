@@ -14,19 +14,21 @@ public class SignedUser {
 	private String openId;
 	//用户头像url
 	private String headImgUrl;
+	//性别
+	private String sex;
 	//用户姓名
 	private String userName;
 	//所在学院
 	private String college;
 	//所在班级
 	private String userClass;
-	//电话号码
-	private String phone;
-	//QQ
-	private String QQ;
-	//邮箱地址
-	private String eMail;
-	//地址
+	//年级
+	private String grade;
+	//联系方式内容
+	private String contact;
+	//联系方式 1:QQ 2:邮箱  3:手机号码
+	private String contactType;
+	//城市
 	private String city;
 	//从事行业
 	private String industry;
@@ -34,8 +36,7 @@ public class SignedUser {
 	private String hobby;
 	//从事职业
 	private String profession;
-	//性别
-	private String sex;
+	
 	
 	public String getSex() {
 		return sex;
@@ -60,24 +61,6 @@ public class SignedUser {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public String getQQ() {
-		return QQ;
-	}
-	public void setQQ(String qQ) {
-		QQ = qQ;
-	}
-	public String geteMail() {
-		return eMail;
-	}
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
 	}
 	public String getCity() {
 		return city;
@@ -114,6 +97,24 @@ public class SignedUser {
 	}
 	public void setUserClass(String userClass) {
 		this.userClass = userClass;
+	}
+	public String getContact() {
+		return contact;
+	}
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+	public String getContactType() {
+		return contactType;
+	}
+	public void setContactType(String contactType) {
+		this.contactType = contactType;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 	
 	

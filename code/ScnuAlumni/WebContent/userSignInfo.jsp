@@ -42,18 +42,18 @@ request.setCharacterEncoding("UTF-8");
 
 <%
 
-String select=request.getParameter("select2");
 String myType=request.getParameter("myType");
 String userOpenId=request.getParameter("userOpenId");
 String userHeadImgUrl=request.getParameter("userHeadImgUrl");
 String sex=request.getParameter("radioSex");
 String userCollege=request.getParameter("userCollege");
+String userGrade=request.getParameter("userGrade");
 String userClass=request.getParameter("userClass");
 String userName=request.getParameter("userName");
-String userPhone=request.getParameter("userPhone");
-String userQQ=request.getParameter("userQQ");
-String userEmail=request.getParameter("userEmail");
 String userCity=request.getParameter("userCity");
+String contactType=request.getParameter("contactSelect");
+String type="";
+String userContact=request.getParameter("contact");
 String userIndustry=request.getParameter("userIndustry");
 String userHobby=request.getParameter("userHobby");
 String userProfession=request.getParameter("userProfession");
@@ -65,10 +65,10 @@ if(!"".equals(userOpenId)){
 	signedUser.setUserClass(userClass);
 	signedUser.setUserName(userName);
 	signedUser.setSex(sex);
-	signedUser.setPhone(userPhone);
-	signedUser.setQQ(userQQ);
-	signedUser.seteMail(userEmail);
+	signedUser.setGrade(userGrade);
 	signedUser.setCity(userCity);
+	signedUser.setContactType(contactType);
+	signedUser.setContact(userContact);
 	signedUser.setIndustry(userIndustry);
 	signedUser.setHobby(userHobby);
 	signedUser.setProfession(userProfession);
@@ -89,6 +89,14 @@ if(!"".equals(userOpenId)){
 		baseUtil.updateSignedUser(signedUser);
 	}
 	
+}
+
+if("1".equals(contactType)){
+	type="QQ";
+}else if("2".equals(contactType)){
+	type="邮箱";
+}else if("3".equals(contactType)){
+	type="手机";
 }
 
 %>
@@ -119,6 +127,14 @@ if(!"".equals(userOpenId)){
     </div>
     
     <div class="weui_cell">
+    	<div class="weui_cell_hd"><label class="weui-label my-label">年级</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+            <p><%=userGrade%></p>
+            <input type="hidden" name="editGrade" value=<%=userGrade %>>
+        </div>
+    </div>
+    
+    <div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label my-label">班级</label></div>
         <div class="weui_cell_bd weui_cell_primary">
             <p><%=userClass%></p>
@@ -143,26 +159,10 @@ if(!"".equals(userOpenId)){
     </div>
 
 	<div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label my-label">手机号</label></div>
+    	<div class="weui_cell_hd"><label class="weui-label my-label"><%=type %></label></div>
         <div class="weui_cell_bd weui_cell_primary"">
-            <p><%=userPhone %></p>
-            <input type="hidden" name="editPhone" value=<%=userPhone %>>
-        </div>
-    </div>
-    
-    <div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label my-label">QQ</label></div>
-        <div class="weui_cell_bd weui_cell_primary">
-            <p><%=userQQ %></p>
-            <input type="hidden" name="editQQ" value=<%=userQQ %>>
-        </div>
-    </div>
-    
-    <div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label my-label">邮箱</label></div>
-        <div class="weui_cell_bd weui_cell_primary">
-            <p><%=userEmail %></p>
-            <input type="hidden" name="editEmail" value=<%=userEmail %>>
+            <p><%=userContact %></p>
+            <input type="hidden" name="editPhone" value=<%=userContact %>>
         </div>
     </div>
     

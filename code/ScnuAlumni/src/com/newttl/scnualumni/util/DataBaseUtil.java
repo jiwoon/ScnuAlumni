@@ -363,10 +363,10 @@ public class DataBaseUtil {
 				signedUser.setUserName(rs.getString("userName"));
 				signedUser.setCollege(rs.getString("college"));
 				signedUser.setUserClass(rs.getString("userClass"));
-				signedUser.setPhone(rs.getString("phone"));
-				signedUser.setQQ(rs.getString("QQ"));
-				signedUser.seteMail(rs.getString("eMail"));
+				signedUser.setGrade(rs.getString("grade"));
 				signedUser.setCity(rs.getString("city"));
+				signedUser.setContact(rs.getString("contact"));
+				signedUser.setContactType(rs.getString("contactType"));
 				signedUser.setIndustry(rs.getString("industry"));
 				signedUser.setHobby(rs.getString("hobby"));
 				signedUser.setProfession(rs.getString("profession"));
@@ -391,8 +391,7 @@ public class DataBaseUtil {
 	 * @return  int
 	 */
 	public int saveSignedUser(SignedUser signedUser){
-//		openId headImgUrl userName phone QQ eMail city industry hobby profession sex
-		String sqlStr = "insert into signed_users(openId, headImgUrl, userName, college, userClass, phone, QQ, eMail, city, industry, hobby, profession, sex) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sqlStr = "insert into signed_users(openId, headImgUrl, sex, userName, college, userClass, grade, city, contact, contactType, industry, hobby, profession) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		int insert=-1;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -400,17 +399,18 @@ public class DataBaseUtil {
 			ps=conn.prepareStatement(sqlStr);
 			ps.setString(1, signedUser.getOpenId());
 			ps.setString(2, signedUser.getHeadImgUrl());
-			ps.setString(3, signedUser.getUserName());
-			ps.setString(4, signedUser.getCollege());
-			ps.setString(5, signedUser.getUserClass());
-			ps.setString(6, signedUser.getPhone());
-			ps.setString(7, signedUser.getQQ());
-			ps.setString(8, signedUser.geteMail());
-			ps.setString(9, signedUser.getCity());
-			ps.setString(10, signedUser.getIndustry());
-			ps.setString(11, signedUser.getHobby());
-			ps.setString(12, signedUser.getProfession());
-			ps.setString(13, signedUser.getSex());
+			ps.setString(3, signedUser.getSex());
+			ps.setString(4, signedUser.getUserName());
+			ps.setString(5, signedUser.getCollege());
+			ps.setString(6, signedUser.getUserClass());
+			ps.setString(7, signedUser.getGrade());
+			ps.setString(8, signedUser.getCity());
+			ps.setString(9, signedUser.getContact());
+			ps.setString(10, signedUser.getContactType());
+			ps.setString(11, signedUser.getIndustry());
+			ps.setString(12, signedUser.getHobby());
+			ps.setString(13, signedUser.getProfession());
+			
 			insert=ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -430,8 +430,8 @@ public class DataBaseUtil {
 	 * @return int
 	 */
 	public int updateSignedUser(SignedUser signedUser){
-//		update signed_users set headImgUrl=?, userName=?, phone=?, QQ=?, eMail=?, city=?, industry=?, hobby=?, profession=?, sex=? where openId=?
-		String sqlStr="update signed_users set headImgUrl=?, userName=?, college=?, userClass=?, phone=?, QQ=?, eMail=?, city=?, industry=?, hobby=?, profession=?, sex=? where openId=?";
+//openId, headImgUrl, sex, userName, college, userClass, grade, city, contact, contactType, industry, hobby, profession
+		String sqlStr="update signed_users set headImgUrl=?, userName=?, college=?, userClass=?, grade=?, contact=?, contactType=?, city=?, industry=?, hobby=?, profession=?, sex=? where openId=?";
 		int update=-1;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -441,9 +441,9 @@ public class DataBaseUtil {
 			ps.setString(2, signedUser.getUserName());
 			ps.setString(3, signedUser.getCollege());
 			ps.setString(4, signedUser.getUserClass());
-			ps.setString(5, signedUser.getPhone());
-			ps.setString(6, signedUser.getQQ());
-			ps.setString(7, signedUser.geteMail());
+			ps.setString(5, signedUser.getGrade());
+			ps.setString(6, signedUser.getContact());
+			ps.setString(7, signedUser.getContactType());
 			ps.setString(8, signedUser.getCity());
 			ps.setString(9, signedUser.getIndustry());
 			ps.setString(10, signedUser.getHobby());
@@ -710,10 +710,10 @@ public class DataBaseUtil {
 				signedUser.setUserName(rs.getString("userName"));
 				signedUser.setCollege(rs.getString("college"));
 				signedUser.setUserClass(rs.getString("userClass"));
-				signedUser.setPhone(rs.getString("phone"));
-				signedUser.setQQ(rs.getString("QQ"));
-				signedUser.seteMail(rs.getString("eMail"));
+				signedUser.setGrade(rs.getString("grade"));
 				signedUser.setCity(rs.getString("city"));
+				signedUser.setContact(rs.getString("contact"));
+				signedUser.setContactType(rs.getString("contactType"));
 				signedUser.setIndustry(rs.getString("industry"));
 				signedUser.setHobby(rs.getString("hobby"));
 				signedUser.setProfession(rs.getString("profession"));
