@@ -55,12 +55,11 @@
 
  </style>
  
- 
 <script src="resources/js/jquery-2.1.4.js"></script>
 <script src="resources/js/fastclick.js"></script>
 <script src="resources/js/jquery-weui.js"></script>
 <script src="resources/js/city-picker.js"></script>	
- 
+
  <script type="text/javascript">
  
 	 function ischinese(s){
@@ -616,6 +615,13 @@
 	}
 %>
 
+<div class="weui-footer ">
+	<p class="weui-footer__links">
+		<a href="#" class="weui-footer__link">华师校友通讯录</a>
+	</p>
+	<p class="weui-footer__text">Copyright © 2017 SCNU</p>
+</div>
+<br>
 
 </body>
 </html>

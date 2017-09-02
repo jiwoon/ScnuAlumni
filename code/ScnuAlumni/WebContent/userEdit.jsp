@@ -55,12 +55,11 @@ SignedUser signedUser=dataBaseUtil.getSigned(openID);
 }
  
 </style>
-
  
 <script src="resources/js/jquery-2.1.4.js"></script>
 <script src="resources/js/fastclick.js"></script>
 <script src="resources/js/jquery-weui.js"></script>
-<script src="resources/js/city-picker.js"></script>	
+<script src="resources/js/city-picker.js"></script>
  
  <script type="text/javascript">
  
@@ -463,10 +462,10 @@ SignedUser signedUser=dataBaseUtil.getSigned(openID);
 <div class='demos-content-padded'>
     <a href="javascript:;" id='show-confirm' class="weui-btn weui-btn_primary">保存</a>
 </div>
+<br>
 
 </div>
 </form>
-
 
 <script>
   $(function() {
@@ -495,6 +494,13 @@ SignedUser signedUser=dataBaseUtil.getSigned(openID);
  	
 </script>
 
+<div class="weui-footer ">
+	<p class="weui-footer__links">
+		<a href="#" class="weui-footer__link">华师校友通讯录</a>
+	</p>
+	<p class="weui-footer__text">Copyright © 2017 SCNU</p>
+</div>
+<br>
 
 </body>
 

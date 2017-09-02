@@ -12,10 +12,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<script src="resources/js/jquery-2.1.4.js"></script>
+<script src="resources/js/jquery-weui.js"></script>
+
 </head>
 <body>
-	<%
+	<script>
+		$.alert("你的活动邀请海报已经生成，请回到公众号查看！")
+	</script>
+	<jsp:include page="recent_activity.jsp" />
+
+<%
 	    String openid =(String) session.getAttribute("openid");
 	
 		String aid = request.getParameter("aid");
@@ -48,11 +55,7 @@
 				.makeImageCustomMessage(openid,customMessage.getAdvancedMethod().getActivityImgId(content,token.getAccess_token()));
 		customMessage.getAdvancedMethod().sendCustomMessage(token.getAccess_token(), jsonImageMsg);
 		
-	%>
-	<script>
-		alert("你的活动邀请海报已经生成，请回到公众号查看！")
-	</script>
-	<jsp:include page="recent_activity.jsp" />
+%>
 
 </body>
 </html>
