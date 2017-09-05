@@ -3,6 +3,7 @@
 <%@page import="com.newttl.scnualumni.bean.database.Activity"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -17,11 +18,31 @@
 <title>校友近期活动</title>
 <!-- 显示我发起过的活动 -->
 </head>
+
 <script>
-$(document).on("click", "#show-alert", function() {
-    $.alert("亲，请先到公众号菜单栏【个人中心】进行注册后，再发起活动！");
-  });
+
+	$(document).on("click", "#show-alert", function() {
+	    $.alert("亲，请先到公众号菜单栏【个人中心】进行注册后，再发起活动！");
+	  });
+	
+	function onCreatePoster(openID, actID) {
+		$.showLoading("正在生成海报...");
+		var posterData={'openId':openID,'activityId':actID};
+		$.ajax({
+			type:"POST",
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			url:"/ScnuAlumni/SendPosterServlet",
+			data:JSON.stringify(posterData),
+			dataType:"json",
+			success:function(data){
+				$.hideLoading();
+				$.alert("你的活动邀请海报已经生成，请回到公众号查看！");
+			}
+		});
+	};
+	
 </script>
+
 <body>
 	<%!public static final int PAGESIZE = 3;
 	int pageCount = 0;
@@ -29,12 +50,12 @@ $(document).on("click", "#show-alert", function() {
 
 	<%
 		String openid = (String) session.getAttribute("openid");
-	
 		//判断用户是否已经注册
 		DataBaseUtil baseUtil2 = new DataBaseUtil();
 		boolean Signed = baseUtil2.isSigned(openid);
 		
 %>
+
 <div class="weui-btn-area">
 		<a href="recent_activity.jsp"
 			class="weui-btn weui-btn_mini weui-btn_plain-primary">近期活动</a> 
@@ -118,17 +139,16 @@ $(document).on("click", "#show-alert", function() {
 
 		<a href="update_activity.jsp?parmer=<%=activitys.get(i).getId()%>"
 			class="weui-form-preview__btn weui-form-preview__btn_default">修改</a>
-		<a
-			href="sendImgMessage.jsp?openid=<%=activitys.get(i).getOpenID()%>&aid=<%=activitys.get(i).getId()%>"
-			class="weui-form-preview__btn weui-form-preview__btn_primary">生成活动海报</a>
+			
+		<a href="javascript:void(0);" 
+			class="weui-form-preview__btn weui-form-preview__btn_primary" 
+			onclick="onCreatePoster('<%=openid %>',<%=activitys.get(i).getId()%>)">生成活动海报</a>
+			
 	</div>
 	<hr />
 
 	<!-- foot 	部分 -->
-	<%
-		i++;}
-
-	%>
+		<% i++;}%>
 	<!-- return confirm('确定将此记录删除?') -->
 
 	<br />

@@ -22,12 +22,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
 <title>查找校友</title>
 
-
 <link rel="stylesheet" href="resources/css/weui.css">
 <link rel="stylesheet" href="resources/css/jquery-weui.css">
+<link rel="stylesheet" href="resources/css/weui.min.css">
 
-<script src="resources/js/jquery-2.1.4.js"></script>
 <script src="resources/js/baiduTemplate.js"></script>
+<script src="resources/js/jquery-2.1.4.js"></script>
 <script src="resources/js/jquery-weui.js"></script>
 
 <style type="text/css">
@@ -36,14 +36,30 @@
  	float: left;
  }
  
+ .m-weui-loadmore{
+	 width:100%;
+	 height:600px;
+	 margin:0 auto;
+	 background-color:rgba(0,0,0,0.3);
+	 line-height:600px;
+	 font-size:18px;
+	 color:black;
+	 text-align:center;
+	 position:absolute;
+	 top:0;
+	 left:0;
+	 z-index:999;
+ }
+ 
  </style>
 
 <script type="text/javascript">
 //搜索数据
 function onSearch() {
+	var load=document.getElementById("loadMore");
 	var name=$("#autoComplete").val();
-	/* alert(name); */
 	if (("" != name) && (name.indexOf(" ") < 0)) {
+		load.style.visibility="visible";
 		var jsonStr={'userName':name};
 		$.ajax({
 			type:"POST",
@@ -51,16 +67,14 @@ function onSearch() {
 			url:"/ScnuAlumni/SignUpServlet",
 			data:JSON.stringify(jsonStr),
 			dataType:"json",
-			success:function(data){  
+			success:function(data){
+				load.style.visibility="hidden";
 				var resp=JSON.stringify(data);
 				var jsonObj = JSON.parse(resp);
-				/* alert(jsonObj.length); */
 				var jsonLength=jsonObj.users.length;
 				if (jsonLength <= 0) {
-					/* alert("不存在该校友!"); */
 					$.toast("不存在该校友!");
 				}
-				
 				//使用模板 ,使用baidu.template命名空间
 				var bt=baidu.template;
 				//可以设置分隔符
@@ -141,6 +155,11 @@ function alumnus(i) {
 </head>
 <body>
 
+<div class="m-weui-loadmore" id="loadMore" style="visibility: hidden;">
+     <i class="weui-loading"></i>
+     <span class="weui-loadmore__tips">正在搜索...</span>
+</div>
+
 <div class="weui_cells weui_cells_access"  style="margin-top: 0px;">
  	<div class="weui_cell">
  		<div class="weui_cell_bd weui_cell_primary">
@@ -188,6 +207,7 @@ function alumnus(i) {
 </div>	
 
 
+
 <script src="resources/js/fastclick.js"></script>
  
 <script>
@@ -195,6 +215,15 @@ function alumnus(i) {
     FastClick.attach(document.body);
   });
 </script>
+
+<br>
+<div class="weui-footer">
+	<p class="weui-footer__links">
+		<a href="#" class="weui-footer__link">华师校友通讯录</a>
+	</p>
+	<p class="weui-footer__text">Copyright © 2017 SCNU</p>
+</div>
+<br/>
 
 </body>
 </html>

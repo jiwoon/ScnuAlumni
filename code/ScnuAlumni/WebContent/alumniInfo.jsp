@@ -3,21 +3,17 @@
 <%@page import="com.newttl.scnualumni.bean.database.SignedUser" %>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String path=request.getContextPath();
-	String basePath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
 
 <link rel="stylesheet" href="resources/css/weui.css">
 <link rel="stylesheet" href="resources/css/weui.min.css">
 <link rel="stylesheet" href="resources/css/jquery-weui.css">
-
 
 <style type="text/css">
  .p{
@@ -43,8 +39,17 @@
 	String alumniName=request.getParameter("alumniName");
 	String alumniOpenId=request.getParameter("alumniOpenId");
 	String alumniHeadImgUrl=request.getParameter("alumniHeadImgUrl");
+	String contactType="";
 	DataBaseUtil baseUtil=new DataBaseUtil();
 	SignedUser signedUser=baseUtil.getSigned(alumniOpenId);
+	String type=signedUser.getContactType();
+	if("1".equals(type)){
+		contactType="QQ";
+	}else if("2".equals(type)){
+		contactType="邮箱";
+	}else if("3".equals(type)){
+		contactType="手机";
+	}
 	//校友已经注册了，显示校友的信息 
 	/* if(null != signedUser){ */
 %>
@@ -83,6 +88,13 @@
     </div>
     
     <div class="weui_cell">
+    	<div class="weui_cell_hd"><label class="weui-label my-label">年级</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+            <p><%=signedUser.getGrade()%></p>
+        </div>
+    </div>
+    
+    <div class="weui_cell">
     	<div class="weui_cell_hd"><label class="weui-label my-label">班级</label></div>
         <div class="weui_cell_bd weui_cell_primary">
             <p ><%=signedUser.getUserClass() %></p>
@@ -90,23 +102,9 @@
     </div>
 
 	<div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label my-label">手机号</label></div>
+    	<div class="weui_cell_hd"><label class="weui-label my-label"><%=contactType %></label></div>
         <div class="weui_cell_bd weui_cell_primary"">
-            <p ><%=signedUser.getPhone() %></p>
-        </div>
-    </div>
-    
-    <div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label my-label">QQ</label></div>
-        <div class="weui_cell_bd weui_cell_primary">
-            <p ><%=signedUser.getQQ() %></p>
-        </div>
-    </div>
-    
-    <div class="weui_cell">
-    	<div class="weui_cell_hd"><label class="weui-label my-label">邮箱</label></div>
-        <div class="weui_cell_bd weui_cell_primary">
-            <p ><%=signedUser.geteMail() %></p>
+            <p ><%=signedUser.getContact() %></p>
         </div>
     </div>
     
@@ -148,6 +146,14 @@
 
 </form>
 
+<br>
+<div class="weui-footer">
+	<p class="weui-footer__links">
+		<a href="#" class="weui-footer__link">华师校友通讯录</a>
+	</p>
+	<p class="weui-footer__text">Copyright © 2017 SCNU</p>
+</div>
+<br/>
 
 </body>
 </html>

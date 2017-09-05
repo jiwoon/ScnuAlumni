@@ -599,6 +599,7 @@ public class DataBaseUtil {
 			rs=ps.executeQuery();
 			while (rs.next()) {
 				Activity activity=new Activity();
+				activity.setOpenID(rs.getString("openid"));
 				activity.setActivityAddress(rs.getString("activity_address"));
 				activity.setActivityHolder(rs.getString("activity_holder"));
 				activity.setActivityIntro(rs.getString("activity_intro"));

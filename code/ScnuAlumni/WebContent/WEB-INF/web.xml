@@ -41,4 +41,13 @@
   	<url-pattern>/ImageCodeServlet</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>SendPosterServlet</servlet-name>
+  	<servlet-class>com.newttl.scnualumni.servlet.SendPosterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SendPosterServlet</servlet-name>
+  	<url-pattern>/SendPosterServlet</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
