@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -37,6 +37,11 @@
 			$.toast("提交成功");
 			document.formSub.submit();
 		}
+	}
+	function keyUp() {
+		var activityInfo=document.getElementById("actInfo");
+		var written=document.getElementById("written");
+		written.innerText=activityInfo.value.length;
 	}
 </script>
 </head>
@@ -103,15 +108,13 @@
 				</div>
 			</div>
 
-
-
 			<div class="weui-cells weui-cells_form">
 				<div class="weui-cell">
 					<div class="weui-cell__bd">
-						<textarea class="weui-textarea" name="atip" placeholder="请输入活动介绍"
-							rows="3"></textarea>
+						<textarea class="weui-textarea" id="actInfo" name="atip" placeholder="请输入活动介绍"
+							rows="3" maxlength="100" onkeyup="keyUp()" onbeforepaste="keyUp()"></textarea>
 						<div class="weui-textarea-counter">
-							<span>0</span>/100
+							<span id="written">0</span>/100
 						</div>
 					</div>
 				</div>
@@ -121,7 +124,7 @@
 				<a href="javascript:;" id='show-confirm'
 					class="weui-btn weui-btn_primary">提交</a>
 			</div>
-			<br /> <br /> 
+			<br/> <br/> 
 		</div>
 	</form>
 	<script src="resources/js/jquery-2.1.4.js"></script>
@@ -132,12 +135,10 @@
 				//确认操作
 				checkInput();
 			}, function() {
-
+				$.toast("取消","cancel");
 			});
 		});
 	</script>
-
-	
 
     <div class="weui-footer">
         <p class="weui-footer__links">
