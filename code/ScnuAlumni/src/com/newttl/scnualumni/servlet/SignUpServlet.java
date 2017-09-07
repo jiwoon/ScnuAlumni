@@ -22,6 +22,7 @@ import org.dom4j.io.SAXReader;
 
 import com.newttl.scnualumni.bean.pojo.SNSUserInfo;
 import com.newttl.scnualumni.bean.pojo.WeiXinOauth2Token;
+import com.newttl.scnualumni.logs.ScnuAlumniLogs;
 import com.newttl.scnualumni.util.AdvancedUtil;
 import com.newttl.scnualumni.util.DataBaseUtil;
 import com.newttl.scnualumni.weixin.WeiXinCommon;
@@ -44,7 +45,7 @@ public class SignUpServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		System.out.println("SignUpServlet doGet");
+		ScnuAlumniLogs.getLogger().debug("【个人中心】网页授权");
 		
 		//设置编码格式，防止中文出现乱码
 		req.setCharacterEncoding("UTF-8");
@@ -53,7 +54,7 @@ public class SignUpServlet extends HttpServlet {
 		//用户同意授权后，能够获得 code
 		String code=req.getParameter("code");
 		
-		System.out.println("code::"+code);
+		ScnuAlumniLogs.getLogger().debug("【个人中心】网页授权-授权码::"+code);
 		
 		//用户同意授权
 		if (!(code.equals("authdeny"))) {
