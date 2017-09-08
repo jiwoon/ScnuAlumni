@@ -16,7 +16,6 @@ public class ScnuAlumniLogs {
 	static{
 		try {
 			logger=Logger.getLogger(ScnuAlumniLogs.class);
-//			PropertyConfigurator.configure("log4j.properties");
 		} catch (Exception e) {
 			System.out.println("初始化log4j失败::"+e.toString());
 		}

@@ -15,6 +15,7 @@ import com.newttl.scnualumni.bean.response.Image;
 import com.newttl.scnualumni.bean.response.ImageMessage;
 import com.newttl.scnualumni.bean.response.NewsMessage;
 import com.newttl.scnualumni.bean.response.TextMessage;
+import com.newttl.scnualumni.logs.ScnuAlumniLogs;
 import com.newttl.scnualumni.util.AdvancedUtil;
 import com.newttl.scnualumni.util.CommonUtil;
 import com.newttl.scnualumni.util.DataBaseUtil;
@@ -73,7 +74,6 @@ public class MessageService {
 			//判断用户请求的消息类型
 			switch (req_msgType) {
 			case MessageUtil.REQ_MESSAGE_TYPE_TEXT://文本消息
-				//TODO
 				String req_content=reqMap.get("Content").trim();//获取文本消息
 				if (req_content.equals("附近")) {
 					//回复文本消息，提示用户发送位置信息
@@ -126,7 +126,6 @@ public class MessageService {
 				break;
 				
 			case MessageUtil.REQ_MESSAGE_TYPE_IMAGE://图片消息
-				//TODO
 				respContent="您发送的是图片消息";
 				//设置文本消息内容
 				textMessage.setContent(respContent);
@@ -135,14 +134,12 @@ public class MessageService {
 				break;
 				
 			case MessageUtil.REQ_MESSAGE_TYPE_VOICE://语音消息
-				//TODO
 				//语音的MediaId
 				String mediaId=reqMap.get("MediaId");
 				//从微信服务器下载该语音到本地服务器下
 				AdvancedUtil advancedUtil=new AdvancedUtil();
 				String downLoadFile=advancedUtil.getAdvancedMethod().downLoadMedia(access_token, mediaId, WeiXinCommon.downLoadFilePathComm+"/voice/");
-				System.out.println("MessageService-downLoadFile::"+downLoadFile);
-				
+				ScnuAlumniLogs.getLogger().debug("用户发送语音消息::"+downLoadFile);
 				respContent="您发送的是语音消息";
 				//设置文本消息内容
 				textMessage.setContent(respContent);
@@ -151,7 +148,6 @@ public class MessageService {
 				break;
 				
 			case MessageUtil.REQ_MESSAGE_TYPE_VIDEO://视频消息
-				//TODO
 				respContent="您发送的是视频消息";
 				//设置文本消息内容
 				textMessage.setContent(respContent);
@@ -160,7 +156,6 @@ public class MessageService {
 				break;
 				
 			case MessageUtil.REQ_MESSAGE_TYPE_SHORTVIDEO://小视频消息
-				//TODO
 				respContent="您发送的是小视频消息";
 				//设置文本消息内容
 				textMessage.setContent(respContent);

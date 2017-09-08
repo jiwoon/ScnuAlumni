@@ -7,6 +7,7 @@ import com.newttl.scnualumni.bean.menu.ComplexButton;
 import com.newttl.scnualumni.bean.menu.Menu;
 import com.newttl.scnualumni.bean.menu.ViewButton;
 import com.newttl.scnualumni.bean.pojo.Token;
+import com.newttl.scnualumni.logs.ScnuAlumniLogs;
 import com.newttl.scnualumni.util.CommonUtil;
 import com.newttl.scnualumni.util.MenuUtil;
 import com.newttl.scnualumni.weixin.WeiXinCommon;
@@ -34,7 +35,7 @@ public class MenuManager {
 		b11.setUrl("http://news.scnu.edu.cn");
 		
 		ClickButton b21=new ClickButton();
-		b21.setName("公众号二维码");
+		b21.setName("二维码");
 		b21.setType("click");
 		b21.setKey("qrcode");
 		
@@ -43,14 +44,10 @@ public class MenuManager {
 		String url1=CommonUtil.urlEncodingUTF8(WeiXinCommon.signUpUrl);
 		url0=url0.replace("APPID",WeiXinCommon.appID);
 		url0=url0.replace("REDIRECT_URI", url1);
-		
 		b31.setName("个人中心");
 		b31.setType("view");
 		b31.setUrl(url0);
-		
-		System.out.println("url0::"+"\n"+url0);
-		
-		
+		ScnuAlumniLogs.getLogger().debug("[个人中心]--url::"+"\n"+url0);
 		
 		ViewButton b32=new ViewButton();
 		String ur32=WeiXinCommon.OAUTH_URL;
@@ -60,8 +57,7 @@ public class MenuManager {
 		b32.setName("活动中心");
 		b32.setType("view");
 		b32.setUrl(ur32);
-		
-		System.out.println("ur32::"+"\n"+ur32);
+		ScnuAlumniLogs.getLogger().debug("[活动中心]--url::"+"\n"+ur32);
 		
 		ViewButton b33 = new ViewButton();
 		b33.setName("查找校友");
@@ -85,19 +81,17 @@ public class MenuManager {
 		//第三方用户唯一凭证密钥appsecret
 		String appsecret=WeiXinCommon.appsecret;
 		
-		
 		//通过凭证 appID appsecret获取 access_token
 		Token token=CommonUtil.getToken(appID, appsecret);
-		
 		
 		if (token!=null) {
 			String accessToken=token.getAccess_token();
 			//创建菜单
 			boolean createResult=MenuUtil.createMenu(getMenu(), accessToken);
 			if (createResult) {
-				System.out.println("菜单创建成功");
+				ScnuAlumniLogs.getLogger().debug("创建菜单--成功");
 			}else {
-				System.out.println("菜单创建失败");
+				ScnuAlumniLogs.getLogger().debug("创建菜单--失败");
 			}
 			
 		}

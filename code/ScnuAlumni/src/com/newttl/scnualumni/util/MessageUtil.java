@@ -22,6 +22,7 @@ import com.newttl.scnualumni.bean.response.NewsMessage;
 import com.newttl.scnualumni.bean.response.TextMessage;
 import com.newttl.scnualumni.bean.response.VideoMessage;
 import com.newttl.scnualumni.bean.response.VoiceMessage;
+import com.newttl.scnualumni.logs.ScnuAlumniLogs;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.binary.Token.StartNode;
@@ -100,11 +101,11 @@ public class MessageUtil {
 		//解析根节点的所有子节点
 		List<Element> elements=root.elements();
 		//遍历子节点，存放到HashMap中
-		System.out.println("用户请求：：");
+		ScnuAlumniLogs.getLogger().debug("用户发出请求::");
 		for (Element element : elements) {
 			msgMap.put(element.getName(), element.getText());
-			
-			System.out.println(element.getName()+"==>"+element.getText());
+			//控制台显示日志
+			ScnuAlumniLogs.getLogger().debug(element.getName()+"=>"+element.getText());
 		}
 		//释放资源
 		iStream.close();

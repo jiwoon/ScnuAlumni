@@ -25,6 +25,7 @@ import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.newttl.scnualumni.bean.database.Knowledge;
+import com.newttl.scnualumni.logs.ScnuAlumniLogs;
 import com.newttl.scnualumni.util.DataBaseUtil;
 
 import oracle.net.aso.d;
@@ -48,7 +49,7 @@ public class ChatService {
 		//将路径classPath中的%20替换为空格
 		classPath=classPath.replaceAll("%20", " ");
 		//索引存储位置
-		System.out.println(classPath+"index/");
+		ScnuAlumniLogs.getLogger().debug("索引存储位置-"+classPath+"index/");
 		return classPath+"index/";
 	}
 	
